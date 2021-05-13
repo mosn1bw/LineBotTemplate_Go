@@ -41,32 +41,6 @@ var baseURL = "https://line-talking-bot-go.herokuapp.com"
 var endpointBase = os.Getenv("ENDPOINT_BASE")
 var tellTimeInterval int = 15
 var answers_TextMessage = []string{
-		"人被殺，就會死。",
-		"你知道嗎 當你背對太陽 你就看不見金星",
-		"當你失眠的時候，你就會睡不著",
-		"今天是昨天的明天。",
-		"吃得苦中苦，那一口特別苦",
-	}
-var answers_ImageMessage = []string{
-		"傳這甚麼廢圖？你有認真在分享嗎？",
-	}
-var answers_StickerMessage = []string{
-		"腳踏實地打字好嗎？傳這甚麼貼圖？",
-	}
-var answers_VideoMessage = []string{
-		"看甚麼影片，不知道我的流量快用光了嗎？",
-	}
-var answers_AudioMessage = []string{
-		"說的比唱的好聽，唱得鬼哭神號，是要嚇唬誰？",
-	}
-var answers_LocationMessage = []string{
-		"這是哪裡啊？火星嗎？",
-	}
-var answers_ReplyCurseMessage = []string{
-		"真的無恥",
-		"有夠無恥",
-		"超級無恥",
-		"就是無恥",
 	}
 
 var silentMap = make(map[string]bool) // [UserID/GroupID/RoomID]:bool
@@ -209,6 +183,19 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					} else {
 						bot.ReplyMessage(replyToken, linebot.NewTextMessage("Bot can't use profile API without user ID")).Do()
 					}
+				} else if "gif" == message.Text {
+					imageURL := "https://lh3.googleusercontent.com/-xHqQP4wTZDU/YBq5AgqjvCI/AAAAAAAAL6c/TmVGaX4tgIk07K5bZIPDtV9Ct49xEwaxwCK8BGAsYHg/s512/2021-02-03.gif"
+					//log.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+imageURL)
+					template := linebot.NewButtonsTemplate(
+						imageURL, "My button sample", "Hello, my button",
+						linebot.NewURITemplateAction("Go to line.me", "line://ti/p/~M_BW"),
+					)
+					if _, err := bot.ReplyMessage(
+						replyToken,
+						linebot.NewTemplateMessage("Buttons alt text", template),
+					).Do(); err != nil {
+						log.Print(err)
+					}
 				} else if "buttons" == message.Text {
 					imageURL := "https://lh3.googleusercontent.com/-xHqQP4wTZDU/YBq5AgqjvCI/AAAAAAAAL6c/TmVGaX4tgIk07K5bZIPDtV9Ct49xEwaxwCK8BGAsYHg/s512/2021-02-03.gif"
 					//log.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+imageURL)
@@ -287,6 +274,403 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							bot.LeaveRoom(source.RoomID).Do()
 						}
 					}
+				} else if "image carousel"== message.Text {
+					imageURL := app.appBaseURL + "/static/buttons/1040.jpg"
+					template := linebot.NewImageCarouselTemplate(
+						linebot.NewImageCarouselColumn(
+							imageURL,
+							linebot.NewURIAction("Go to LINE", "https://line.me"),
+						),
+						linebot.NewImageCarouselColumn(
+							imageURL,
+							linebot.NewPostbackAction("Say hello1", "hello こんにちは", "", ""),
+						),
+						linebot.NewImageCarouselColumn(
+							imageURL,
+							linebot.NewMessageAction("Say message", "Rice=米"),
+						),
+						linebot.NewImageCarouselColumn(
+							imageURL,
+							linebot.NewDatetimePickerAction("datetime", "DATETIME", "datetime", "", "", ""),
+						),
+					)
+					if _, err := app.bot.ReplyMessage(
+						replyToken,
+						linebot.NewTemplateMessage("Image carousel alt text", template),
+					).Do(); err != nil {
+						return err
+					}
+				}case "datetime":
+					template := linebot.NewButtonsTemplate(
+						"", "", "Select date / time !",
+						linebot.NewDatetimePickerAction("date", "DATE", "date", "", "", ""),
+						linebot.NewDatetimePickerAction("time", "TIME", "time", "", "", ""),
+						linebot.NewDatetimePickerAction("datetime", "DATETIME", "datetime", "", "", ""),
+					)
+					if _, err := app.bot.ReplyMessage(
+						replyToken,
+						linebot.NewTemplateMessage("Datetime pickers alt text", template),
+					).Do(); err != nil {
+						return err
+					}
+				case "flex":
+					// {
+					//   "type": "bubble",
+					//   "body": {
+					//     "type": "box",
+					//     "layout": "horizontal",
+					//     "contents": [
+					//       {
+					//         "type": "text",
+					//         "text": "Hello,"
+					//       },
+					//       {
+					//         "type": "text",
+					//         "text": "World!"
+					//       }
+					//     ]
+					//   }
+					// }
+					contents := &linebot.BubbleContainer{
+						Type: linebot.FlexContainerTypeBubble,
+						Body: &linebot.BoxComponent{
+							Type:   linebot.FlexComponentTypeBox,
+							Layout: linebot.FlexBoxLayoutTypeHorizontal,
+							Contents: []linebot.FlexComponent{
+								&linebot.TextComponent{
+									Type: linebot.FlexComponentTypeText,
+									Text: "Hello,",
+								},
+								&linebot.TextComponent{
+									Type: linebot.FlexComponentTypeText,
+									Text: "World!",
+								},
+							},
+						},
+					}
+					if _, err := app.bot.ReplyMessage(
+						replyToken,
+						linebot.NewFlexMessage("Flex message alt text", contents),
+					).Do(); err != nil {
+						return err
+					}
+				case "flex carousel":
+					// {
+					//   "type": "carousel",
+					//   "contents": [
+					//     {
+					//       "type": "bubble",
+					//       "body": {
+					//         "type": "box",
+					//         "layout": "vertical",
+					//         "contents": [
+					//           {
+					//             "type": "text",
+					//             "text": "First bubble"
+					//           }
+					//         ]
+					//       }
+					//     },
+					//     {
+					//       "type": "bubble",
+					//       "body": {
+					//         "type": "box",
+					//         "layout": "vertical",
+					//         "contents": [
+					//           {
+					//             "type": "text",
+					//             "text": "Second bubble"
+					//           }
+					//         ]
+					//       }
+					//     }
+					//   ]
+					// }
+					contents := &linebot.CarouselContainer{
+						Type: linebot.FlexContainerTypeCarousel,
+						Contents: []*linebot.BubbleContainer{
+							{
+								Type: linebot.FlexContainerTypeBubble,
+								Body: &linebot.BoxComponent{
+									Type:   linebot.FlexComponentTypeBox,
+									Layout: linebot.FlexBoxLayoutTypeVertical,
+									Contents: []linebot.FlexComponent{
+										&linebot.TextComponent{
+											Type: linebot.FlexComponentTypeText,
+											Text: "First bubble",
+										},
+									},
+								},
+							},
+							{
+								Type: linebot.FlexContainerTypeBubble,
+								Body: &linebot.BoxComponent{
+									Type:   linebot.FlexComponentTypeBox,
+									Layout: linebot.FlexBoxLayoutTypeVertical,
+									Contents: []linebot.FlexComponent{
+										&linebot.TextComponent{
+											Type: linebot.FlexComponentTypeText,
+											Text: "Second bubble",
+										},
+									},
+								},
+							},
+						},
+					}
+					if _, err := app.bot.ReplyMessage(
+						replyToken,
+						linebot.NewFlexMessage("Flex message alt text", contents),
+					).Do(); err != nil {
+						return err
+					}
+				case "flex json":
+					jsonString := `{
+					"type": "bubble",
+					"hero": {
+					"type": "image",
+					"url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+					"size": "full",
+					"aspectRatio": "20:13",
+					"aspectMode": "cover",
+					"action": {
+					"type": "uri",
+					"uri": "http://linecorp.com/"
+ 			     }
+ 			 },
+			  "body": {
+    			"type": "box",
+			    "layout": "vertical",
+ 			   "contents": [
+  			    {
+   			     "type": "text",
+    	         "text": "Brown Cafe",
+    	         "weight": "bold",
+    	         "size": "xl"
+    	       },
+    	       {
+    	         "type": "box",
+     	        "layout": "baseline",
+    	         "margin": "md",
+    	         "contents": [
+    	           {
+    	             "type": "icon",
+    	             "size": "sm",
+    	             "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+     	          },
+     	          {
+     	            "type": "icon",
+     	            "size": "sm",
+     	            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+     	          },
+     	          {
+     	            "type": "icon",
+    	             "size": "sm",
+    	             "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+       	        },
+       	        {
+       	          "type": "icon",
+       	          "size": "sm",
+       	          "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+       	        },
+       	        {
+        	      "type": "icon",
+         	      "size": "sm",
+        	      "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png"
+                },
+       	        {
+       	          "type": "text",
+        	      "text": "4.0",
+         	      "size": "sm",
+        	      "color": "#999999",
+                  "margin": "md",
+                  "flex": 0
+   	            }
+   	          ]
+   	        },
+    	       {
+                  "type": "box",
+                  "layout": "vertical",
+                  "margin": "lg",
+                  "spacing": "sm",
+                  "contents": [
+    	           {
+                  "type": "box",
+       	          "layout": "baseline",
+                  "spacing": "sm",
+                  "contents": [
+       	            {
+       	              "type": "text",
+       	              "text": "Place",
+        	             "color": "#aaaaaa",
+        	             "size": "sm",
+        	             "flex": 1
+        	           },
+         	          {
+                      "type": "text",
+                      "text": "Miraina Tower, 4-1-6 Shinjuku, Tokyo",
+                      "wrap": true,
+                      "color": "#666666",
+           	          "size": "sm",
+                      "flex": 5
+       	            }
+        	         ]
+         	      },
+    			      {
+    			        "type": "box",
+    			        "layout": "baseline",
+    			        "spacing": "sm",
+    			        "contents": [
+    			          {
+    			            "type": "text",
+    			            "text": "Time",
+    			            "color": "#aaaaaa",
+    			            "size": "sm",
+    			            "flex": 1
+    			          },
+    			          {
+    			            "type": "text",
+    			            "text": "10:00 - 23:00",
+    			            "wrap": true,
+    			            "color": "#666666",
+    			            "size": "sm",
+    			            "flex": 5
+    			          }
+    			        ]
+    			      }
+    			    ]
+    			  }
+    			]
+			  },
+			    "footer": {
+    			"type": "box",
+    			"layout": "vertical",
+    			"spacing": "sm",
+    			"contents": [
+    			  {
+    			    "type": "button",
+    			    "style": "link",
+    			    "height": "sm",
+    			    "action": {
+    			      "type": "uri",
+    			      "label": "CALL",
+    			      "uri": "https://linecorp.com"
+    			    }
+    			  },
+    			  {
+    			    "type": "button",
+    			    "style": "link",
+    			    "height": "sm",
+    			    "action": {
+    			      "type": "uri",
+    			      "label": "WEBSITE",
+    			      "uri": "https://linecorp.com",
+    			      "altUri": {
+    			        "desktop": "https://line.me/ja/download"
+    			      }
+    			    }
+    			  },
+    			  {
+    			    "type": "spacer",
+    			    "size": "sm"
+    			  }
+    			],
+    			"flex": 0
+ 			 }
+		        	}`
+					contents, err := linebot.UnmarshalFlexMessageJSON([]byte(jsonString))
+					if err != nil {
+						return err
+					}
+					if _, err := app.bot.ReplyMessage(
+						replyToken,
+						linebot.NewFlexMessage("Flex message alt text", contents),
+					).Do(); err != nil {
+						return err
+					}
+				case "imagemap":
+					if _, err := app.bot.ReplyMessage(
+						replyToken,
+						linebot.NewImagemapMessage(
+							app.appBaseURL+"/static/rich",
+							"Imagemap alt text",
+							linebot.ImagemapBaseSize{Width: 1040, Height: 1040},
+							linebot.NewURIImagemapAction("LINE Store Manga", "https://store.line.me/family/manga/en", linebot.ImagemapArea{X: 0, Y: 0, Width: 520, Height: 520}),
+							linebot.NewURIImagemapAction("LINE Store Music", "https://store.line.me/family/music/en", linebot.ImagemapArea{X: 520, Y: 0, Width: 520, Height: 520}),
+							linebot.NewURIImagemapAction("LINE Store Play", "https://store.line.me/family/play/en", linebot.ImagemapArea{X: 0, Y: 520, Width: 520, Height: 520}),
+							linebot.NewMessageImagemapAction("URANAI!", "URANAI!", linebot.ImagemapArea{X: 520, Y: 520, Width: 520, Height: 520}),
+						),
+					).Do(); err != nil {
+						return err
+					}
+				case "imagemap video":
+					if _, err := app.bot.ReplyMessage(
+						replyToken,
+						linebot.NewImagemapMessage(
+							app.appBaseURL+"/static/rich",
+							"Imagemap with video alt text",
+							linebot.ImagemapBaseSize{Width: 1040, Height: 1040},
+							linebot.NewURIImagemapAction("LINE Store Manga", "https://store.line.me/family/manga/en", linebot.ImagemapArea{X: 0, Y: 0, Width: 520, Height: 520}),
+							linebot.NewURIImagemapAction("LINE Store Music", "https://store.line.me/family/music/en", linebot.ImagemapArea{X: 520, Y: 0, Width: 520, Height: 520}),
+							linebot.NewURIImagemapAction("LINE Store Play", "https://store.line.me/family/play/en", linebot.ImagemapArea{X: 0, Y: 520, Width: 520, Height: 520}),
+							linebot.NewMessageImagemapAction("URANAI!", "URANAI!", linebot.ImagemapArea{X: 520, Y: 520, Width: 520, Height: 520}),
+									).WithVideo(&linebot.ImagemapVideo{
+							OriginalContentURL: app.appBaseURL + "/static/imagemap/video.mp4",
+							PreviewImageURL:    app.appBaseURL + "/static/imagemap/preview.jpg",
+							Area:               linebot.ImagemapArea{X: 280, Y: 385, Width: 480, Height: 270},
+							ExternalLink:       &linebot.ImagemapVideoExternalLink{LinkURI: "https://line.me", Label: "LINE"},
+						}),
+					).Do(); err != nil {
+						return err
+					}
+				case "quick":
+					if _, err := app.bot.ReplyMessage(
+						replyToken,
+						linebot.NewTextMessage("Select your favorite food category or send me your location!").
+							WithQuickReplies(linebot.NewQuickReplyItems(
+								linebot.NewQuickReplyButton(
+									app.appBaseURL+"/static/quick/sushi.png",
+									linebot.NewMessageAction("Sushi", "Sushi")),
+								linebot.NewQuickReplyButton(
+									app.appBaseURL+"/static/quick/tempura.png",
+									linebot.NewMessageAction("Tempura", "Tempura")),
+								linebot.NewQuickReplyButton(
+									"",
+									linebot.NewLocationAction("Send location")),
+							)),
+					).Do(); err != nil {
+						return err
+					}
+				case "bye":
+					switch source.Type {
+					case linebot.EventSourceTypeUser:
+						return app.replyText(replyToken, "Bot can't leave from 1:1 chat")
+					case linebot.EventSourceTypeGroup:
+						if err := app.replyText(replyToken, "Leaving group"); err != nil {
+							return err
+						}
+						if _, err := app.bot.LeaveGroup(source.GroupID).Do(); err != nil {
+							return app.replyText(replyToken, err.Error())
+						}
+					case linebot.EventSourceTypeRoom:
+						if err := app.replyText(replyToken, "Leaving room"); err != nil {
+							return err
+						}
+						if _, err := app.bot.LeaveRoom(source.RoomID).Do(); err != nil {
+							return app.replyText(replyToken, err.Error())
+						}
+					}
+				default:
+					log.Printf("Echo message to %s: %s", replyToken, message.Text)
+					if _, err := app.bot.ReplyMessage(
+						replyToken,
+						linebot.NewTextMessage(message.Text),
+					).Do(); err != nil {
+						return err
+					}
+				}
+				return nil
+			}
+
 				} else if "無恥" == message.Text {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ReplyCurseMessage[rand.Intn(len(answers_ReplyCurseMessage))])).Do()
 				} else if silentMap[sourceId] != true {
