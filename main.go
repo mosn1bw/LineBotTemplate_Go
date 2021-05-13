@@ -259,13 +259,13 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
-				} else if "你滾開" == message.Text {
+				} else if "/bye" == message.Text {
 					if rand.Intn(100) > 70 {
-						bot.ReplyMessage(replyToken, linebot.NewTextMessage("請神容易送神難, 我偏不要, 嘿嘿")).Do()
+						bot.ReplyMessage(replyToken, linebot.NewTextMessage("BYE BYE")).Do()
 					} else {
 						switch source.Type {
 						case linebot.EventSourceTypeUser:
-							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我想走, 但是我走不了...")).Do()
+							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我想走, 但是走不了...")).Do()
 						case linebot.EventSourceTypeGroup:
 							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
 							bot.LeaveGroup(source.GroupID).Do()
@@ -275,7 +275,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						}
 					}
 				} else if "image carousel"== message.Text {
-					imageURL := app.appBaseURL + "/static/buttons/1040.jpg"
+					imageURL :="https://lh3.googleusercontent.com/-buBdz24kuAQ/XzzphunjcDI/AAAAAAAAIVI/FJXAP-jE3X0PlpcuwiyHeHBJepS8JU1sgCK8BGAsYHg/s512/2020-08-19.png"
 					template := linebot.NewImageCarouselTemplate(
 						linebot.NewImageCarouselColumn(
 							imageURL,
@@ -641,35 +641,21 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						return err
 					}
-				case "bye":
-					switch source.Type {
-					case linebot.EventSourceTypeUser:
-						return app.replyText(replyToken, "Bot can't leave from 1:1 chat")
-					case linebot.EventSourceTypeGroup:
-						if err := app.replyText(replyToken, "Leaving group"); err != nil {
-							return err
-						}
-						if _, err := app.bot.LeaveGroup(source.GroupID).Do(); err != nil {
-							return app.replyText(replyToken, err.Error())
-						}
-					case linebot.EventSourceTypeRoom:
-						if err := app.replyText(replyToken, "Leaving room"); err != nil {
-							return err
-						}
-						if _, err := app.bot.LeaveRoom(source.RoomID).Do(); err != nil {
-							return app.replyText(replyToken, err.Error())
+				} else if "#bye" == message.Text {
+					if rand.Intn(100) > 70 {
+						bot.ReplyMessage(replyToken, linebot.NewTextMessage("BYE BYE")).Do()
+					} else {
+						switch source.Type {
+						case linebot.EventSourceTypeUser:
+							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我想走, 但是我走不了...")).Do()
+						case linebot.EventSourceTypeGroup:
+							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
+							bot.LeaveGroup(source.GroupID).Do()
+						case linebot.EventSourceTypeRoom:
+							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
+							bot.LeaveRoom(source.RoomID).Do()
 						}
 					}
-				default:
-					log.Printf("Echo message to %s: %s", replyToken, message.Text)
-					if _, err := app.bot.ReplyMessage(
-						replyToken,{
-						linebot.NewTextMessage(message.Text),
-					).Do(); err != nil {
-						return err
-					}
-				return nil														
-
 				} else if "無恥" == message.Text {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ReplyCurseMessage[rand.Intn(len(answers_ReplyCurseMessage))])).Do()
 				} else if silentMap[sourceId] != true {
@@ -678,27 +664,27 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			case *linebot.ImageMessage :
 				log.Print("ReplyToken[" + replyToken + "] ImageMessage[" + message.ID + "] OriginalContentURL(" + message.OriginalContentURL + "), PreviewImageURL(" + message.PreviewImageURL + ")" )
 				if silent != true {
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ImageMessage[rand.Intn(len(answers_ImageMessage))])).Do(){
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ImageMessage[rand.Intn(len(answers_ImageMessage))])).Do()
 				}
 			case *linebot.VideoMessage :
 				log.Print("ReplyToken[" + replyToken + "] VideoMessage[" + message.ID + "] OriginalContentURL(" + message.OriginalContentURL + "), PreviewImageURL(" + message.PreviewImageURL + ")" )
 				if silent != true {
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_VideoMessage[rand.Intn(len(answers_VideoMessage))])).Do(){
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_VideoMessage[rand.Intn(len(answers_VideoMessage))])).Do()
 				}
 			case *linebot.AudioMessage :
 				log.Print("ReplyToken[" + replyToken + "] AudioMessage[" + message.ID + "] OriginalContentURL(" + message.OriginalContentURL + "), Duration(" + strconv.Itoa(message.Duration) + ")" )
 				if silent != true {
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_AudioMessage[rand.Intn(len(answers_AudioMessage))])).Do(){
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_AudioMessage[rand.Intn(len(answers_AudioMessage))])).Do()
 				}
 			case *linebot.LocationMessage:
 				log.Print("ReplyToken[" + replyToken + "] LocationMessage[" + message.ID + "] Title(" + message.Title  + "), Address(" + message.Address + "), Latitude(" + strconv.FormatFloat(message.Latitude, 'f', -1, 64) + "), Longitude(" + strconv.FormatFloat(message.Longitude, 'f', -1, 64) + ")" )
 				if silent != true {
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_LocationMessage[rand.Intn(len(answers_LocationMessage))])).Do(){
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_LocationMessage[rand.Intn(len(answers_LocationMessage))])).Do()
 				}
 			case *linebot.StickerMessage :
 				log.Print("ReplyToken[" + replyToken + "] StickerMessage[" + message.ID + "] PackageID(" + message.PackageID + "), StickerID(" + message.StickerID + ")" )
 				if silent != true {
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_StickerMessage[rand.Intn(len(answers_StickerMessage))])).Do(){
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_StickerMessage[rand.Intn(len(answers_StickerMessage))])).Do()
 				}
 			}
 		} else if event.Type == linebot.EventTypePostback {
