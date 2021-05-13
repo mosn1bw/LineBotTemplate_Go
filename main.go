@@ -300,7 +300,8 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						return err
 					}
-				}case "datetime":
+				}
+				case "datetime":
 					template := linebot.NewButtonsTemplate(
 						"", "", "Select date / time !",
 						linebot.NewDatetimePickerAction("date", "DATE", "date", "", "", ""),
@@ -662,14 +663,12 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				default:
 					log.Printf("Echo message to %s: %s", replyToken, message.Text)
 					if _, err := app.bot.ReplyMessage(
-						replyToken,
+						replyToken,{
 						linebot.NewTextMessage(message.Text),
 					).Do(); err != nil {
 						return err
 					}
-				}
-				return nil
-			}
+				return nil														
 
 				} else if "無恥" == message.Text {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ReplyCurseMessage[rand.Intn(len(answers_ReplyCurseMessage))])).Do()
@@ -679,27 +678,27 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			case *linebot.ImageMessage :
 				log.Print("ReplyToken[" + replyToken + "] ImageMessage[" + message.ID + "] OriginalContentURL(" + message.OriginalContentURL + "), PreviewImageURL(" + message.PreviewImageURL + ")" )
 				if silent != true {
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ImageMessage[rand.Intn(len(answers_ImageMessage))])).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ImageMessage[rand.Intn(len(answers_ImageMessage))])).Do(){
 				}
 			case *linebot.VideoMessage :
 				log.Print("ReplyToken[" + replyToken + "] VideoMessage[" + message.ID + "] OriginalContentURL(" + message.OriginalContentURL + "), PreviewImageURL(" + message.PreviewImageURL + ")" )
 				if silent != true {
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_VideoMessage[rand.Intn(len(answers_VideoMessage))])).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_VideoMessage[rand.Intn(len(answers_VideoMessage))])).Do(){
 				}
 			case *linebot.AudioMessage :
 				log.Print("ReplyToken[" + replyToken + "] AudioMessage[" + message.ID + "] OriginalContentURL(" + message.OriginalContentURL + "), Duration(" + strconv.Itoa(message.Duration) + ")" )
 				if silent != true {
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_AudioMessage[rand.Intn(len(answers_AudioMessage))])).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_AudioMessage[rand.Intn(len(answers_AudioMessage))])).Do(){
 				}
 			case *linebot.LocationMessage:
 				log.Print("ReplyToken[" + replyToken + "] LocationMessage[" + message.ID + "] Title(" + message.Title  + "), Address(" + message.Address + "), Latitude(" + strconv.FormatFloat(message.Latitude, 'f', -1, 64) + "), Longitude(" + strconv.FormatFloat(message.Longitude, 'f', -1, 64) + ")" )
 				if silent != true {
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_LocationMessage[rand.Intn(len(answers_LocationMessage))])).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_LocationMessage[rand.Intn(len(answers_LocationMessage))])).Do(){
 				}
 			case *linebot.StickerMessage :
 				log.Print("ReplyToken[" + replyToken + "] StickerMessage[" + message.ID + "] PackageID(" + message.PackageID + "), StickerID(" + message.StickerID + ")" )
 				if silent != true {
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_StickerMessage[rand.Intn(len(answers_StickerMessage))])).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_StickerMessage[rand.Intn(len(answers_StickerMessage))])).Do(){
 				}
 			}
 		} else if event.Type == linebot.EventTypePostback {
@@ -708,4 +707,3 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	
 }
-
