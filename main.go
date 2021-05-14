@@ -258,33 +258,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
-				} else if "image carousel"== message.Text {
-					imageURL := app.appBaseURL + "/static/buttons/1040.jpg"
-					template := linebot.NewImageCarouselTemplate(
-						linebot.NewImageCarouselColumn(
-							imageURL,
-							linebot.NewURIAction("Go to LINE", "https://line.me"),
-						),
-						linebot.NewImageCarouselColumn(
-							imageURL,
-							linebot.NewPostbackAction("Say hello1", "hello こんにちは", "", ""),
-						),
-						linebot.NewImageCarouselColumn(
-							imageURL,
-							linebot.NewMessageAction("Say message", "Rice=米"),
-						),
-						linebot.NewImageCarouselColumn(
-							imageURL,
-							linebot.NewDatetimePickerAction("datetime", "DATETIME", "datetime", "", "", ""),
-						),
-					)
-					if _, err := app.bot.ReplyMessage(
-						replyToken,
-						linebot.NewTemplateMessage("Image carousel alt text", template),
-					).Do(); err != nil {
-						return err
-					}
-				} else if "imagemap" == message.Text {
+				} else if "imagemap9" == message.Text {
 					if _, err := bot.ReplyMessage(
 						replyToken,
 						linebot.NewImagemapMessage(
