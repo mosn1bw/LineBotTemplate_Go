@@ -299,8 +299,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						return err
 					}
-				}
-				case "datetime":
+				} else if "datetime"== message.Text {
 					template := linebot.NewButtonsTemplate(
 						"", "", "Select date / time !",
 						linebot.NewDatetimePickerAction("date", "DATE", "date", "", "", ""),
@@ -312,8 +311,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						linebot.NewTemplateMessage("Datetime pickers alt text", template),
 					).Do(); err != nil {
 						return err
-					}
-				case "flex":
+				} else if "flex"== message.Text {
 					// {
 					//   "type": "bubble",
 					//   "body": {
@@ -353,8 +351,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						linebot.NewFlexMessage("Flex message alt text", contents),
 					).Do(); err != nil {
 						return err
-					}
-				case "flex carousel":
+				} else if "flex carousel"== message.Text {
 					// {
 					//   "type": "carousel",
 					//   "contents": [
@@ -422,8 +419,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						linebot.NewFlexMessage("Flex message alt text", contents),
 					).Do(); err != nil {
 						return err
-					}
-				case "flex json":
+				} else if "flex json"== message.Text {
 					jsonString := `{
 					"type": "bubble",
 					"hero": {
