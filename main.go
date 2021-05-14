@@ -618,26 +618,8 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							OriginalContentURL: app.appBaseURL + "/static/imagemap/video.mp4",
 							PreviewImageURL:    app.appBaseURL + "/static/imagemap/preview.jpg",
 							Area:               linebot.ImagemapArea{X: 280, Y: 385, Width: 480, Height: 270},
-							ExternalLink:       &linebot.ImagemapVideoExternalLink{LinkURI: "https://line.me", Label: "LINE"},
+							ExternalLink:       linebot.ImagemapVideoExternalLink{LinkURI: "https://line.me", Label: "LINE"},
 						}),
-					).Do(); err != nil {
-						return err
-					}
-				case "quick":
-					if _, err := app.bot.ReplyMessage(
-						replyToken,
-						linebot.NewTextMessage("Select your favorite food category or send me your location!").
-							WithQuickReplies(linebot.NewQuickReplyItems(
-								linebot.NewQuickReplyButton(
-									app.appBaseURL+"/static/quick/sushi.png",
-									linebot.NewMessageAction("Sushi", "Sushi")),
-								linebot.NewQuickReplyButton(
-									app.appBaseURL+"/static/quick/tempura.png",
-									linebot.NewMessageAction("Tempura", "Tempura")),
-								linebot.NewQuickReplyButton(
-									"",
-									linebot.NewLocationAction("Send location")),
-							)),
 					).Do(); err != nil {
 						return err
 					}
