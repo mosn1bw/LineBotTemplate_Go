@@ -588,7 +588,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						return err
 					}
-				case "imagemap":
+				case "imagemap1":
 					if _, err := app.bot.ReplyMessage(
 						replyToken,
 						linebot.NewImagemapMessage(
@@ -603,7 +603,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						return err
 					}
-				case "imagemap video":
+				case "imagemap video1":
 					if _, err := app.bot.ReplyMessage(
 						replyToken,
 						linebot.NewImagemapMessage(
@@ -625,6 +625,89 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 		        	}
 			
+				} else if "buttons1" == message.Text {
+					imageURL := baseURL + "/static/buttons/1040.jpg"
+					//log.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+imageURL)
+					template := linebot.NewButtonsTemplate(
+						imageURL, "My button sample", "Hello, my button",
+						linebot.NewURITemplateAction("Go to line.me", "https://line.me"),
+						linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", ""),
+						linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは"),
+						linebot.NewMessageTemplateAction("Say message", "Rice=米"),
+					)
+					if _, err := bot.ReplyMessage(
+						replyToken,
+						linebot.NewTemplateMessage("Buttons alt text", template),
+					).Do(); err != nil {
+						log.Print(err)
+					}
+				} else if "confirm1" == message.Text {
+					template := linebot.NewConfirmTemplate(
+						"Do it?",
+						linebot.NewMessageTemplateAction("Yes", "Yes!"),
+						linebot.NewMessageTemplateAction("No", "No!"),
+					)
+					if _, err := bot.ReplyMessage(
+						replyToken,
+						linebot.NewTemplateMessage("Confirm alt text", template),
+					).Do(); err != nil {
+						log.Print(err)
+					}
+				} else if "carousel1" == message.Text {
+					imageURL := baseURL + "/static/buttons/1040.jpg"
+					template := linebot.NewCarouselTemplate(
+						linebot.NewCarouselColumn(
+							imageURL, "hoge", "fuga",
+							linebot.NewURITemplateAction("Go to line.me", "https://line.me"),
+							linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", ""),
+						),
+						linebot.NewCarouselColumn(
+							imageURL, "hoge", "fuga",
+							linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは"),
+							linebot.NewMessageTemplateAction("Say message", "Rice=米"),
+						),
+					)
+					if _, err := bot.ReplyMessage(
+						replyToken,
+						linebot.NewTemplateMessage("Carousel alt text", template),
+					).Do(); err != nil {
+						log.Print(err)
+					}
+				} else if "imagemap1" == message.Text {
+					if _, err := bot.ReplyMessage(
+						replyToken,
+						linebot.NewImagemapMessage(
+							baseURL + "/static/rich",
+							"Imagemap alt text",
+							linebot.ImagemapBaseSize{1040, 1040},
+							linebot.NewURIImagemapAction("https://store.line.me/family/manga/en", linebot.ImagemapArea{0, 0, 520, 520}),
+							linebot.NewURIImagemapAction("https://store.line.me/family/music/en", linebot.ImagemapArea{520, 0, 520, 520}),
+							linebot.NewURIImagemapAction("https://store.line.me/family/play/en", linebot.ImagemapArea{0, 520, 520, 520}),
+							linebot.NewMessageImagemapAction("URANAI!", linebot.ImagemapArea{520, 520, 520, 520}),
+						),
+					).Do(); err != nil {
+						log.Print(err)
+					}
+				} else if "你滾開1" == message.Text {
+					if rand.Intn(100) > 70 {
+						bot.ReplyMessage(replyToken, linebot.NewTextMessage("請神容易送神難, 我偏不要, 嘿嘿")).Do()
+					} else {
+						switch source.Type {
+						case linebot.EventSourceTypeUser:
+							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我想走, 但是我走不了...")).Do()
+						case linebot.EventSourceTypeGroup:
+							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
+							bot.LeaveGroup(source.GroupID).Do()
+						case linebot.EventSourceTypeRoom:
+							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
+							bot.LeaveRoom(source.RoomID).Do()
+						}
+					}
+				} else if "無恥" == message.Text {
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ReplyCurseMessage[rand.Intn(len(answers_ReplyCurseMessage))])).Do()
+				} else if silentMap[sourceId] != true {
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_TextMessage[rand.Intn(len(answers_TextMessage))])).Do()
+				}
 			case *linebot.ImageMessage :
 				log.Print("ReplyToken[" + replyToken + "] ImageMessage[" + message.ID + "] OriginalContentURL(" + message.OriginalContentURL + "), PreviewImageURL(" + message.PreviewImageURL + ")" )
 				if silent != true {
