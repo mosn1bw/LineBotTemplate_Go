@@ -188,6 +188,9 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					template := linebot.NewButtonsTemplate(
 						imageURL, "My button sample", "Hello, my button",
 						linebot.NewURITemplateAction("Go to line.me", "line://ti/p/~M_BW"),
+						linebot.NewURITemplateAction("Say hello1", "https://lh3.googleusercontent.com/-xHqQP4wTZDU/YBq5AgqjvCI/AAAAAAAAL6c/TmVGaX4tgIk07K5bZIPDtV9Ct49xEwaxwCK8BGAsYHg/s512/2021-02-03.gif"),
+						linebot.NewPostbackTemplateAction("言 hello2", "hello2", "hello こんにちは"),
+						linebot.NewMessageTemplateAction("Say message", "Rice=米"),
 					)
 					if _, err := bot.ReplyMessage(
 						replyToken,
