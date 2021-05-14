@@ -1,4 +1,4 @@
-// Licensed under the Apache License, Version 2.0 (the "License");
+﻿// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -80,7 +80,7 @@ func main() {
 	rand.Seed(time.Now().UnixNano())
 	/*
 	go func() {
-		tellTimeJob(user_mosen);
+		tellTimeJob(user_zchien);
 	}()
 	go func() {
 		for {
@@ -147,11 +147,11 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				//	log.Print(err)
 				//}
 				
-				if source.UserID != "" && source.UserID != user_mosen {
+				if source.UserID != "" && source.UserID != user_zchien {
 					profile, err := bot.GetProfile(source.UserID).Do()
 					if err != nil {
 						log.Print(err)
-					} else if _, err := bot.PushMessage(user_mosen, linebot.NewTextMessage(profile.DisplayName + ": "+message.Text)).Do(); err != nil {
+					} else if _, err := bot.PushMessage(user_zchien, linebot.NewTextMessage(profile.DisplayName + ": "+message.Text)).Do(); err != nil {
 							log.Print(err)
 					}
 				}
@@ -159,7 +159,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				if strings.Contains(message.Text, "你閉嘴") {
 					silentMap[sourceId] = true
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
-                }    
 				if strings.Contains(message.Text, "1") {
 					silentMap[sourceId] = true
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
@@ -259,13 +258,13 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
-				} else if "/bye" == message.Text {
+				} else if "你滾開" == message.Text {
 					if rand.Intn(100) > 70 {
-						bot.ReplyMessage(replyToken, linebot.NewTextMessage("BYE BYE")).Do()
+						bot.ReplyMessage(replyToken, linebot.NewTextMessage("請神容易送神難, 我偏不要, 嘿嘿")).Do()
 					} else {
 						switch source.Type {
 						case linebot.EventSourceTypeUser:
-							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我想走, 但是走不了...")).Do()
+							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我想走, 但是我走不了...")).Do()
 						case linebot.EventSourceTypeGroup:
 							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
 							bot.LeaveGroup(source.GroupID).Do()
@@ -275,7 +274,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						}
 					}
 				} else if "image carousel"== message.Text {
-					imageURL :="https://lh3.googleusercontent.com/-buBdz24kuAQ/XzzphunjcDI/AAAAAAAAIVI/FJXAP-jE3X0PlpcuwiyHeHBJepS8JU1sgCK8BGAsYHg/s512/2020-08-19.png"
+					imageURL := app.appBaseURL + "/static/buttons/1040.jpg"
 					template := linebot.NewImageCarouselTemplate(
 						linebot.NewImageCarouselColumn(
 							imageURL,
@@ -588,92 +587,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						return err
 					}
-				case "imagemap1":
-					if _, err := app.bot.ReplyMessage(
-						replyToken,
-						linebot.NewImagemapMessage(
-							app.appBaseURL+"/static/rich",
-							"Imagemap alt text",
-							linebot.ImagemapBaseSize{Width: 1040, Height: 1040},
-							linebot.NewURIImagemapAction("LINE Store Manga", "https://store.line.me/family/manga/en", linebot.ImagemapArea{X: 0, Y: 0, Width: 520, Height: 520}),
-							linebot.NewURIImagemapAction("LINE Store Music", "https://store.line.me/family/music/en", linebot.ImagemapArea{X: 520, Y: 0, Width: 520, Height: 520}),
-							linebot.NewURIImagemapAction("LINE Store Play", "https://store.line.me/family/play/en", linebot.ImagemapArea{X: 0, Y: 520, Width: 520, Height: 520}),
-							linebot.NewMessageImagemapAction("URANAI!", "URANAI!", linebot.ImagemapArea{X: 520, Y: 520, Width: 520, Height: 520}),
-						),
-					).Do(); err != nil {
-						return err
-					}
-				case "imagemap video1":
-					if _, err := app.bot.ReplyMessage(
-						replyToken,
-						linebot.NewImagemapMessage(
-							app.appBaseURL+"/static/rich",
-							"Imagemap with video alt text",
-							linebot.ImagemapBaseSize{Width: 1040, Height: 1040},
-							linebot.NewURIImagemapAction("LINE Store Manga", "https://store.line.me/family/manga/en", linebot.ImagemapArea{X: 0, Y: 0, Width: 520, Height: 520}),
-							linebot.NewURIImagemapAction("LINE Store Music", "https://store.line.me/family/music/en", linebot.ImagemapArea{X: 520, Y: 0, Width: 520, Height: 520}),
-							linebot.NewURIImagemapAction("LINE Store Play", "https://store.line.me/family/play/en", linebot.ImagemapArea{X: 0, Y: 520, Width: 520, Height: 520}),
-							linebot.NewMessageImagemapAction("URANAI!", "URANAI!", linebot.ImagemapArea{X: 520, Y: 520, Width: 520, Height: 520}),
-									).WithVideo(&linebot.ImagemapVideo{
-							OriginalContentURL: app.appBaseURL + "/static/imagemap/video.mp4",
-							PreviewImageURL:    app.appBaseURL + "/static/imagemap/preview.jpg",
-							Area:               linebot.ImagemapArea{X: 280, Y: 385, Width: 480, Height: 270},
-							ExternalLink:       linebot.ImagemapVideoExternalLink{LinkURI: "https://line.me", Label: "LINE"},
-						}),
-					).Do(); err != nil {
-						return err
-					}
-		        	}
-			
-				} else if "buttons1" == message.Text {
-					imageURL := baseURL + "/static/buttons/1040.jpg"
-					//log.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+imageURL)
-					template := linebot.NewButtonsTemplate(
-						imageURL, "My button sample", "Hello, my button",
-						linebot.NewURITemplateAction("Go to line.me", "https://line.me"),
-						linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", ""),
-						linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは"),
-						linebot.NewMessageTemplateAction("Say message", "Rice=米"),
-					)
-					if _, err := bot.ReplyMessage(
-						replyToken,
-						linebot.NewTemplateMessage("Buttons alt text", template),
-					).Do(); err != nil {
-						log.Print(err)
-					}
-				} else if "confirm1" == message.Text {
-					template := linebot.NewConfirmTemplate(
-						"Do it?",
-						linebot.NewMessageTemplateAction("Yes", "Yes!"),
-						linebot.NewMessageTemplateAction("No", "No!"),
-					)
-					if _, err := bot.ReplyMessage(
-						replyToken,
-						linebot.NewTemplateMessage("Confirm alt text", template),
-					).Do(); err != nil {
-						log.Print(err)
-					}
-				} else if "carousel1" == message.Text {
-					imageURL := baseURL + "/static/buttons/1040.jpg"
-					template := linebot.NewCarouselTemplate(
-						linebot.NewCarouselColumn(
-							imageURL, "hoge", "fuga",
-							linebot.NewURITemplateAction("Go to line.me", "https://line.me"),
-							linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", ""),
-						),
-						linebot.NewCarouselColumn(
-							imageURL, "hoge", "fuga",
-							linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは"),
-							linebot.NewMessageTemplateAction("Say message", "Rice=米"),
-						),
-					)
-					if _, err := bot.ReplyMessage(
-						replyToken,
-						linebot.NewTemplateMessage("Carousel alt text", template),
-					).Do(); err != nil {
-						log.Print(err)
-					}
-				} else if "imagemap1" == message.Text {
+				} else if "imagemap" == message.Text {
 					if _, err := bot.ReplyMessage(
 						replyToken,
 						linebot.NewImagemapMessage(
@@ -688,32 +602,55 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
-			case *linebot.ImageMessage:
-				/*
-					response := "image message received"
-					if _, err = lineServer.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(response)).Do(); err != nil {
-						log.Println("Reply Error: ", err)
-					}*/
-
-				log.Println("IMAGE URL: ", message.OriginalContentURL, message.PreviewImageURL)
-				pub := fmt.Sprintf("Type: \"%s\"  Content: \"%s\"  Response: \"%s\"  FromID: \"%s\"  DisplayName: \"%s\"",
-					"image",
-					message.OriginalContentURL,
-					"none",
-					profile.UserID,
-					profile.DisplayName)
-				subManager.Publish("lnstream", pub)
-
+				} else if "你滾開" == message.Text {
+					if rand.Intn(100) > 70 {
+						bot.ReplyMessage(replyToken, linebot.NewTextMessage("請神容易送神難, 我偏不要, 嘿嘿")).Do()
+					} else {
+						switch source.Type {
+						case linebot.EventSourceTypeUser:
+							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我想走, 但是我走不了...")).Do()
+						case linebot.EventSourceTypeGroup:
+							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
+							bot.LeaveGroup(source.GroupID).Do()
+						case linebot.EventSourceTypeRoom:
+							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
+							bot.LeaveRoom(source.RoomID).Do()
+						}
+					}
+				} else if "無恥" == message.Text {
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ReplyCurseMessage[rand.Intn(len(answers_ReplyCurseMessage))])).Do()
+				} else if silentMap[sourceId] != true {
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_TextMessage[rand.Intn(len(answers_TextMessage))])).Do()
+				}
+			case *linebot.ImageMessage :
+				log.Print("ReplyToken[" + replyToken + "] ImageMessage[" + message.ID + "] OriginalContentURL(" + message.OriginalContentURL + "), PreviewImageURL(" + message.PreviewImageURL + ")" )
+				if silent != true {
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ImageMessage[rand.Intn(len(answers_ImageMessage))])).Do()
+				}
+			case *linebot.VideoMessage :
+				log.Print("ReplyToken[" + replyToken + "] VideoMessage[" + message.ID + "] OriginalContentURL(" + message.OriginalContentURL + "), PreviewImageURL(" + message.PreviewImageURL + ")" )
+				if silent != true {
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_VideoMessage[rand.Intn(len(answers_VideoMessage))])).Do()
+				}
+			case *linebot.AudioMessage :
+				log.Print("ReplyToken[" + replyToken + "] AudioMessage[" + message.ID + "] OriginalContentURL(" + message.OriginalContentURL + "), Duration(" + strconv.Itoa(message.Duration) + ")" )
+				if silent != true {
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_AudioMessage[rand.Intn(len(answers_AudioMessage))])).Do()
+				}
+			case *linebot.LocationMessage:
+				log.Print("ReplyToken[" + replyToken + "] LocationMessage[" + message.ID + "] Title(" + message.Title  + "), Address(" + message.Address + "), Latitude(" + strconv.FormatFloat(message.Latitude, 'f', -1, 64) + "), Longitude(" + strconv.FormatFloat(message.Longitude, 'f', -1, 64) + ")" )
+				if silent != true {
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_LocationMessage[rand.Intn(len(answers_LocationMessage))])).Do()
+				}
+			case *linebot.StickerMessage :
+				log.Print("ReplyToken[" + replyToken + "] StickerMessage[" + message.ID + "] PackageID(" + message.PackageID + "), StickerID(" + message.StickerID + ")" )
+				if silent != true {
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_StickerMessage[rand.Intn(len(answers_StickerMessage))])).Do()
+				}
 			}
-
-		}
-
-		if event.Type == linebot.EventTypeJoin {
-			log.Printf("Userid %s - %s joined", profile.UserID, profile.DisplayName)
-			/*
-				if _, err = lineServer.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("Thanks for adding this humble robot, "+profile.DisplayName)).Do(); err != nil {
-					log.Println(err)
-				}*/
+		} else if event.Type == linebot.EventTypePostback {
+		} else if event.Type == linebot.EventTypeBeacon {
 		}
 	}
+	
 }
