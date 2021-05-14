@@ -284,19 +284,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						return err
 					}
-				} else if "datetime"== message.Text {
-					template := linebot.NewButtonsTemplate(
-						"", "", "Select date / time !",
-						linebot.NewDatetimePickerAction("date", "DATE", "date", "", "", ""),
-						linebot.NewDatetimePickerAction("time", "TIME", "time", "", "", ""),
-						linebot.NewDatetimePickerAction("datetime", "DATETIME", "datetime", "", "", ""),
-					)
-					if _, err := app.bot.ReplyMessage(
-						replyToken,
-						linebot.NewTemplateMessage("Datetime pickers alt text", template),
-					).Do(); err != nil {
-						return err
-					}	
 				} else if "imagemap" == message.Text {
 					if _, err := bot.ReplyMessage(
 						replyToken,
