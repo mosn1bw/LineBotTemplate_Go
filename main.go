@@ -258,21 +258,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
-				} else if "你滾開" == message.Text {
-					if rand.Intn(100) > 70 {
-						bot.ReplyMessage(replyToken, linebot.NewTextMessage("請神容易送神難, 我偏不要, 嘿嘿")).Do()
-					} else {
-						switch source.Type {
-						case linebot.EventSourceTypeUser:
-							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我想走, 但是我走不了...")).Do()
-						case linebot.EventSourceTypeGroup:
-							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
-							bot.LeaveGroup(source.GroupID).Do()
-						case linebot.EventSourceTypeRoom:
-							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
-							bot.LeaveRoom(source.RoomID).Do()
-						}
-					}
 				} else if "image carousel"== message.Text {
 					imageURL := app.appBaseURL + "/static/buttons/1040.jpg"
 					template := linebot.NewImageCarouselTemplate(
@@ -311,46 +296,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						linebot.NewTemplateMessage("Datetime pickers alt text", template),
 					).Do(); err != nil {
 						return err
-				} else if "flex"== message.Text {
-					// {
-					//   "type": "bubble",
-					//   "body": {
-					//     "type": "box",
-					//     "layout": "horizontal",
-					//     "contents": [
-					//       {
-					//         "type": "text",
-					//         "text": "Hello,"
-					//       },
-					//       {
-					//         "type": "text",
-					//         "text": "World!"
-					//       }
-					//     ]
-					//   }
-					// }
-					contents := &linebot.BubbleContainer{
-						Type: linebot.FlexContainerTypeBubble,
-						Body: &linebot.BoxComponent{
-							Type:   linebot.FlexComponentTypeBox,
-							Layout: linebot.FlexBoxLayoutTypeHorizontal,
-							Contents: []linebot.FlexComponent{
-								&linebot.TextComponent{
-									Type: linebot.FlexComponentTypeText,
-									Text: "Hello,",
-								},
-								&linebot.TextComponent{
-									Type: linebot.FlexComponentTypeText,
-									Text: "World!",
-								},
-							},
-						},
-					}
-					if _, err := app.bot.ReplyMessage(
-						replyToken,
-						linebot.NewFlexMessage("Flex message alt text", contents),
-					).Do(); err != nil {
-						return err
 				} else if "imagemap" == message.Text {
 					if _, err := bot.ReplyMessage(
 						replyToken,
@@ -366,7 +311,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
-				} else if "你滾開" == message.Text {
+				} else if "/bye" == message.Text {
 					if rand.Intn(100) > 70 {
 						bot.ReplyMessage(replyToken, linebot.NewTextMessage("請神容易送神難, 我偏不要, 嘿嘿")).Do()
 					} else {
