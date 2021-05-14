@@ -331,8 +331,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ReplyCurseMessage[rand.Intn(len(answers_ReplyCurseMessage))])).Do()
 				} else if silentMap[sourceId] != true {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_TextMessage[rand.Intn(len(answers_TextMessage))])).Do()
-				}
-				case "flex":
+				} else if "flex"== message.Text {
 					// {
 					//   "type": "bubble",
 					//   "body": {
@@ -372,8 +371,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						linebot.NewFlexMessage("Flex message alt text", contents),
 					).Do(); err != nil {
 						return err
-					}
-				case "flex carousel":
+				} else if "flex carousel"== message.Text {
 					// {
 					//   "type": "carousel",
 					//   "contents": [
@@ -442,6 +440,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						return err
 					}
+				}		
 			case *linebot.ImageMessage :
 				log.Print("ReplyToken[" + replyToken + "] ImageMessage[" + message.ID + "] OriginalContentURL(" + message.OriginalContentURL + "), PreviewImageURL(" + message.PreviewImageURL + ")" )
 				if silent != true {
