@@ -41,28 +41,25 @@ var baseURL = "https://line-talking-bot-go.herokuapp.com"
 var endpointBase = os.Getenv("ENDPOINT_BASE")
 var tellTimeInterval int = 15
 var answers_TextMessage = []string{
-		"人被殺，就會死。",
+		"",
 	}
 var answers_ImageMessage = []string{
-		"傳這甚麼廢圖？你有認真在分享嗎？",
+		"",
 	}
 var answers_StickerMessage = []string{
-		"腳踏實地打字好嗎？傳這甚麼貼圖？",
+		"",
 	}
 var answers_VideoMessage = []string{
-		"看甚麼影片，不知道我的流量快用光了嗎？",
+		"",
 	}
 var answers_AudioMessage = []string{
-		"說的比唱的好聽，唱得鬼哭神號，是要嚇唬誰？",
+		"",
 	}
 var answers_LocationMessage = []string{
-		"這是哪裡啊？火星嗎？",
+		"",
 	}
 var answers_ReplyCurseMessage = []string{
-		"真的無恥",
-		"有夠無恥",
-		"超級無恥",
-		"就是無恥",
+		"",
 	}
 
 var silentMap = make(map[string]bool) // [UserID/GroupID/RoomID]:bool
@@ -222,8 +219,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						imageURL, "My button sample", "Hello, my button",
 						linebot.NewURITemplateAction("Go to line.me",  "line://ti/p/~M_BW"),
 						linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", ""),
-						linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは"),
-						linebot.NewMessageTemplateAction("Say message", "Rice=米"),
 					)
 					if _, err := bot.ReplyMessage(
 						replyToken,
@@ -267,14 +262,12 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					imageURL := "https://lh3.googleusercontent.com/-CKPfi57SLOs/YGtXrTQ30ZI/AAAAAAAAMUU/SkJbo6DV4S0m7QmM3Dpsbl9BWpgA6uWJwCK8BGAsYHg/s500/2021-04-05.gif"
 					template := linebot.NewCarouselTemplate(
 						linebot.NewCarouselColumn(
-							imageURL, "hoge", "fuga",
+							imageURL, "мosᴇɴ", "ʙoт",
 							linebot.NewURITemplateAction("Go to line.me",  "line://ti/p/~M_BW"),
-							linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", ""),
 						),
 						linebot.NewCarouselColumn(
-							imageURL, "hoge", "fuga",
+							imageURL, "мosᴇɴ", "ʙoт",
 							linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは"),
-							linebot.NewMessageTemplateAction("Say message", "Rice=米"),
 						),
 					)
 					if _, err := bot.ReplyMessage(
