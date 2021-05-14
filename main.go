@@ -296,6 +296,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						linebot.NewTemplateMessage("Datetime pickers alt text", template),
 					).Do(); err != nil {
 						return err
+					}	
 				} else if "imagemap" == message.Text {
 					if _, err := bot.ReplyMessage(
 						replyToken,
@@ -331,6 +332,116 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				} else if silentMap[sourceId] != true {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_TextMessage[rand.Intn(len(answers_TextMessage))])).Do()
 				}
+				case "flex":
+					// {
+					//   "type": "bubble",
+					//   "body": {
+					//     "type": "box",
+					//     "layout": "horizontal",
+					//     "contents": [
+					//       {
+					//         "type": "text",
+					//         "text": "Hello,"
+					//       },
+					//       {
+					//         "type": "text",
+					//         "text": "World!"
+					//       }
+					//     ]
+					//   }
+					// }
+					contents := &linebot.BubbleContainer{
+						Type: linebot.FlexContainerTypeBubble,
+						Body: &linebot.BoxComponent{
+							Type:   linebot.FlexComponentTypeBox,
+							Layout: linebot.FlexBoxLayoutTypeHorizontal,
+							Contents: []linebot.FlexComponent{
+								&linebot.TextComponent{
+									Type: linebot.FlexComponentTypeText,
+									Text: "Hello,",
+								},
+								&linebot.TextComponent{
+									Type: linebot.FlexComponentTypeText,
+									Text: "World!",
+								},
+							},
+						},
+					}
+					if _, err := app.bot.ReplyMessage(
+						replyToken,
+						linebot.NewFlexMessage("Flex message alt text", contents),
+					).Do(); err != nil {
+						return err
+					}
+				case "flex carousel":
+					// {
+					//   "type": "carousel",
+					//   "contents": [
+					//     {
+					//       "type": "bubble",
+					//       "body": {
+					//         "type": "box",
+					//         "layout": "vertical",
+					//         "contents": [
+					//           {
+					//             "type": "text",
+					//             "text": "First bubble"
+					//           }
+					//         ]
+					//       }
+					//     },
+					//     {
+					//       "type": "bubble",
+					//       "body": {
+					//         "type": "box",
+					//         "layout": "vertical",
+					//         "contents": [
+					//           {
+					//             "type": "text",
+					//             "text": "Second bubble"
+					//           }
+					//         ]
+					//       }
+					//     }
+					//   ]
+					// }
+					contents := &linebot.CarouselContainer{
+						Type: linebot.FlexContainerTypeCarousel,
+						Contents: []*linebot.BubbleContainer{
+							{
+								Type: linebot.FlexContainerTypeBubble,
+								Body: &linebot.BoxComponent{
+									Type:   linebot.FlexComponentTypeBox,
+									Layout: linebot.FlexBoxLayoutTypeVertical,
+									Contents: []linebot.FlexComponent{
+										&linebot.TextComponent{
+											Type: linebot.FlexComponentTypeText,
+											Text: "First bubble",
+										},
+									},
+								},
+							},
+							{
+								Type: linebot.FlexContainerTypeBubble,
+								Body: &linebot.BoxComponent{
+									Type:   linebot.FlexComponentTypeBox,
+									Layout: linebot.FlexBoxLayoutTypeVertical,
+									Contents: []linebot.FlexComponent{
+										&linebot.TextComponent{
+											Type: linebot.FlexComponentTypeText,
+											Text: "Second bubble",
+										},
+									},
+								},
+							},
+						},
+					}
+					if _, err := app.bot.ReplyMessage(
+						replyToken,
+						linebot.NewFlexMessage("Flex message alt text", contents),
+					).Do(); err != nil {
+						return err
+					}
 			case *linebot.ImageMessage :
 				log.Print("ReplyToken[" + replyToken + "] ImageMessage[" + message.ID + "] OriginalContentURL(" + message.OriginalContentURL + "), PreviewImageURL(" + message.PreviewImageURL + ")" )
 				if silent != true {
