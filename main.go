@@ -688,26 +688,32 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
-				} else if "你滾開1" == message.Text {
-					if rand.Intn(100) > 70 {
-						bot.ReplyMessage(replyToken, linebot.NewTextMessage("請神容易送神難, 我偏不要, 嘿嘿")).Do()
-					} else {
-						switch source.Type {
-						case linebot.EventSourceTypeUser:
-							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我想走, 但是我走不了...")).Do()
-						case linebot.EventSourceTypeGroup:
-							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
-							bot.LeaveGroup(source.GroupID).Do()
-						case linebot.EventSourceTypeRoom:
-							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
-							bot.LeaveRoom(source.RoomID).Do()
-						}
-					}
-				} 
+			case *linebot.ImageMessage:
+				/*
+					response := "image message received"
+					if _, err = lineServer.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(response)).Do(); err != nil {
+						log.Println("Reply Error: ", err)
+					}*/
+
+				log.Println("IMAGE URL: ", message.OriginalContentURL, message.PreviewImageURL)
+				pub := fmt.Sprintf("Type: \"%s\"  Content: \"%s\"  Response: \"%s\"  FromID: \"%s\"  DisplayName: \"%s\"",
+					"image",
+					message.OriginalContentURL,
+					"none",
+					profile.UserID,
+					profile.DisplayName)
+				subManager.Publish("lnstream", pub)
+
 			}
-		} else if event.Type == linebot.EventTypePostback {
-		} else if event.Type == linebot.EventTypeBeacon {
+
+		}
+
+		if event.Type == linebot.EventTypeJoin {
+			log.Printf("Userid %s - %s joined", profile.UserID, profile.DisplayName)
+			/*
+				if _, err = lineServer.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("Thanks for adding this humble robot, "+profile.DisplayName)).Do(); err != nil {
+					log.Println(err)
+				}*/
 		}
 	}
-	
 }
