@@ -40,30 +40,30 @@ var channelToken = os.Getenv("CHANNEL_TOKEN")
 var baseURL = "https://line-talking-bot-go.herokuapp.com"
 var endpointBase = os.Getenv("ENDPOINT_BASE")
 var tellTimeInterval int = 15
-//var answers_TextMessage = []string{
-//		"人被殺，就會死。",
-//	}
-//var answers_ImageMessage = []string{
-//		"傳這甚麼廢圖？你有認真在分享嗎？",
-//	}
-//var answers_StickerMessage = []string{
-//		"腳踏實地打字好嗎？傳這甚麼貼圖？",
-//	}
-//var answers_VideoMessage = []string{
-//		"看甚麼影片，不知道我的流量快用光了嗎？",
-//	}
-//var answers_AudioMessage = []string{
-//		"說的比唱的好聽，唱得鬼哭神號，是要嚇唬誰？",
-//	}
-//var answers_LocationMessage = []string{
-//		"這是哪裡啊？火星嗎？",
-//	}
-//var answers_ReplyCurseMessage = []string{
-//		"真的無恥",
-//		"有夠無恥",
-//		"超級無恥",
-//		"就是無恥",
-//	}
+var answers_TextMessage = []string{
+		"人被殺，就會死。",
+	}
+var answers_ImageMessage = []string{
+		"傳這甚麼廢圖？你有認真在分享嗎？",
+	}
+var answers_StickerMessage = []string{
+		"腳踏實地打字好嗎？傳這甚麼貼圖？",
+	}
+var answers_VideoMessage = []string{
+		"看甚麼影片，不知道我的流量快用光了嗎？",
+	}
+var answers_AudioMessage = []string{
+		"說的比唱的好聽，唱得鬼哭神號，是要嚇唬誰？",
+	}
+var answers_LocationMessage = []string{
+		"這是哪裡啊？火星嗎？",
+	}
+var answers_ReplyCurseMessage = []string{
+		"真的無恥",
+		"有夠無恥",
+		"超級無恥",
+		"就是無恥",
+	}
 
 var silentMap = make(map[string]bool) // [UserID/GroupID/RoomID]:bool
 
@@ -169,11 +169,11 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				//	log.Print(err)
 				//}
 				
-				if source.UserID != "" && source.UserID != user_zchien {
+				if source.UserID != "" && source.UserID != user_mosen {
 					profile, err := bot.GetProfile(source.UserID).Do()
 					if err != nil {
 						log.Print(err)
-					} else if _, err := bot.PushMessage(user_zchien, linebot.NewTextMessage(profile.DisplayName + ": "+message.Text)).Do(); err != nil {
+					} else if _, err := bot.PushMessage(user_mosen, linebot.NewTextMessage(profile.DisplayName + ": "+message.Text)).Do(); err != nil {
 							log.Print(err)
 					}
 				}
