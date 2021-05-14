@@ -28,7 +28,7 @@ import (
 
 // Constants
 var timeFormat = "01/02 PM03:04:05"
-var user_mosen = "u2023c2d6c4de3dc7c266f3f07cfabdcc"
+var user_zchien = "U696bcb700dfc9254b27605374b86968b"
 var user_yaoming = "U3aaab6c6248bb38f194134948c60f757"
 var user_jackal = "U3effab06ddf5bcf0b46c1c60bcd39ef5"
 var user_shane = "U2ade7ac4456cb3ca99ffdf9d7257329a"
@@ -41,13 +41,66 @@ var baseURL = "https://line-talking-bot-go.herokuapp.com"
 var endpointBase = os.Getenv("ENDPOINT_BASE")
 var tellTimeInterval int = 15
 var answers_TextMessage = []string{
+		"人被殺，就會死。",
+		"凡是每天喝水的人，有高機率在100年內死去",
+		"今年中秋節剛好是滿月、今年七夕恰逢鬼月、今年母親節正好是星期日",
+		"只要每天省下買一杯奶茶的錢，十天後就能買十杯奶茶",
+		"台灣人在睡覺時，大多數的美國人都在工作",
+		"台灣競爭力低落，在美國就連小學生都會說流利的英語",
+		"在非洲，每六十秒，就有一分鐘過去",
+		"每呼吸60秒，就減少一分鐘的壽命",
+		"身高170cm的女生看起來和身高1米7的女生一樣高",
+		"英國研究證實，全世界的人口中，減去瘦子的人口數後，剩下來的都是胖子。",
+		"張開你的眼睛！否則，你將什麼都看不見。",
+		"嗯嗯，呵呵，我要去洗澡了",
+		"當一個便當吃不飽時.你可以吃兩個",
+		"當你吃下吃下廿碗白飯，換算竟相當於吃下了二十碗白飯的熱量",
+		"當你的左臉被人打，那你的左臉就會痛",
+		"當蝴蝶在南半球拍了兩下翅膀，牠就會稍微飛高一點點",
+		"誰能想的到，這名16歲少女，在四年前，只是一名12歲少女",
+		"據統計，未婚生子的人數中有高機率為女性",
+		"在非洲，每一分鐘，就有六十秒過去。",
+		"在你的面前閉氣的話，就會不能呼吸喔。",
+		"跟你在一起時，回憶一天前的事，就像回想昨天的事情。",
+		"你不在的這十二個月，對我來說如同一年般長。",
+		"不知道為什麼，把眼睛矇上後什麼都看不到。",
+		"出生時，大家都是裸體的喔。",
+		"英國研究 生日過越多的人就越老",
+		"歲數越長活的越久",
+		"當別人贏過你時，你就輸了！",
+		"研究指出日本人的母語是日語",
+		"你知道嗎 當你背對太陽 你就看不見金星",
+		"當你失眠的時候，你就會睡不著",
+		"今天是昨天的明天。",
+		"吃得苦中苦，那一口特別苦",
+	}
+var answers_ImageMessage = []string{
+		"傳這甚麼廢圖？你有認真在分享嗎？",
+	}
+var answers_StickerMessage = []string{
+		"腳踏實地打字好嗎？傳這甚麼貼圖？",
+	}
+var answers_VideoMessage = []string{
+		"看甚麼影片，不知道我的流量快用光了嗎？",
+	}
+var answers_AudioMessage = []string{
+		"說的比唱的好聽，唱得鬼哭神號，是要嚇唬誰？",
+	}
+var answers_LocationMessage = []string{
+		"這是哪裡啊？火星嗎？",
+	}
+var answers_ReplyCurseMessage = []string{
+		"真的無恥",
+		"有夠無恥",
+		"超級無恥",
+		"就是無恥",
 	}
 
 var silentMap = make(map[string]bool) // [UserID/GroupID/RoomID]:bool
 
 //var echoMap = make(map[string]bool)
 
-var loc, _ = time.LoadLocation("Asia/Tehran")
+var loc, _ = time.LoadLocation("Asia/Taipei")
 var bot *linebot.Client
 
 
@@ -57,11 +110,11 @@ func tellTime(replyToken string, doTell bool){
 	nowString := now.Format(timeFormat)
 	
 	if doTell {
-		log.Println("Time time (Tehran): " + nowString)
-		bot.ReplyMessage(replyToken, linebot.NewTextMessage("Time time (Tehran): " + nowString)).Do()
+		log.Println("現在時間(台北): " + nowString)
+		bot.ReplyMessage(replyToken, linebot.NewTextMessage("現在時間(台北): " + nowString)).Do()
 	} else if silent != true {
-		log.Println("Automatic report(Tehran): " + nowString)
-		bot.PushMessage(replyToken, linebot.NewTextMessage("Automatic report(Tehran): " + nowString)).Do()
+		log.Println("自動報時(台北): " + nowString)
+		bot.PushMessage(replyToken, linebot.NewTextMessage("自動報時(台北): " + nowString)).Do()
 	} else {
 		log.Println("tell time misfired")
 	}
@@ -159,16 +212,11 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				if strings.Contains(message.Text, "你閉嘴") {
 					silentMap[sourceId] = true
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
-				if strings.Contains(message.Text, "1") {
-					silentMap[sourceId] = true
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage("Bot can't use profile API without user ID")).Do()
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage("Bot can't use profile API without user ID")).Do()
-				} else if strings.Contains(message.Text, "time") {
+				} else if strings.Contains(message.Text, "現在幾點") {
 					tellTime(replyToken, true)
-				} else if "say" == message.Text {
+				} else if "說吧" == message.Text {
 					silentMap[sourceId] = false
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage("Microphone test，1、2、3... OK")).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage("麥克風測試，1、2、3... OK")).Do()
 				} else if "profile" == message.Text {
 					if source.UserID != "" {
 						profile, err := bot.GetProfile(source.UserID).Do()
@@ -183,11 +231,11 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						bot.ReplyMessage(replyToken, linebot.NewTextMessage("Bot can't use profile API without user ID")).Do()
 					}
 				} else if "buttons" == message.Text {
-					imageURL := baseURL + "/static/buttons/1040.jpg"
+					imageURL := "https://lh3.googleusercontent.com/-IVJ0bg14co4/YBq4zQOEN0I/AAAAAAAAL6Q/ojEHrB9Uju8Cj4nQ1FTHun-6XKHYZd_vACK8BGAsYHg/s340/2021-02-03.gif"
 					//log.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+imageURL)
 					template := linebot.NewButtonsTemplate(
 						imageURL, "My button sample", "Hello, my button",
-						linebot.NewURITemplateAction("Go to line.me", "https://line.me"),
+						linebot.NewURITemplateAction("Go to line.me",  "line://ti/p/~M_BW"),
 						linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", ""),
 						linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは"),
 						linebot.NewMessageTemplateAction("Say message", "Rice=米"),
@@ -211,11 +259,11 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						log.Print(err)
 					}
 				} else if "carousel" == message.Text {
-					imageURL := baseURL + "/static/buttons/1040.jpg"
+					imageURL := "https://lh3.googleusercontent.com/-CKPfi57SLOs/YGtXrTQ30ZI/AAAAAAAAMUU/SkJbo6DV4S0m7QmM3Dpsbl9BWpgA6uWJwCK8BGAsYHg/s500/2021-04-05.gif"
 					template := linebot.NewCarouselTemplate(
 						linebot.NewCarouselColumn(
 							imageURL, "hoge", "fuga",
-							linebot.NewURITemplateAction("Go to line.me", "https://line.me"),
+							linebot.NewURITemplateAction("Go to line.me",  "line://ti/p/~M_BW"),
 							linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", ""),
 						),
 						linebot.NewCarouselColumn(
@@ -245,9 +293,9 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
-				} else if "你滾開" == message.Text {
+				} else if "/bye" == message.Text {
 					if rand.Intn(100) > 70 {
-						bot.ReplyMessage(replyToken, linebot.NewTextMessage("請神容易送神難, 我偏不要, 嘿嘿")).Do()
+						bot.ReplyMessage(replyToken, linebot.NewTextMessage("BYE BYE")).Do()
 					} else {
 						switch source.Type {
 						case linebot.EventSourceTypeUser:
