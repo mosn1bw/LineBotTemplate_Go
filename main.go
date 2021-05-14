@@ -703,11 +703,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							bot.LeaveRoom(source.RoomID).Do()
 						}
 					}
-				} else if "無恥" == message.Text {
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ReplyCurseMessage[rand.Intn(len(answers_ReplyCurseMessage))])).Do()
-				} else if silentMap[sourceId] != true {
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_TextMessage[rand.Intn(len(answers_TextMessage))])).Do()
-				}
+				} 
 			}
 		} else if event.Type == linebot.EventTypePostback {
 		} else if event.Type == linebot.EventTypeBeacon {
