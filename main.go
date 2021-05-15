@@ -245,21 +245,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
-				} else if "mee2"== message.Text {
-					imageURL := "https://imgurl.ir/uploads/g643845_.gif"
-					template := linebot.NewCarouselTemplate(
-						linebot.NewCarouselColumn(
-							imageURL,
-							linebot.NewURITemplateAction("https://line.me/ti/p/~m_bw"),
-						),
-					)
-					if _, err := bot.ReplyMessage(
-						replyToken,
-						linebot.NewTemplateMessage("[┅═★ᖼᗱO꓅★═┅]", template),
-					).Do(); err != nil {
-						return err
-					}
-
 				} else if "ربات" == message.Text {
 					template := linebot.NewConfirmTemplate(
 						"از ربات راضی هستید?",
@@ -304,7 +289,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
-                    
 				} else if "carousel" == message.Text {
 					imageURL := "https://lh3.googleusercontent.com/-CKPfi57SLOs/YGtXrTQ30ZI/AAAAAAAAMUU/SkJbo6DV4S0m7QmM3Dpsbl9BWpgA6uWJwCK8BGAsYHg/s500/2021-04-05.gif"
 					template := linebot.NewCarouselTemplate(
@@ -337,7 +321,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						),
 					).Do(); err != nil {
 						log.Print(err)
-                    }    
+                                        }    
 				} else if "/bye" == message.Text {
 					if rand.Intn(100) > 70 {
 						bot.ReplyMessage(replyToken, linebot.NewTextMessage("BYE BYE, 我偏不要, 嘿嘿")).Do()
