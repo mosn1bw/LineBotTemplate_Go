@@ -275,19 +275,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
-				} else if "me2" == message.Text {
-					imageURL := "https://lh3.googleusercontent.com/-CKPfi57SLOs/YGtXrTQ30ZI/AAAAAAAAMUU/SkJbo6DV4S0m7QmM3Dpsbl9BWpgA6uWJwCK8BGAsYHg/s500/2021-04-05.gif"
-					template := linebot.NewCarouselTemplate(
-						linebot.NewCarouselColumn(
-							imageURL, "",
-						),
-					)
-					if _, err := bot.ReplyMessage(
-						replyToken,
-						linebot.NewTemplateMessage("Carousel alt text", template),
-					).Do(); err != nil {
-						log.Print(err)
-					}
 				} else if "carousel" == message.Text {
 					imageURL := "https://lh3.googleusercontent.com/-CKPfi57SLOs/YGtXrTQ30ZI/AAAAAAAAMUU/SkJbo6DV4S0m7QmM3Dpsbl9BWpgA6uWJwCK8BGAsYHg/s500/2021-04-05.gif"
 					template := linebot.NewCarouselTemplate(
