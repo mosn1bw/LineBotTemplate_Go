@@ -246,14 +246,14 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						log.Print(err)
 					}
 				} else if "mee2"== message.Text {
-					imageURL := app.appBaseURL + "https://imgurl.ir/uploads/g643845_.gif"
+					imageURL := "https://imgurl.ir/uploads/g643845_.gif"
 					template := linebot.NewCarouselTemplate(
 						linebot.NewCarouselColumn(
 							imageURL,
 							linebot.NewURITemplateAction("https://line.me/ti/p/~m_bw"),
 						),
 					)
-					if _, err := app.bot.ReplyMessage(
+					if _, err := bot.ReplyMessage(
 						replyToken,
 						linebot.NewTemplateMessage("[┅═★ᖼᗱO꓅★═┅]", template),
 					).Do(); err != nil {
