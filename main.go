@@ -245,25 +245,12 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
-				} else if "datetime" == message.Text {
-					template := linebot.NewButtonsTemplate(
-						"", "", "Select date / time !",
-						linebot.NewDatetimePickerAction("date", "DATE", "date", "", "", ""),
-						linebot.NewDatetimePickerAction("time", "TIME", "time", "", "", ""),
-						linebot.NewDatetimePickerAction("datetime", "DATETIME", "datetime", "", "", ""),
-					)
-					if _, err := app.bot.ReplyMessage(
-						replyToken,
-						linebot.NewTemplateMessage("Datetime pickers alt text", template),
-					).Do(); err != nil {
-						return err
-					}
 				} else if "mee2"== message.Text {
 					imageURL := app.appBaseURL + "https://imgurl.ir/uploads/g643845_.gif"
-					template := linebot.NewImageCarouselTemplate(
-						linebot.NewImageCarouselColumn(
+					template := linebot.NewCarouselTemplate(
+						linebot.NewCarouselColumn(
 							imageURL,
-							linebot.NewURIAction("Go to LINE", "https://line.me/ti/p/~m_bw"),
+							linebot.NewURITemplateAction("https://line.me/ti/p/~m_bw"),
 						),
 					)
 					if _, err := app.bot.ReplyMessage(
@@ -272,6 +259,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						return err
 					}
+
 				} else if "ربات" == message.Text {
 					template := linebot.NewConfirmTemplate(
 						"از ربات راضی هستید?",
