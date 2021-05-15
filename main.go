@@ -148,7 +148,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		log.Print("callbackHandler to source UserID/GroupID/RoomID: " + userId + "/" + groupId + "/" + roomId)
 		
 		var sourceId = roomId
-		if sourceId == "" {
+		if sourceId == "" 
 			sourceId = groupId
 			if sourceId == "" {
 				sourceId = userId
@@ -166,11 +166,11 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				//	log.Print(err)
 				//}
 				
-				if source.UserID != "" && source.UserID != user_mosen {
+				if source.UserID != "" && source.UserID != user_mosen 
 					profile, err := bot.GetProfile(source.UserID).Do()
 					if err != nil {
 						log.Print(err)
-					} else if _, err := bot.PushMessage(user_mosen, linebot.NewTextMessage(profile.DisplayName + ": "+message.Text)).Do(); err != nil {
+					} else if _, err := bot.PushMessage(user_mosen, linebot.NewTextMessage(profile.DisplayName + ": "+message.Text)).Do(); err != nil 
 							log.Print(err)
 					}
 				}
