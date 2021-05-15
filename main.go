@@ -349,8 +349,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						),
 					).Do(); err != nil {
 						log.Print(err)
-					}
-				case "bye":
+				} else if "/bye" == message.Text {
 					switch source.Type {
 					case linebot.EventSourceTypeUser:
 						return app.replyText(replyToken, "Bot can't leave from 1:1 chat")
@@ -377,8 +376,8 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						return err
 					}
-				return nil														
-
+                                {    
+				return nil
 				} else if "無恥" == message.Text {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ReplyCurseMessage[rand.Intn(len(answers_ReplyCurseMessage))])).Do()
 				} else if silentMap[sourceId] != true {
