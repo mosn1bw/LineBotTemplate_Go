@@ -76,11 +76,11 @@ func tellTime(replyToken string, doTell bool){
 	nowString := now.Format(timeFormat)
 	
 	if doTell {
-		log.Println("現在時間(Tehran): " + nowString)
-		bot.ReplyMessage(replyToken, linebot.NewTextMessage("現在時間(Tehran): " + nowString)).Do()
+		log.Println("ساعت بوقت(Tehran): " + nowString)
+		bot.ReplyMessage(replyToken, linebot.NewTextMessage("ساعت بوقت(Tehran): " + nowString)).Do()
 	} else if silent != true {
-		log.Println("自動報時(Tehran): " + nowString)
-		bot.PushMessage(replyToken, linebot.NewTextMessage("自動報時(Tehran): " + nowString)).Do()
+		log.Println("ساعت بوقت(Tehran): " + nowString)
+		bot.PushMessage(replyToken, linebot.NewTextMessage("ساعت بوقت(Tehran): " + nowString)).Do()
 	} else {
 		log.Println("tell time misfired")
 	}
@@ -175,14 +175,21 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 				}
 				
-				if strings.Contains(message.Text, "你閉嘴") {
+				if strings.Contains(message.Text, "1") {
 					silentMap[sourceId] = true
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
+				if strings.Contains(message.Text, "2") {
+					silentMap[sourceId] = true
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
 				} else if strings.Contains(message.Text, "time") {
 					tellTime(replyToken, true)
-				} else if "說吧" == message.Text {
+				} else if "1" == message.Text {
 					silentMap[sourceId] = false
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage("麥克風測試，1、2、3... OK")).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage("，1、2、3... OK")).Do()
 				} else if "profile" == message.Text {
 					if source.UserID != "" {
 						profile, err := bot.GetProfile(source.UserID).Do()
@@ -200,11 +207,9 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					imageURL := "https://lh3.googleusercontent.com/-IVJ0bg14co4/YBq4zQOEN0I/AAAAAAAAL6Q/ojEHrB9Uju8Cj4nQ1FTHun-6XKHYZd_vACK8BGAsYHg/s340/2021-02-03.gif"
 					//log.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+imageURL)
 					template := linebot.NewButtonsTemplate(
-						imageURL, "My button sample", "Hello, my button",
+						imageURL, "My button sample", "«ϻơsɛɳ»",
 						linebot.NewURITemplateAction("Go to line.me",  "line://ti/p/~M_BW"),
-						linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", ""),
-						linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは"),
-						linebot.NewMessageTemplateAction("Say message", "Rice=米"),
+						linebot.NewMessageTemplateAction("Say message", "«ϻơsɛɳ»"),
 					)
 					if _, err := bot.ReplyMessage(
 						replyToken,
@@ -226,9 +231,50 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
-				} else if "confirm" == message.Text {
+				} else if "vpn" == message.Text {
+					imageURL := "https://lh3.googleusercontent.com/-xHqQP4wTZDU/YBq5AgqjvCI/AAAAAAAAL6c/TmVGaX4tgIk07K5bZIPDtV9Ct49xEwaxwCK8BGAsYHg/s512/2021-02-03.gif"
+					//log.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+imageURL)
+					template := linebot.NewButtonsTemplate(
+						imageURL, "فیلتر شکن", "روی یکی از منوهای زیر کلیک کنید",
+						linebot.NewURITemplateAction("supervpnfree", "https://play.google.com/store/apps/details?id=com.jrzheng.supervpnfree&hl=fa"),
+						linebot.NewURITemplateAction("totally", "https://play.google.com/store/apps/details?id=net.rejinderi.totallyfreevpn&hl=fa"),
+					)
+					if _, err := bot.ReplyMessage(
+						replyToken,
+						linebot.NewTemplateMessage("Buttons alt text", template),
+					).Do(); err != nil {
+						log.Print(err)
+					}
+				} else if "datetime" == message.Text {
+					template := linebot.NewButtonsTemplate(
+						"", "", "Select date / time !",
+						linebot.NewDatetimePickerAction("date", "DATE", "date", "", "", ""),
+						linebot.NewDatetimePickerAction("time", "TIME", "time", "", "", ""),
+						linebot.NewDatetimePickerAction("datetime", "DATETIME", "datetime", "", "", ""),
+					)
+					if _, err := app.bot.ReplyMessage(
+						replyToken,
+						linebot.NewTemplateMessage("Datetime pickers alt text", template),
+					).Do(); err != nil {
+						return err
+					}
+				} else if "mee2"== message.Text {
+					imageURL := app.appBaseURL + "https://imgurl.ir/uploads/g643845_.gif"
+					template := linebot.NewImageCarouselTemplate(
+						linebot.NewImageCarouselColumn(
+							imageURL,
+							linebot.NewURIAction("Go to LINE", "https://line.me/ti/p/~m_bw"),
+						),
+					)
+					if _, err := app.bot.ReplyMessage(
+						replyToken,
+						linebot.NewTemplateMessage("[┅═★ᖼᗱO꓅★═┅]", template),
+					).Do(); err != nil {
+						return err
+					}
+				} else if "ربات" == message.Text {
 					template := linebot.NewConfirmTemplate(
-						"Do it?",
+						"از ربات راضی هستید?",
 						linebot.NewMessageTemplateAction("Yes", "Yes!"),
 						linebot.NewMessageTemplateAction("No", "No!"),
 					)
@@ -242,14 +288,12 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					imageURL := "https://lh3.googleusercontent.com/-CKPfi57SLOs/YGtXrTQ30ZI/AAAAAAAAMUU/SkJbo6DV4S0m7QmM3Dpsbl9BWpgA6uWJwCK8BGAsYHg/s500/2021-04-05.gif"
 					template := linebot.NewCarouselTemplate(
 						linebot.NewCarouselColumn(
-							imageURL, "hoge", "fuga",
-							linebot.NewURITemplateAction("Go to line.me",  "line://ti/p/~M_BW"),
-							linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", ""),
+							imageURL, "мosᴇɴ", "ʙoт",
+							linebot.NewURITemplateAction("Go to line.me", "line://ti/p/~M_BW"),
 						),
 						linebot.NewCarouselColumn(
-							imageURL, "hoge", "fuga",
-							linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは"),
-							linebot.NewMessageTemplateAction("Say message", "Rice=米"),
+							imageURL, "мosᴇɴ", "ʙoт",
+							linebot.NewMessageTemplateAction("мosᴇɴ", "✿мosᴇɴ👿ʙoт✿"),
 						),
 					)
 					if _, err := bot.ReplyMessage(
@@ -258,6 +302,21 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
+				} else if "me2" == message.Text {
+					imageURL := "https://lh3.googleusercontent.com/-CKPfi57SLOs/YGtXrTQ30ZI/AAAAAAAAMUU/SkJbo6DV4S0m7QmM3Dpsbl9BWpgA6uWJwCK8BGAsYHg/s500/2021-04-05.gif"
+					template := linebot.NewCarouselTemplate(
+						linebot.NewCarouselColumn(
+							imageURL, "",
+							linebot.NewMessageTemplateAction("★ᖼOᗱᗴℕ★", "ᖼOᗱᗴℕ"),
+						),
+					)
+					if _, err := bot.ReplyMessage(
+						replyToken,
+						linebot.NewTemplateMessage("Carousel alt text", template),
+					).Do(); err != nil {
+						log.Print(err)
+					}
+                    
 				} else if "carousel" == message.Text {
 					imageURL := "https://lh3.googleusercontent.com/-CKPfi57SLOs/YGtXrTQ30ZI/AAAAAAAAMUU/SkJbo6DV4S0m7QmM3Dpsbl9BWpgA6uWJwCK8BGAsYHg/s500/2021-04-05.gif"
 					template := linebot.NewCarouselTemplate(
@@ -267,7 +326,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						),
 						linebot.NewCarouselColumn(
 							imageURL, "мosᴇɴ", "ʙoт",
-							linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは"),
+							linebot.NewPostbackTemplateAction("мosᴇɴ", "hello ", "hello こんにちは"),
 						),
 					)
 					if _, err := bot.ReplyMessage(
@@ -280,7 +339,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					if _, err := bot.ReplyMessage(
 						replyToken,
 						linebot.NewImagemapMessage(
-							baseURL + "/static/rich",
+							baseURL + "https://8pic.ir/uploads/045ceedfbc8efc4bb05d612cebe22ae0.jpg",
 							"Imagemap alt text",
 							linebot.ImagemapBaseSize{1040, 1040},
 							linebot.NewURIImagemapAction("https://store.line.me/family/manga/en", linebot.ImagemapArea{0, 0, 520, 520}),
@@ -291,21 +350,35 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
-				} else if "/bye" == message.Text {
-					if rand.Intn(100) > 70 {
-						bot.ReplyMessage(replyToken, linebot.NewTextMessage("BYE BYE")).Do()
-					} else {
-						switch source.Type {
-						case linebot.EventSourceTypeUser:
-							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我想走, 但是我走不了...")).Do()
-						case linebot.EventSourceTypeGroup:
-							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
-							bot.LeaveGroup(source.GroupID).Do()
-						case linebot.EventSourceTypeRoom:
-							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
-							bot.LeaveRoom(source.RoomID).Do()
+				case "bye":
+					switch source.Type {
+					case linebot.EventSourceTypeUser:
+						return app.replyText(replyToken, "Bot can't leave from 1:1 chat")
+					case linebot.EventSourceTypeGroup:
+						if err := app.replyText(replyToken, "Leaving group"); err != nil {
+							return err
+						}
+						if _, err := app.bot.LeaveGroup(source.GroupID).Do(); err != nil {
+							return app.replyText(replyToken, err.Error())
+						}
+					case linebot.EventSourceTypeRoom:
+						if err := app.replyText(replyToken, "Leaving room"); err != nil {
+							return err
+						}
+						if _, err := app.bot.LeaveRoom(source.RoomID).Do(); err != nil {
+							return app.replyText(replyToken, err.Error())
 						}
 					}
+				default:
+					log.Printf("Echo message to %s: %s", replyToken, message.Text)
+					if _, err := app.bot.ReplyMessage(
+						replyToken,{
+						linebot.NewTextMessage(message.Text),
+					).Do(); err != nil {
+						return err
+					}
+				return nil														
+
 				} else if "無恥" == message.Text {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ReplyCurseMessage[rand.Intn(len(answers_ReplyCurseMessage))])).Do()
 				} else if silentMap[sourceId] != true {
