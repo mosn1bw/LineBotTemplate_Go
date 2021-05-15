@@ -180,14 +180,14 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
-				if strings.Contains(message.Text, "2") {
+				} else if strings.Contains(message.Text, "2") {
 					silentMap[sourceId] = true
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
 				} else if strings.Contains(message.Text, "time") {
 					tellTime(replyToken, true)
-				} else if "1" == message.Text {
+				} else if "3" == message.Text {
 					silentMap[sourceId] = false
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("，1、2、3... OK")).Do()
 				} else if "profile" == message.Text {
