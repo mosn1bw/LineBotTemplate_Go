@@ -350,34 +350,20 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 				} else if "/bye" == message.Text {
-					switch source.Type {
-					case linebot.EventSourceTypeUser:
-						return app.replyText(replyToken, "Bot can't leave from 1:1 chat")
-					case linebot.EventSourceTypeGroup:
-						if err := app.replyText(replyToken, "Leaving group"); err != nil {
-							return err
-						}
-						if _, err := app.bot.LeaveGroup(source.GroupID).Do(); err != nil {
-							return app.replyText(replyToken, err.Error())
-						}
-					case linebot.EventSourceTypeRoom:
-						if err := app.replyText(replyToken, "Leaving room"); err != nil {
-							return err
-						}
-						if _, err := app.bot.LeaveRoom(source.RoomID).Do(); err != nil {
-							return app.replyText(replyToken, err.Error())
+					if rand.Intn(100) > 70 {
+						bot.ReplyMessage(replyToken, linebot.NewTextMessage("BYE BYE, 我偏不要, 嘿嘿")).Do()
+					} else {
+						switch source.Type {
+						case linebot.EventSourceTypeUser:
+							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我想走, 但是我走不了...")).Do()
+						case linebot.EventSourceTypeGroup:
+							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
+							bot.LeaveGroup(source.GroupID).Do()
+						case linebot.EventSourceTypeRoom:
+							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
+							bot.LeaveRoom(source.RoomID).Do()
 						}
 					}
-				default:
-					log.Printf("Echo message to %s: %s", replyToken, message.Text)
-					if _, err := app.bot.ReplyMessage(
-						replyToken,{
-						linebot.NewTextMessage(message.Text),
-					).Do(); err != nil {
-						return err
-					}
-                                {    
-				return nil
 				} else if "無恥" == message.Text {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ReplyCurseMessage[rand.Intn(len(answers_ReplyCurseMessage))])).Do()
 				} else if silentMap[sourceId] != true {
