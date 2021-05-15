@@ -280,7 +280,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					template := linebot.NewCarouselTemplate(
 						linebot.NewCarouselColumn(
 							imageURL, "",
-							linebot.NewMessageTemplateAction("мosᴇɴ", "✿мosᴇɴ👿ʙoт✿"),
 						),
 					)
 					if _, err := bot.ReplyMessage(
