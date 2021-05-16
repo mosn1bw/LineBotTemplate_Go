@@ -308,63 +308,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
-				} else if "contact2" == message.Text {
-					messages = []linebot.SendingMessage{
-						linebot.NewTextMessage(
-						"常見問題",
-						linebot.NewCarouselTemplate(
-							&linebot.CarouselColumn{
-								ThumbnailImageURL: "https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/faq-donate.png",
-								Title:             "贊助",
-								Text:              "若您使用滿意，可以考慮鼓勵開發者",
-								Actions: []linebot.TemplateAction{
-									&linebot.URIAction{
-										Label: "需要贊助的理由",
-										URI:   "https://liff.line.me/1645278921-kWRPP32q/611mscwy/text/560773408578064?accountId=611mscwy",
-									},
-									&linebot.URIAction{
-										Label: "使用台新 Richart 轉帳",
-										URI:   "https://richart.tw/TSDIB_RichartWeb/RC04/RC040300?token=X6Y36lCy06A%3D",
-									},
-								},
-							},
-							&linebot.CarouselColumn{
-								ThumbnailImageURL: "https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/faq-misc.png",
-								Title:             "其它問題",
-								Text:              "關於維羅博士的運作方式與系統反饋",
-								Actions: []linebot.TemplateAction{
-									&linebot.PostbackAction{
-										Label:       "服務完全免費",
-										Data:        "faq=pricing",
-										DisplayText: "我想知道這項服務是免費還是付費的？",
-									},
-									&linebot.PostbackAction{
-										Label:       "提供建議或反饋",
-										Data:        "faq=contact",
-										DisplayText: "我應該如何提供對系統的建議或反饋？",
-									},
-								},
-							},
-							&linebot.CarouselColumn{
-								ThumbnailImageURL: "https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/faq-share.png",
-								Title:             "分享推廣",
-								Text:              "將維羅博士介紹給更多的訓練家",
-								Actions: []linebot.TemplateAction{,
-									&linebot.URIAction,
-										Label: "將博士介紹給朋友",
-										URI: fmt.Sprintf,
-											"https://line.me/R/nv/recommendOA/%s",
-											botBasicID,
-										),
-									},
-									&linebot.URIAction,
-										Label: "巴哈姆特討論串",
-										URI:   "https://forum.gamer.com.tw/C.php?bsn=29659&snA=40930",
-									},
-								},
-					        	),
-                                                 }
-                        
 				} else if "vpn" == message.Text {
 					imageURL := "https://lh3.googleusercontent.com/-xHqQP4wTZDU/YBq5AgqjvCI/AAAAAAAAL6c/TmVGaX4tgIk07K5bZIPDtV9Ct49xEwaxwCK8BGAsYHg/s512/2021-02-03.gif"
 					//log.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+imageURL)
