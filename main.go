@@ -340,7 +340,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 									Layout:  linebot.FlexBoxLayoutTypeVertical,
 									Spacing: linebot.FlexComponentSpacingTypeMd,
 									Contents: []linebot.FlexComponent{
-										&linebot.ButtonComponent{
+										&linebot.ButtonComponent,
 											Type:  linebot.FlexComponentTypeButton,
 											Style: linebot.FlexButtonStyleTypeLink,
 											Action: &linebot.URIAction{
@@ -364,8 +364,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							},
 						),
 					}
-				}
-				return messages
+				        return messages,
 				
 				} else if "contact2" == message.Text {
 					messages = []linebot.SendingMessage{
@@ -426,7 +425,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 								Title:             "分享推廣",
 								Text:              "將維羅博士介紹給更多的訓練家",
 								Actions: []linebot.TemplateAction{
-									&linebot.URIAction{
+									&linebot.URIAction,
 										Label: "將博士介紹給朋友",
 										URI: fmt.Sprintf(
 											"https://line.me/R/nv/recommendOA/%s",
@@ -441,7 +440,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							},
 						),
 					),
-				}
 
 				} else if "vpn" == message.Text {
 					imageURL := "https://lh3.googleusercontent.com/-xHqQP4wTZDU/YBq5AgqjvCI/AAAAAAAAL6c/TmVGaX4tgIk07K5bZIPDtV9Ct49xEwaxwCK8BGAsYHg/s512/2021-02-03.gif"
