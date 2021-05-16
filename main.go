@@ -357,12 +357,13 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 											Action: &linebot.URIAction{
 												Label: "寫信給博士",
 												URI:   "mailto:salmon.zh.tw@gmail.com?subject=訓練家給維羅博士的一封信&body=博士您好，",
-											},
-										},
-									},
-								},
-							},
-						),
+											}
+										}
+									}
+								}
+							}
+						)
+						
 				} else if "contact2" == message.Text {
 					messages = []linebot.SendingMessage{
 						linebot.NewTextMessage(
@@ -380,23 +381,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 									&linebot.URIAction{
 										Label: "使用台新 Richart 轉帳",
 										URI:   "https://richart.tw/TSDIB_RichartWeb/RC04/RC040300?token=X6Y36lCy06A%3D",
-									},
-								},
-							},
-							&linebot.CarouselColumn{
-								ThumbnailImageURL: "https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/faq-data.png",
-								Title:             "資料相關",
-								Text:              "關於團體戰、蛋池與活動等資訊",
-								Actions: []linebot.TemplateAction{
-									&linebot.PostbackAction{
-										Label:       "資料來源與更新週期",
-										Data:        "faq=datasource",
-										DisplayText: "我想知道資料來源與更新週期是？",
-									},
-									&linebot.PostbackAction{
-										Label:       "資料正確性",
-										Data:        "faq=dataAccuracy",
-										DisplayText: "我想知道資料的正確性有多高？",
 									},
 								},
 							},
@@ -421,10 +405,10 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 								ThumbnailImageURL: "https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/faq-share.png",
 								Title:             "分享推廣",
 								Text:              "將維羅博士介紹給更多的訓練家",
-								Actions: []linebot.TemplateAction{
-									&linebot.URIAction,)
+								Actions: []linebot.TemplateAction{,
+									&linebot.URIAction,
 										Label: "將博士介紹給朋友",
-										URI: fmt.Sprintf(
+										URI: fmt.Sprintf,
 											"https://line.me/R/nv/recommendOA/%s",
 											botBasicID,
 										),
@@ -434,8 +418,8 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 										URI:   "https://forum.gamer.com.tw/C.php?bsn=29659&snA=40930",
 									},
 								},
-					    	),
-                        }
+					        	),
+                                                 }
                         
 				} else if "vpn" == message.Text {
 					imageURL := "https://lh3.googleusercontent.com/-xHqQP4wTZDU/YBq5AgqjvCI/AAAAAAAAL6c/TmVGaX4tgIk07K5bZIPDtV9Ct49xEwaxwCK8BGAsYHg/s512/2021-02-03.gif"
