@@ -177,7 +177,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				}
 			
 				if strings.Contains(message.Text, "test") {
-					bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("success")).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage("success")).Do()
 				} else if "1" == message.Text {
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("2222222222")).Do(); err != nil {
 							log.Print(7285)
@@ -185,72 +185,72 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						}
 						return
 				} else if  "groupid"  == message.Text {
-					bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage(string(re.Source.GroupID))).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(string(Source.GroupID))).Do()
 				} else if  "byebye" == message.Text  {
-					bot.ReplyMessage(re.ReplyToken, linebot.NewStickerMessage("3", "187")).Do()
-					_, err := bot.LeaveGroup(re.Source.GroupID).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage("3", "187")).Do()
+					_, err := bot.LeaveGroup(Source.GroupID).Do()
 					if err != nil {
-						bot.LeaveRoom(re.Source.RoomID).Do()
+						bot.LeaveRoom(Source.RoomID).Do()
 					}
 				} else if "help" == message.Text  {
-					bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("help\n・[image:画像url]=從圖片網址發送圖片\n・[speed]=測回話速度\n・[groupid]=發送GroupID\n・[roomid]=發送RoomID\n・[byebye]=取消訂閱\n・[about]=作者\n・[me]=發送發件人信息\n・[test]=test bowwow是否正常\n・[now]=現在時間\n・[mid]=mid\n・[sticker]=隨機圖片\n\n[其他機能]\n位置測試\n捉貼圖ID\n加入時發送消息")).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage("help\n・[image:画像url]=從圖片網址發送圖片\n・[speed]=測回話速度\n・[groupid]=發送GroupID\n・[roomid]=發送RoomID\n・[byebye]=取消訂閱\n・[about]=作者\n・[me]=發送發件人信息\n・[test]=test bowwow是否正常\n・[now]=現在時間\n・[mid]=mid\n・[sticker]=隨機圖片\n\n[其他機能]\n位置測試\n捉貼圖ID\n加入時發送消息")).Do()
 				} else if "check" == message.Text  {
-					fmt.Println(msg)
+					fmt.Println(msg.Text)
 				} else if "now" == message.Text  {
 					n := time.Now()
 					NowT := timeutil.Strftime(&n, "%Y年%m月%d日%H時%M分%S秒")
-					bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage(NowT)).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(NowT)).Do()
 				} else if "mid" == message.Text  {
-					bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage(re.Source.UserID)).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(Source.UserID)).Do()
 				} else if "roomid" == message.Text  {
-					bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage(re.Source.RoomID)).Do()
+					bot.ReplyMessage(ReplyToken, linebot.NewTextMessage(Source.RoomID)).Do()
 				} else if "hidden" == message.Text  {
-					bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("hidden")).Do()
+					bot.ReplyMessage(ReplyToken, linebot.NewTextMessage("hidden")).Do()
 				} else if "bowwow" == message.Text  {
-					_, err := bot.ReplyMessage(re.ReplyToken, linebot.NewImageMessage(imageURL, imageURL)).Do()
+					_, err := bot.ReplyMessage(ReplyToken, linebot.NewImageMessage(imageURL, imageURL)).Do()
 					if err != nil {
 						log.Fatal(err)
 					}
 				} else if "sticker"  == message.Text {
 					stid := random(180, 259)
 					stidx := strconv.Itoa(stid)
-					_, err := bot.ReplyMessage(re.ReplyToken, linebot.NewStickerMessage("3", stidx)).Do()
+					_, err := bot.ReplyMessage(ReplyToken, linebot.NewStickerMessage("3", stidx)).Do()
 					if err != nil {
 						log.Fatal(err)
 					}
 				} else if "3"  == message.Text {
-					replytoken := re.ReplyToken
+					replytoken := ReplyToken
 					    bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"),linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("2222222222")).Do(); err != nil 
 				} else if "me" == message.Text  {
-					mid := re.Source.UserID
+					mid := Source.UserID
 					p, err := bot.GetProfile(mid).Do()
 					if err != nil {
-						bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("新增同意"))
+						bot.ReplyMessage(ReplyToken, linebot.NewTextMessage("新增同意"))
 					}
 
-					bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("mid:"+mid+"\nname:"+p.DisplayName+"\nstatusMessage:"+p.StatusMessage)).Do()
+					bot.ReplyMessage(ReplyToken, linebot.NewTextMessage("mid:"+mid+"\nname:"+p.DisplayName+"\nstatusMessage:"+p.StatusMessage)).Do()
 				} else if  "speed" == message.Text  {
-					replytoken := re.ReplyToken
+					replytoken := ReplyToken
 					start := time.Now()
 					bot.ReplyMessage(replytoken, linebot.NewTextMessage("..")).Do()
 					end := time.Now()
 					result := fmt.Sprintf("%f [sec]", (end.Sub(start)).Seconds())
-					_, err := bot.PushMessage(re.Source.GroupID, linebot.NewTextMessage(result)).Do()
+					_, err := bot.PushMessage(Source.GroupID, linebot.NewTextMessage(result)).Do()
 					if err != nil {
-						_, err := bot.PushMessage(re.Source.RoomID, linebot.NewTextMessage(result)).Do()
+						_, err := bot.PushMessage(Source.RoomID, linebot.NewTextMessage(result)).Do()
 						if err != nil {
-							_, err := bot.PushMessage(re.Source.UserID, linebot.NewTextMessage(result)).Do()
+							_, err := bot.PushMessage(Source.UserID, linebot.NewTextMessage(result)).Do()
 							if err != nil {
 								log.Fatal(err)
 							}
 						}
 				} else if res := strings.Contains(msg.Text, "hello"); res == true {
-					bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("hello!"), linebot.NewTextMessage("my name is bowwow")).Do()
+					bot.ReplyMessage(ReplyToken, linebot.NewTextMessage("hello!"), linebot.NewTextMessage("my name is bowwow")).Do()
 				} else if res := strings.Contains(msg.Text, "image:"); res == true {
 					image_url := strings.Replace(msg.Text, "image:", "", -1)
-					bot.ReplyMessage(re.ReplyToken, linebot.NewImageMessage(image_url, image_url)).Do()
+					bot.ReplyMessage(ReplyToken, linebot.NewImageMessage(image_url, image_url)).Do()
 				} else if  "about" == message.Text {
-					_, err := bot.ReplyMessage(re.ReplyToken, linebot.NewTemplateMessage("hi", template)).Do()
+					_, err := bot.ReplyMessage(ReplyToken, linebot.NewTemplateMessage("hi", template)).Do()
 					if err != nil {
 						log.Println(err)
 					}
