@@ -378,32 +378,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("汪！"), linebot.NewImageMessage(image[rand.Intn(len(image))] , image[rand.Intn(len(image))])).Do(); err != nil {
 					log.Print(err)
 					}
-				} else if "contact44" == message.Text {
-					messages = []linebot.SendingMessage{
-						linebot.NewTextMessage(
-						"你想要知道哪一種寶可夢蛋資訊？",
-					).WithQuickReplies(
-						linebot.NewQuickReplyItems(
-							linebot.NewQuickReplyButton(
-								"https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/eggs/12km.png",
-								&linebot.PostbackAction{
-									Label:       "12 公里",
-									Data:        "egg=12km",
-									DisplayText: "我想知道擊敗火箭隊幹部取得的獎勵 12 公里蛋\n(可儲存於獎勵儲存空間)",
-								},
-							),
-							linebot.NewQuickReplyButton(
-								"https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/eggs/5km.png",
-								&linebot.PostbackAction{
-									Label:       "時時刻刻冒險 5 公里",
-									Data:        "egg=時時刻刻冒險 5km",
-									DisplayText: "我想知道時時刻刻冒險取得的獎勵 5 公里蛋\n(可儲存於獎勵儲存空間)",
-							        	},
-								},
-							),
-						),
-					),
-						
 				} else if "carousel" == message.Text {
 					imageURL := "https://lh3.googleusercontent.com/-CKPfi57SLOs/YGtXrTQ30ZI/AAAAAAAAMUU/SkJbo6DV4S0m7QmM3Dpsbl9BWpgA6uWJwCK8BGAsYHg/s500/2021-04-05.gif"
 					template := linebot.NewCarouselTemplate(
