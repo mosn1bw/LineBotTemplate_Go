@@ -308,62 +308,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
-				} else if "contact" == message.Text {
-					messages = []linebot.SendingMessage{
-						linebot.NewFlexMessage(
-							"與博士聯繫",
-							&linebot.BubbleContainer{
-								Type: linebot.FlexContainerTypeBubble,
-								Size: linebot.FlexBubbleSizeTypeMega,
-								Hero: &linebot.ImageComponent{
-									Type:        linebot.FlexComponentTypeImage,
-									Size:        linebot.FlexImageSizeTypeFull,
-									URL:         "https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/author.png",
-									AspectRatio: "648:355",
-								},
-								Body: &linebot.BoxComponent{
-									Type:   linebot.FlexComponentTypeBox,
-									Layout: linebot.FlexBoxLayoutTypeVertical,
-									Contents: []linebot.FlexComponent{
-										&linebot.TextComponent{
-											Type:   linebot.FlexComponentTypeText,
-											Text:   "如果是想要匿名留給維羅博士，請直接發送首三字為「給博士」的文字訊息。\n\n如果有任何建議都歡迎來信至博士的 Email，標題請與「維羅博士」字眼相關。",
-											Color:  "#6C757D",
-											Align:  linebot.FlexComponentAlignTypeStart,
-											Wrap:   true,
-											Margin: linebot.FlexComponentMarginTypeSm,
-										},
-									},
-								},
-								Footer: &linebot.BoxComponent{
-									Type:    linebot.FlexComponentTypeBox,
-									Layout:  linebot.FlexBoxLayoutTypeVertical,
-									Spacing: linebot.FlexComponentSpacingTypeMd,
-									Contents: []linebot.FlexComponent{
-										&linebot.ButtonComponent,
-											Type:  linebot.FlexComponentTypeButton,
-											Style: linebot.FlexButtonStyleTypeLink,
-											Action: &linebot.URIAction{
-												Label: "傳送敲敲話給博士",
-												URI: fmt.Sprintf(
-													"https://line.me/R/oaMessage/%s/?給博士，",
-													botBasicID,
-												),
-											},
-										},
-										&linebot.ButtonComponent{
-											Type:  linebot.FlexComponentTypeButton,
-											Style: linebot.FlexButtonStyleTypeLink,
-											Action: &linebot.URIAction{
-												Label: "寫信給博士",
-												URI:   "mailto:salmon.zh.tw@gmail.com?subject=訓練家給維羅博士的一封信&body=博士您好，",
-											}
-										}
-									}
-								}
-							}
-						)
-						
 				} else if "contact2" == message.Text {
 					messages = []linebot.SendingMessage{
 						linebot.NewTextMessage(
