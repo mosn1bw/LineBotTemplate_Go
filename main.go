@@ -522,37 +522,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("汪！"), linebot.NewImageMessage(image[rand.Intn(len(image))] , image[rand.Intn(len(image))])).Do(); err != nil {
 					log.Print(err)
 					}
-				} else if selectedQuestion == "contact5" {
-					messages = []linebot.SendingMessage{
-						linebot.NewTextMessage(
-						"要選擇哪種類型的活動？\n(英文版資訊)",
-					).WithQuickReplies(
-						linebot.NewQuickReplyItems(
-							append(
-								[]*linebot.QuickReplyButton{
-									linebot.NewQuickReplyButton(
-										"",
-										&linebot.PostbackAction{
-											Label:       "全部",
-											Data:        fmt.Sprintf("event=%s,", eventLabel),
-											DisplayText: "全部",
-										},
-									),
-								},
-								//funk.Map(allEventTypes, func(eventType string) *linebot.QuickReplyButton {
-									return linebot.NewQuickReplyButton(
-										"",
-										&linebot.PostbackAction{
-											Label:       eventType,
-											Data:        fmt.Sprintf("event=%s,%s", eventLabel, eventType),
-											DisplayText: eventType,
-										},
-									)
-								}).([]*linebot.QuickReplyButton)...,
-							)...,
-						),
-					),
-				}
 				} else if selectedQuestion == "contact" {
 					messages = []linebot.SendingMessage{
 						linebot.NewTextMessage(
