@@ -174,99 +174,97 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							log.Print(err)
 					}
 				}
-				
-			if re.Type == linebot.EventTypeMessage {
-				switch msg := re.Message.(type) {
-				case *linebot.TextMessage:
-					if msg.Text == "test" {
-						bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("success")).Do()
-					} else if msg.Text == "1" {
-						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("2222222222")).Do(); err != nil {
-								log.Print(7285)
-								log.Print(err)
-							}
-							return
-					} else if msg.Text == "groupid" {
-						bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage(string(re.Source.GroupID))).Do()
-					} else if msg.Text == "byebye" {
-						bot.ReplyMessage(re.ReplyToken, linebot.NewStickerMessage("3", "187")).Do()
-						_, err := bot.LeaveGroup(re.Source.GroupID).Do()
-						if err != nil {
-							bot.LeaveRoom(re.Source.RoomID).Do()
+			
+        		case *linebot.TextMessage:
+				if msg.Text == "test" {
+					bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("success")).Do()
+				} else if msg.Text == "1" {
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("2222222222")).Do(); err != nil {
+							log.Print(7285)
+							log.Print(err)
 						}
-					} else if msg.Text == "help" {
-						bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("help\n・[image:画像url]=從圖片網址發送圖片\n・[speed]=測回話速度\n・[groupid]=發送GroupID\n・[roomid]=發送RoomID\n・[byebye]=取消訂閱\n・[about]=作者\n・[me]=發送發件人信息\n・[test]=test bowwow是否正常\n・[now]=現在時間\n・[mid]=mid\n・[sticker]=隨機圖片\n\n[其他機能]\n位置測試\n捉貼圖ID\n加入時發送消息")).Do()
-					} else if msg.Text == "check" {
-						fmt.Println(msg)
-					} else if msg.Text == "now" {
-						n := time.Now()
-						NowT := timeutil.Strftime(&n, "%Y年%m月%d日%H時%M分%S秒")
-						bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage(NowT)).Do()
-					} else if msg.Text == "mid" {
-						bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage(re.Source.UserID)).Do()
-					} else if msg.Text == "roomid" {
-						bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage(re.Source.RoomID)).Do()
-					} else if msg.Text == "hidden" {
-						bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("hidden")).Do()
-					} else if msg.Text == "bowwow" {
-						_, err := bot.ReplyMessage(re.ReplyToken, linebot.NewImageMessage(imageURL, imageURL)).Do()
-						if err != nil {
-							log.Fatal(err)
-						}
-					} else if msg.Text == "sticker" {
-						stid := random(180, 259)
-						stidx := strconv.Itoa(stid)
-						_, err := bot.ReplyMessage(re.ReplyToken, linebot.NewStickerMessage("3", stidx)).Do()
-						if err != nil {
-							log.Fatal(err)
-						}
-					} else if msg.Text == "3" {
-						replytoken := re.ReplyToken
-						    bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("2222222222")).Do(); err != nil {
-						}
-					} else if msg.Text == "me" {
-						mid := re.Source.UserID
-						p, err := bot.GetProfile(mid).Do()
-						if err != nil {
-							bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("新增同意"))
-						}
+						return
+				} else if msg.Text == "groupid" {
+					bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage(string(re.Source.GroupID))).Do()
+				} else if msg.Text == "byebye" {
+					bot.ReplyMessage(re.ReplyToken, linebot.NewStickerMessage("3", "187")).Do()
+					_, err := bot.LeaveGroup(re.Source.GroupID).Do()
+					if err != nil {
+						bot.LeaveRoom(re.Source.RoomID).Do()
+					}
+				} else if msg.Text == "help" {
+					bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("help\n・[image:画像url]=從圖片網址發送圖片\n・[speed]=測回話速度\n・[groupid]=發送GroupID\n・[roomid]=發送RoomID\n・[byebye]=取消訂閱\n・[about]=作者\n・[me]=發送發件人信息\n・[test]=test bowwow是否正常\n・[now]=現在時間\n・[mid]=mid\n・[sticker]=隨機圖片\n\n[其他機能]\n位置測試\n捉貼圖ID\n加入時發送消息")).Do()
+				} else if msg.Text == "check" {
+					fmt.Println(msg)
+				} else if msg.Text == "now" {
+					n := time.Now()
+					NowT := timeutil.Strftime(&n, "%Y年%m月%d日%H時%M分%S秒")
+					bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage(NowT)).Do()
+				} else if msg.Text == "mid" {
+					bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage(re.Source.UserID)).Do()
+				} else if msg.Text == "roomid" {
+					bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage(re.Source.RoomID)).Do()
+				} else if msg.Text == "hidden" {
+					bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("hidden")).Do()
+				} else if msg.Text == "bowwow" {
+					_, err := bot.ReplyMessage(re.ReplyToken, linebot.NewImageMessage(imageURL, imageURL)).Do()
+					if err != nil {
+						log.Fatal(err)
+					}
+				} else if msg.Text == "sticker" {
+					stid := random(180, 259)
+					stidx := strconv.Itoa(stid)
+					_, err := bot.ReplyMessage(re.ReplyToken, linebot.NewStickerMessage("3", stidx)).Do()
+					if err != nil {
+						log.Fatal(err)
+					}
+				} else if msg.Text == "3" {
+					replytoken := re.ReplyToken
+					    bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"),linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("2222222222")).Do(); err != nil {
+					}
+				} else if msg.Text == "me" {
+					mid := re.Source.UserID
+					p, err := bot.GetProfile(mid).Do()
+					if err != nil {
+						bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("新增同意"))
+					}
 
-						bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("mid:"+mid+"\nname:"+p.DisplayName+"\nstatusMessage:"+p.StatusMessage)).Do()
-					} else if msg.Text == "speed" {
-						replytoken := re.ReplyToken
-						start := time.Now()
-						bot.ReplyMessage(replytoken, linebot.NewTextMessage("..")).Do()
-						end := time.Now()
-						result := fmt.Sprintf("%f [sec]", (end.Sub(start)).Seconds())
-						_, err := bot.PushMessage(re.Source.GroupID, linebot.NewTextMessage(result)).Do()
+					bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("mid:"+mid+"\nname:"+p.DisplayName+"\nstatusMessage:"+p.StatusMessage)).Do()
+				} else if msg.Text == "speed" {
+					replytoken := re.ReplyToken
+					start := time.Now()
+					bot.ReplyMessage(replytoken, linebot.NewTextMessage("..")).Do()
+					end := time.Now()
+					result := fmt.Sprintf("%f [sec]", (end.Sub(start)).Seconds())
+					_, err := bot.PushMessage(re.Source.GroupID, linebot.NewTextMessage(result)).Do()
+					if err != nil {
+						_, err := bot.PushMessage(re.Source.RoomID, linebot.NewTextMessage(result)).Do()
 						if err != nil {
-							_, err := bot.PushMessage(re.Source.RoomID, linebot.NewTextMessage(result)).Do()
+							_, err := bot.PushMessage(re.Source.UserID, linebot.NewTextMessage(result)).Do()
 							if err != nil {
-								_, err := bot.PushMessage(re.Source.UserID, linebot.NewTextMessage(result)).Do()
-								if err != nil {
-									log.Fatal(err)
-								}
+								log.Fatal(err)
 							}
-						}
-					} else if res := strings.Contains(msg.Text, "hello"); res == true {
-						bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("hello!"), linebot.NewTextMessage("my name is bowwow")).Do()
-					} else if res := strings.Contains(msg.Text, "image:"); res == true {
-						image_url := strings.Replace(msg.Text, "image:", "", -1)
-						bot.ReplyMessage(re.ReplyToken, linebot.NewImageMessage(image_url, image_url)).Do()
-					} else if msg.Text == "about" {
-						_, err := bot.ReplyMessage(re.ReplyToken, linebot.NewTemplateMessage("hi", template)).Do()
-						if err != nil {
-							log.Println(err)
 						}
 					}
+				} else if res := strings.Contains(msg.Text, "hello"); res == true {
+					bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("hello!"), linebot.NewTextMessage("my name is bowwow")).Do()
+				} else if res := strings.Contains(msg.Text, "image:"); res == true {
+					image_url := strings.Replace(msg.Text, "image:", "", -1)
+					bot.ReplyMessage(re.ReplyToken, linebot.NewImageMessage(image_url, image_url)).Do()
+				} else if msg.Text == "about" {
+					_, err := bot.ReplyMessage(re.ReplyToken, linebot.NewTemplateMessage("hi", template)).Do()
+					if err != nil {
+						log.Println(err)
+					}
+				}
 				} else if strings.Contains(message.Text, "2") {
 					silentMap[sourceId] = true
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"),linebot.NewTextMessage("111111111111"),linebot.NewTextMessage("111111111111"),linebot.NewTextMessage("111111111111")).Do(); err != nil {
-				} else if strings.Contains(message.Text, "ساعت") {
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111")).Do(); err != nil {
+				} else if strings.Contains(message.Text, "time") {
 					tellTime(replyToken, true)
 				} else if "4" == message.Text {
 					silentMap[sourceId] = false
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage("，1、2、3... OK")).Do()
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111")).Do(); err != nil {
 				} else if "profile" == message.Text {
 					if source.UserID != "" {
 						profile, err := bot.GetProfile(source.UserID).Do()
