@@ -67,7 +67,7 @@ var silentMap = make(map[string]bool) // [UserID/GroupID/RoomID]:bool
 
 //var echoMap = make(map[string]bool)
 
-var loc, _ = time.LoadLocation("Asia/Tehran"){
+var loc, _ = time.LoadLocation("Asia/Tehran")
 var bot *linebot.Client
 
 
@@ -386,7 +386,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 				}
 				return messages
-                }
 				} else if selectedQuestion == "contact" {
 					messages = []linebot.SendingMessage{
 						linebot.NewTextMessage(
