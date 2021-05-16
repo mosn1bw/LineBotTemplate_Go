@@ -608,7 +608,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						),
 					).Do(); err != nil {
 						log.Print(err)
-                    }    
+                                        }    
 				} else if "/bye" == message.Text {
 					if rand.Intn(100) > 70 {
 						bot.ReplyMessage(replyToken, linebot.NewTextMessage("BYE BYE, 我偏不要, 嘿嘿")).Do()
