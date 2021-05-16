@@ -190,10 +190,10 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				} else if "mid" == message.Text  {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(source.UserID)).Do()
 				} else if "mee6" == message.Text  {
-					bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage("https://www.itsfun.com.tw/cacheimg/41/ac/f9e580eb9cbd38241182198bcb1b.jpg","https://www.itsfun.com.tw/cacheimg/41/ac/f9e580eb9cbd38241182198bcb1b.jpg")).Do()}
+					bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage("https://www.itsfun.com.tw/cacheimg/41/ac/f9e580eb9cbd38241182198bcb1b.jpg","https://www.itsfun.com.tw/cacheimg/41/ac/f9e580eb9cbd38241182198bcb1b.jpg")).Do()
 				} else if "mee5" == message.Text  {
-					bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage("https://www.itsfun.com.tw/cacheimg/41/ac/f9e580eb9cbd38241182198bcb1b.jpg","https://www.itsfun.com.tw/cacheimg/41/ac/f9e580eb9cbd38241182198bcb1b.jpg")).Do()}
-					bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage("https://www.itsfun.com.tw/cacheimg/1a/e7/e18b42a3703133301659f6ddd7a4.jpg","https://www.itsfun.com.tw/cacheimg/1a/e7/e18b42a3703133301659f6ddd7a4.jpg")).Do()}
+					bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage("https://www.itsfun.com.tw/cacheimg/41/ac/f9e580eb9cbd38241182198bcb1b.jpg","https://www.itsfun.com.tw/cacheimg/41/ac/f9e580eb9cbd38241182198bcb1b.jpg")).Do()
+					bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage("https://www.itsfun.com.tw/cacheimg/1a/e7/e18b42a3703133301659f6ddd7a4.jpg","https://www.itsfun.com.tw/cacheimg/1a/e7/e18b42a3703133301659f6ddd7a4.jpg")).Do()
 				} else if "roomid" == message.Text  {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(source.RoomID)).Do()
 				} else if "hidden" == message.Text  {
@@ -202,7 +202,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					_, err := bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage("https://www.itsfun.com.tw/cacheimg/66/0c/eda9d251c3bd769ac820552b2ff1.jpg","https://www.itsfun.com.tw/cacheimg/66/0c/eda9d251c3bd769ac820552b2ff1.jpg")).Do()}
 					if err != nil {
 						log.Fatal(err)
-					}
 				} else if "sticker"  == message.Text {
 					stid := random(180, 259)
 					stidx := strconv.Itoa(stid)
@@ -540,7 +539,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 										},
 									),
 								},
-								funk.Map(allEventTypes, func(eventType string) *linebot.QuickReplyButton {
+								//funk.Map(allEventTypes, func(eventType string) *linebot.QuickReplyButton {
 									return linebot.NewQuickReplyButton(
 										"",
 										&linebot.PostbackAction{
@@ -651,7 +650,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						),
 					).Do(); err != nil {
 						log.Print(err)
-                                        }    
+                    }    
 				} else if "/bye" == message.Text {
 					if rand.Intn(100) > 70 {
 						bot.ReplyMessage(replyToken, linebot.NewTextMessage("BYE BYE, 我偏不要, 嘿嘿")).Do()
