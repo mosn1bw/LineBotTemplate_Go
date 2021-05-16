@@ -202,15 +202,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					_, err := bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage("https://www.itsfun.com.tw/cacheimg/66/0c/eda9d251c3bd769ac820552b2ff1.jpg","https://www.itsfun.com.tw/cacheimg/66/0c/eda9d251c3bd769ac820552b2ff1.jpg")).Do()}
 					if err != nil {
 						log.Fatal(err)
-				} else if "sticker"  == message.Text {
-					stid := random(180, 259)
-					stidx := strconv.Itoa(stid)
-					_, err := bot.ReplyMessage(replyToken, linebot.NewStickerMessage("3", stidx)).Do()
-					if err != nil {
-						log.Fatal(err)
-					}
 				} else if "3"  == message.Text {
-					replytoken := ReplyToken
 					    bot.ReplyMessage(event.replyToken, linebot.NewTextMessage("111111111111"),linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("2222222222")).Do(); err != nil 
 				} else if "me" == message.Text  {
 					mid := source.UserID
@@ -246,7 +238,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						log.Println(err)
 					}
 				} else if "2" == message.Text {
-					silentMap[sourceId] = true
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111")).Do(); err != nil 
 				} else if  "time" == message.Text {
 					tellTime(replyToken, true)
@@ -522,6 +513,37 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("汪！"), linebot.NewImageMessage(image[rand.Intn(len(image))] , image[rand.Intn(len(image))])).Do(); err != nil {
 					log.Print(err)
 					}
+				} else if selectedQuestion == "contact5" {
+					messages = []linebot.SendingMessage{
+						linebot.NewTextMessage(
+						"要選擇哪種類型的活動？\n(英文版資訊)",
+					).WithQuickReplies(
+						linebot.NewQuickReplyItems(
+							append(
+								[]*linebot.QuickReplyButton{
+									linebot.NewQuickReplyButton(
+										"",
+										&linebot.PostbackAction{
+											Label:       "全部",
+											Data:        fmt.Sprintf("event=%s,", eventLabel),
+											DisplayText: "全部",
+										},
+									),
+								},
+								//funk.Map(allEventTypes, func(eventType string) *linebot.QuickReplyButton {
+									return linebot.NewQuickReplyButton(
+										"",
+										&linebot.PostbackAction{
+											Label:       eventType,
+											Data:        fmt.Sprintf("event=%s,%s", eventLabel, eventType),
+											DisplayText: eventType,
+										},
+									)
+								}).([]*linebot.QuickReplyButton)...,
+							)...,
+						),
+					),
+				}
 				} else if selectedQuestion == "contact" {
 					messages = []linebot.SendingMessage{
 						linebot.NewTextMessage(
@@ -673,3 +695,4 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	
 } 
 	
+
