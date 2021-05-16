@@ -1,3 +1,4 @@
+		
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -220,7 +221,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 				} else if msg.Text == "3" {
 					replytoken := re.ReplyToken
-					    bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"),linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("2222222222")).Do(); err != nil {
+					    bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"),linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("2222222222")).Do(); err != nil 
 				} else if msg.Text == "me" {
 					mid := re.Source.UserID
 					p, err := bot.GetProfile(mid).Do()
@@ -646,7 +647,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
-                }   
 				} else if "imagemap" == message.Text {
 					if _, err := bot.ReplyMessage(
 						replyToken,
@@ -714,4 +714,4 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	
 } 
-			
+	
