@@ -203,7 +203,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					if err != nil {
 						log.Fatal(err)
 				} else if "3"  == message.Text {
-					    bot.ReplyMessage(event.replyToken, linebot.NewTextMessage("111111111111"),linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("2222222222")).Do(); err != nil 
+					    bot.ReplyMessage(event.replyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("2222222222")).Do()
 				} else if "me" == message.Text  {
 					mid := source.UserID
 					p, err := bot.GetProfile(mid).Do()
@@ -212,8 +212,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("mid:"+mid+"\nname:"+p.DisplayName+"\nstatusMessage:"+p.StatusMessage)).Do()
-				} else if  "speed" == message.Text  {
-					replytoken := ReplyToken
+				} else if  "speed" == message.Text  
 					start := time.Now()
 					bot.ReplyMessage(replytoken, linebot.NewTextMessage("..")).Do()
 					end := time.Now()
@@ -238,12 +237,12 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						log.Println(err)
 					}
 				} else if "2" == message.Text {
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111")).Do(); err != nil 
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111")).Do()
 				} else if  "time" == message.Text {
 					tellTime(replyToken, true)
 				} else if  "4" == message.Text {
 					silentMap[sourceId] = false
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111")).Do(); err != nil 
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"),linebot.NewTextMessage("111111111111")).Do()
 				} else if "profile" == message.Text {
 					if source.UserID != "" {
 						profile, err := bot.GetProfile(source.UserID).Do()
@@ -664,4 +663,3 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	
 } 
 	
-
