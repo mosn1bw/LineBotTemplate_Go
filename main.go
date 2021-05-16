@@ -66,7 +66,7 @@ var silentMap = make(map[string]bool) // [UserID/GroupID/RoomID]:bool
 
 //var echoMap = make(map[string]bool)
 
-var loc, _ = time.LoadLocation("Asia/Tehran")
+var loc, _ = time.LoadLocation("Asia/Tehran"){
 var bot *linebot.Client
 
 
@@ -221,7 +221,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				} else if msg.Text == "3" {
 					replytoken := re.ReplyToken
 					    bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"),linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("2222222222")).Do(); err != nil {
-					}
 				} else if msg.Text == "me" {
 					mid := re.Source.UserID
 					p, err := bot.GetProfile(mid).Do()
@@ -245,7 +244,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 								log.Fatal(err)
 							}
 						}
-					}
 				} else if res := strings.Contains(msg.Text, "hello"); res == true {
 					bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("hello!"), linebot.NewTextMessage("my name is bowwow")).Do()
 				} else if res := strings.Contains(msg.Text, "image:"); res == true {
@@ -256,15 +254,14 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					if err != nil {
 						log.Println(err)
 					}
-				}
-				} else if strings.Contains(message.Text, "2") {
+				} else if msg.Text == "2" {
 					silentMap[sourceId] = true
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111")).Do(); err != nil {
-				} else if strings.Contains(message.Text, "time") {
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111")).Do(); err != nil 
+				} else if msg.Text == "time" {
 					tellTime(replyToken, true)
-				} else if "4" == message.Text {
+				} else if msg.Text == "4" {
 					silentMap[sourceId] = false
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111")).Do(); err != nil {
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111")).Do(); err != nil 
 				} else if "profile" == message.Text {
 					if source.UserID != "" {
 						profile, err := bot.GetProfile(source.UserID).Do()
@@ -535,14 +532,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("汪！"), linebot.NewImageMessage(image[rand.Intn(len(image))] , image[rand.Intn(len(image))])).Do(); err != nil {
 					log.Print(err)
 					}
-				} else if selectedQuestion == "mee3" {
-					messages = []linebot.SendingMessage{
-						linebot.NewTextMessage(
-					t1 := time.NewTimer(20 * time.Second)
-					<- t1.C
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("起床！！！"), linebot.NewImageMessage("https://i.imgur.com/URlBkOk.jpg" , "https://i.imgur.com/URlBkOk.jpg")).Do(); err != nil {
-					log.Print(err)
-					}
 				} else if selectedQuestion == "contact5" {
 					messages = []linebot.SendingMessage{
 						linebot.NewTextMessage(
@@ -671,8 +660,8 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							linebot.NewMessageImagemapAction("URANAI!", linebot.ImagemapArea{520, 520, 520, 520}),
 						),
 					).Do(); err != nil {
-						log.Print(err))
-                    }    
+						log.Print(err)
+                                        }    
 				} else if "/bye" == message.Text {
 					if rand.Intn(100) > 70 {
 						bot.ReplyMessage(replyToken, linebot.NewTextMessage("BYE BYE, 我偏不要, 嘿嘿")).Do()
