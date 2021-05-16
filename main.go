@@ -212,24 +212,24 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("mid:"+mid+"\nname:"+p.DisplayName+"\nstatusMessage:"+p.StatusMessage)).Do()
-				} else if  "speed" == message.Text  {
-					start := time.Now()
-					bot.ReplyMessage(replytoken, linebot.NewTextMessage("..")).Do()
-					end := time.Now()
-					result := fmt.Sprintf("%f [sec]", (end.Sub(start)).Seconds())
-					_, err := bot.PushMessage(source.GroupID, linebot.NewTextMessage(result)).Do()
-					if err != nil {
-						_, err := bot.PushMessage(source.RoomID, linebot.NewTextMessage(result)).Do()
-						if err != nil {
-							_, err := bot.PushMessage(source.UserID, linebot.NewTextMessage(result)).Do()
-							if err != nil {
-								log.Fatal(err)
-							}
-						}
-				} else if res := strings.Contains(msg.Text, "hello"); res == true {
+				//} else if  "speed" == message.Text  {
+				//	start := time.Now()
+				//	bot.ReplyMessage(replytoken, linebot.NewTextMessage("..")).Do()
+				//	end := time.Now()
+				//	result := fmt.Sprintf("%f [sec]", (end.Sub(start)).Seconds())
+				//	_, err := bot.PushMessage(source.GroupID, linebot.NewTextMessage(result)).Do()
+				//	if err != nil {
+				//		_, err := bot.PushMessage(source.RoomID, linebot.NewTextMessage(result)).Do()
+				//		if err != nil {
+				//			_, err := bot.PushMessage(source.UserID, linebot.NewTextMessage(result)).Do()
+				//			if err != nil {
+				//				log.Fatal(err)
+				//			}
+				//		}
+				} else if res := strings.Contains(message.Text, "hello"); res == true {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("hello!"), linebot.NewTextMessage("my name is bowwow")).Do()
-				} else if res := strings.Contains(msg.Text, "image:"); res == true {
-					image_url := strings.Replace(msg.Text, "image:", "", -1)
+				} else if res := strings.Contains(message.Text, "image:"); res == true {
+					image_url := strings.Replace(message.Text, "image:", "", -1)
 					bot.ReplyMessage(replyToken, linebot.NewImageMessage(image_url, image_url)).Do()
 				} else if  "about" == message.Text {
 					_, err := bot.ReplyMessage(replyToken, linebot.NewTemplateMessage("hi", template)).Do()
@@ -255,6 +255,30 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						}
 					} else {
 						bot.ReplyMessage(replyToken, linebot.NewTextMessage("Bot can't use profile API without user ID")).Do()
+					}
+				} else if selectedQuestion == "mee4" {
+					messages = []linebot.SendingMessage{
+						linebot.NewTextMessage(
+							"資料來源主以國外 Leek Duck 與 The Sliph Road 網站所彙整，維羅博士透過自動化程式進行收集。\n\n因此更新時間將以上述網站為主，而雙方資訊差異不會超過三十分鐘。",
+						),
+						linebot.NewTextMessage(
+							"維羅博士所使用之圖片、寶可夢資訊之版權屬於 Niantic, Inc. 與 Nintendo 擁有。（部分為二創將不在此列）",
+						),
+					}
+				} else if selectedQuestion == "dataAccuracy" {
+					messages = []linebot.SendingMessage{
+						linebot.NewTextMessage(
+							"資料取自富有規模的國外資料站，儘管可信度相當高，若與實際遊戲內容存在差異，維羅博士不另行告知。",
+						),
+						linebot.NewTextMessage(
+							"因地方時區因素，可能存在活動交替導致資訊落差，請各位訓練家注意。\n\n而時間倒數資訊將以台灣時區為主 (GMT+8)。",
+						),
+					}
+				} else if selectedQuestion == "pricing" {
+					messages = []linebot.SendingMessage{
+						linebot.NewTextMessage(
+							"維羅博士提供的功能皆為「免費」，且不會有任何廣告訊息。\n\n在使用過程中，傳輸圖片所產生的流量，請訓練家們自行注意哦！",
+						),
 					}
 				} else if "buttons" == message.Text {
 					imageURL := "https://lh3.googleusercontent.com/-IVJ0bg14co4/YBq4zQOEN0I/AAAAAAAAL6Q/ojEHrB9Uju8Cj4nQ1FTHun-6XKHYZd_vACK8BGAsYHg/s340/2021-02-03.gif"
@@ -284,31 +308,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
-				} else if selectedQuestion == "mee4" {
-					messages = []linebot.SendingMessage{
-						linebot.NewTextMessage(
-							"資料來源主以國外 Leek Duck 與 The Sliph Road 網站所彙整，維羅博士透過自動化程式進行收集。\n\n因此更新時間將以上述網站為主，而雙方資訊差異不會超過三十分鐘。",
-						),
-						linebot.NewTextMessage(
-							"維羅博士所使用之圖片、寶可夢資訊之版權屬於 Niantic, Inc. 與 Nintendo 擁有。（部分為二創將不在此列）",
-						),
-					}
-				} else if selectedQuestion == "dataAccuracy" {
-					messages = []linebot.SendingMessage{
-						linebot.NewTextMessage(
-							"資料取自富有規模的國外資料站，儘管可信度相當高，若與實際遊戲內容存在差異，維羅博士不另行告知。",
-						),
-						linebot.NewTextMessage(
-							"因地方時區因素，可能存在活動交替導致資訊落差，請各位訓練家注意。\n\n而時間倒數資訊將以台灣時區為主 (GMT+8)。",
-						),
-					}
-				} else if selectedQuestion == "pricing" {
-					messages = []linebot.SendingMessage{
-						linebot.NewTextMessage(
-							"維羅博士提供的功能皆為「免費」，且不會有任何廣告訊息。\n\n在使用過程中，傳輸圖片所產生的流量，請訓練家們自行注意哦！",
-						),
-					}
-				} else if selectedQuestion == "contact" {
+				} else if "contact" == message.Text {
 					messages = []linebot.SendingMessage{
 						linebot.NewFlexMessage(
 							"與博士聯繫",
@@ -366,7 +366,8 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 				}
 				return messages
-				} else if selectedQuestion == "contact" {
+				
+				} else if "contact2" == message.Text {
 					messages = []linebot.SendingMessage{
 						linebot.NewTextMessage(
 						"常見問題",
