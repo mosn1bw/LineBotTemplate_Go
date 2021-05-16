@@ -393,39 +393,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 								},
 							),
 							linebot.NewQuickReplyButton(
-								"https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/eggs/10km.png",
-								&linebot.PostbackAction{
-									Label:       "10 公里",
-									Data:        "egg=10km",
-									DisplayText: "我想知道補給站取得的 10 公里蛋",
-								},
-							),
-							linebot.NewQuickReplyButton(
-								"https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/eggs/7km.png",
-								&linebot.PostbackAction{
-									Label:       "7 公里",
-									Data:        "egg=7km",
-									DisplayText: "我想知道透過好友禮物取得的 7 公里蛋",
-								},
-							),
-							linebot.NewQuickReplyButton(
-								"https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/eggs/5km.png",
-								&linebot.PostbackAction{
-									Label:       "5 公里",
-									Data:        "egg=5km",
-									DisplayText: "我想知道補給站取得的 5 公里蛋",
-								},
-							),
-							linebot.NewQuickReplyButton(
 								"https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/eggs/2km.png",
-								&linebot.PostbackAction{
-									Label:       "2 公里",
-									Data:        "egg=2km",
-									DisplayText: "我想知道補給站取得的 2 公里蛋",
-								},
-							),
-							linebot.NewQuickReplyButton(
-								"https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/eggs/10km.png",
 								&linebot.PostbackAction{
 									Label:       "時時刻刻冒險 10 公里",
 									Data:        "egg=時時刻刻冒險 10km",
