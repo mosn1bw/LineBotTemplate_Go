@@ -1,4 +1,4 @@
-	// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -198,32 +198,32 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				} else if "mid" == message.Text  {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(source.UserID)).Do()
 				} else if "roomid" == message.Text  {
-					bot.ReplyMessage(ReplyToken, linebot.NewTextMessage(source.RoomID)).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(source.RoomID)).Do()
 				} else if "hidden" == message.Text  {
-					bot.ReplyMessage(ReplyToken, linebot.NewTextMessage("hidden")).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage("hidden")).Do()
 				} else if "bowwow" == message.Text  {
-					_, err := bot.ReplyMessage(ReplyToken, linebot.NewImageMessage(imageURL, imageURL)).Do()
+					_, err := bot.ReplyMessage(replyToken, linebot.NewImageMessage(imageURL, "https://lh3.googleusercontent.com/-IVJ0bg14co4/YBq4zQOEN0I/AAAAAAAAL6Q/ojEHrB9Uju8Cj4nQ1FTHun-6XKHYZd_vACK8BGAsYHg/s340/2021-02-03.gif")).Do()
 					if err != nil {
 						log.Fatal(err)
 					}
 				} else if "sticker"  == message.Text {
 					stid := random(180, 259)
 					stidx := strconv.Itoa(stid)
-					_, err := bot.ReplyMessage(ReplyToken, linebot.NewStickerMessage("3", stidx)).Do()
+					_, err := bot.ReplyMessage(replyToken, linebot.NewStickerMessage("3", stidx)).Do()
 					if err != nil {
 						log.Fatal(err)
 					}
 				} else if "3"  == message.Text {
 					replytoken := ReplyToken
-					    bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"),linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("2222222222")).Do(); err != nil 
+					    bot.ReplyMessage(event.replyToken, linebot.NewTextMessage("111111111111"),linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("2222222222")).Do(); err != nil 
 				} else if "me" == message.Text  {
 					mid := source.UserID
 					p, err := bot.GetProfile(mid).Do()
 					if err != nil {
-						bot.ReplyMessage(ReplyToken, linebot.NewTextMessage("新增同意"))
+						bot.ReplyMessage(replyToken, linebot.NewTextMessage("新增同意"))
 					}
 
-					bot.ReplyMessage(ReplyToken, linebot.NewTextMessage("mid:"+mid+"\nname:"+p.DisplayName+"\nstatusMessage:"+p.StatusMessage)).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage("mid:"+mid+"\nname:"+p.DisplayName+"\nstatusMessage:"+p.StatusMessage)).Do()
 				} else if  "speed" == message.Text  {
 					replytoken := ReplyToken
 					start := time.Now()
@@ -240,23 +240,23 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							}
 						}
 				} else if res := strings.Contains(msg.Text, "hello"); res == true {
-					bot.ReplyMessage(ReplyToken, linebot.NewTextMessage("hello!"), linebot.NewTextMessage("my name is bowwow")).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage("hello!"), linebot.NewTextMessage("my name is bowwow")).Do()
 				} else if res := strings.Contains(msg.Text, "image:"); res == true {
 					image_url := strings.Replace(msg.Text, "image:", "", -1)
-					bot.ReplyMessage(ReplyToken, linebot.NewImageMessage(image_url, image_url)).Do()
+					bot.ReplyMessage(replyToken, linebot.NewImageMessage(image_url, image_url)).Do()
 				} else if  "about" == message.Text {
-					_, err := bot.ReplyMessage(ReplyToken, linebot.NewTemplateMessage("hi", template)).Do()
+					_, err := bot.ReplyMessage(replyToken, linebot.NewTemplateMessage("hi", template)).Do()
 					if err != nil {
 						log.Println(err)
 					}
 				} else if "2" == message.Text {
 					silentMap[sourceId] = true
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111")).Do(); err != nil 
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111")).Do(); err != nil 
 				} else if  "time" == message.Text {
 					tellTime(replyToken, true)
 				} else if  "4" == message.Text {
 					silentMap[sourceId] = false
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111")).Do(); err != nil 
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111")).Do(); err != nil 
 				} else if "profile" == message.Text {
 					if source.UserID != "" {
 						profile, err := bot.GetProfile(source.UserID).Do()
@@ -707,5 +707,4 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	
 } 
-	
 	
