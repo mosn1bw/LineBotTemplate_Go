@@ -378,7 +378,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("汪！"), linebot.NewImageMessage(image[rand.Intn(len(image))] , image[rand.Intn(len(image))])).Do(); err != nil {
 					log.Print(err)
 					}
-				} else if selectedQuestion == "contact" {
+				} else if "contact44" == message.Text {
 					messages = []linebot.SendingMessage{
 						linebot.NewTextMessage(
 						"你想要知道哪一種寶可夢蛋資訊？",
