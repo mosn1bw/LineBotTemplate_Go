@@ -212,7 +212,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("mid:"+mid+"\nname:"+p.DisplayName+"\nstatusMessage:"+p.StatusMessage)).Do()
-				} else if  "speed" == message.Text  
+				} else if  "speed" == message.Text  {
 					start := time.Now()
 					bot.ReplyMessage(replytoken, linebot.NewTextMessage("..")).Do()
 					end := time.Now()
