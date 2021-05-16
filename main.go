@@ -76,11 +76,11 @@ func tellTime(replyToken string, doTell bool){
 	nowString := now.Format(timeFormat)
 	
 	if doTell {
-		log.Println("ساعت بوقت(Tehran): " + nowString)
-		bot.ReplyMessage(replyToken, linebot.NewTextMessage("ساعت بوقت(Tehran): " + nowString)).Do()
+		log.Println("ساعت بوقت تهران:  " + nowString)
+		bot.ReplyMessage(replyToken, linebot.NewTextMessage("ساعت بوقت تهران: " + nowString)).Do()
 	} else if silent != true {
-		log.Println("ساعت بوقت(Tehran): " + nowString)
-		bot.PushMessage(replyToken, linebot.NewTextMessage("ساعت بوقت(Tehran): " + nowString)).Do()
+		log.Println("ساعت بوقت تهران:  " + nowString)
+		bot.PushMessage(replyToken, linebot.NewTextMessage("ساعت بوقت تهران:  " + nowString)).Do()
 	} else {
 		log.Println("tell time misfired")
 	}
@@ -175,19 +175,96 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 				}
 				
-				if strings.Contains(message.Text, "1") {
-					silentMap[sourceId] = true
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
+			if re.Type == linebot.EventTypeMessage {
+				switch msg := re.Message.(type) {
+				case *linebot.TextMessage:
+					if msg.Text == "test" {
+						bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("success")).Do()
+					} else if msg.Text == "1" {
+						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("2222222222")).Do(); err != nil {
+								log.Print(7285)
+								log.Print(err)
+							}
+							return
+					} else if msg.Text == "groupid" {
+						bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage(string(re.Source.GroupID))).Do()
+					} else if msg.Text == "byebye" {
+						bot.ReplyMessage(re.ReplyToken, linebot.NewStickerMessage("3", "187")).Do()
+						_, err := bot.LeaveGroup(re.Source.GroupID).Do()
+						if err != nil {
+							bot.LeaveRoom(re.Source.RoomID).Do()
+						}
+					} else if msg.Text == "help" {
+						bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("help\n・[image:画像url]=從圖片網址發送圖片\n・[speed]=測回話速度\n・[groupid]=發送GroupID\n・[roomid]=發送RoomID\n・[byebye]=取消訂閱\n・[about]=作者\n・[me]=發送發件人信息\n・[test]=test bowwow是否正常\n・[now]=現在時間\n・[mid]=mid\n・[sticker]=隨機圖片\n\n[其他機能]\n位置測試\n捉貼圖ID\n加入時發送消息")).Do()
+					} else if msg.Text == "check" {
+						fmt.Println(msg)
+					} else if msg.Text == "now" {
+						n := time.Now()
+						NowT := timeutil.Strftime(&n, "%Y年%m月%d日%H時%M分%S秒")
+						bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage(NowT)).Do()
+					} else if msg.Text == "mid" {
+						bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage(re.Source.UserID)).Do()
+					} else if msg.Text == "roomid" {
+						bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage(re.Source.RoomID)).Do()
+					} else if msg.Text == "hidden" {
+						bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("hidden")).Do()
+					} else if msg.Text == "bowwow" {
+						_, err := bot.ReplyMessage(re.ReplyToken, linebot.NewImageMessage(imageURL, imageURL)).Do()
+						if err != nil {
+							log.Fatal(err)
+						}
+					} else if msg.Text == "sticker" {
+						stid := random(180, 259)
+						stidx := strconv.Itoa(stid)
+						_, err := bot.ReplyMessage(re.ReplyToken, linebot.NewStickerMessage("3", stidx)).Do()
+						if err != nil {
+							log.Fatal(err)
+						}
+					} else if msg.Text == "3" {
+						replytoken := re.ReplyToken
+						    bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("2222222222")).Do(); err != nil {
+						}
+					} else if msg.Text == "me" {
+						mid := re.Source.UserID
+						p, err := bot.GetProfile(mid).Do()
+						if err != nil {
+							bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("新增同意"))
+						}
+
+						bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("mid:"+mid+"\nname:"+p.DisplayName+"\nstatusMessage:"+p.StatusMessage)).Do()
+					} else if msg.Text == "speed" {
+						replytoken := re.ReplyToken
+						start := time.Now()
+						bot.ReplyMessage(replytoken, linebot.NewTextMessage("..")).Do()
+						end := time.Now()
+						result := fmt.Sprintf("%f [sec]", (end.Sub(start)).Seconds())
+						_, err := bot.PushMessage(re.Source.GroupID, linebot.NewTextMessage(result)).Do()
+						if err != nil {
+							_, err := bot.PushMessage(re.Source.RoomID, linebot.NewTextMessage(result)).Do()
+							if err != nil {
+								_, err := bot.PushMessage(re.Source.UserID, linebot.NewTextMessage(result)).Do()
+								if err != nil {
+									log.Fatal(err)
+								}
+							}
+						}
+					} else if res := strings.Contains(msg.Text, "hello"); res == true {
+						bot.ReplyMessage(re.ReplyToken, linebot.NewTextMessage("hello!"), linebot.NewTextMessage("my name is bowwow")).Do()
+					} else if res := strings.Contains(msg.Text, "image:"); res == true {
+						image_url := strings.Replace(msg.Text, "image:", "", -1)
+						bot.ReplyMessage(re.ReplyToken, linebot.NewImageMessage(image_url, image_url)).Do()
+					} else if msg.Text == "about" {
+						_, err := bot.ReplyMessage(re.ReplyToken, linebot.NewTemplateMessage("hi", template)).Do()
+						if err != nil {
+							log.Println(err)
+						}
+					}
 				} else if strings.Contains(message.Text, "2") {
 					silentMap[sourceId] = true
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage("QQ")).Do()
-				} else if strings.Contains(message.Text, "time") {
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"),linebot.NewTextMessage("111111111111"),linebot.NewTextMessage("111111111111"),linebot.NewTextMessage("111111111111")).Do(); err != nil {
+				} else if strings.Contains(message.Text, "ساعت") {
 					tellTime(replyToken, true)
-				} else if "3" == message.Text {
+				} else if "4" == message.Text {
 					silentMap[sourceId] = false
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("，1、2、3... OK")).Do()
 				} else if "profile" == message.Text {
@@ -231,6 +308,165 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
+				} else if selectedQuestion == "mee4" {
+					messages = []linebot.SendingMessage{
+						linebot.NewTextMessage(
+							"資料來源主以國外 Leek Duck 與 The Sliph Road 網站所彙整，維羅博士透過自動化程式進行收集。\n\n因此更新時間將以上述網站為主，而雙方資訊差異不會超過三十分鐘。",
+						),
+						linebot.NewTextMessage(
+							"維羅博士所使用之圖片、寶可夢資訊之版權屬於 Niantic, Inc. 與 Nintendo 擁有。（部分為二創將不在此列）",
+						),
+					}
+				} else if selectedQuestion == "dataAccuracy" {
+					messages = []linebot.SendingMessage{
+						linebot.NewTextMessage(
+							"資料取自富有規模的國外資料站，儘管可信度相當高，若與實際遊戲內容存在差異，維羅博士不另行告知。",
+						),
+						linebot.NewTextMessage(
+							"因地方時區因素，可能存在活動交替導致資訊落差，請各位訓練家注意。\n\n而時間倒數資訊將以台灣時區為主 (GMT+8)。",
+						),
+					}
+				} else if selectedQuestion == "pricing" {
+					messages = []linebot.SendingMessage{
+						linebot.NewTextMessage(
+							"維羅博士提供的功能皆為「免費」，且不會有任何廣告訊息。\n\n在使用過程中，傳輸圖片所產生的流量，請訓練家們自行注意哦！",
+						),
+					}
+				} else if selectedQuestion == "contact" {
+					messages = []linebot.SendingMessage{
+						linebot.NewFlexMessage(
+							"與博士聯繫",
+							&linebot.BubbleContainer{
+								Type: linebot.FlexContainerTypeBubble,
+								Size: linebot.FlexBubbleSizeTypeMega,
+								Hero: &linebot.ImageComponent{
+									Type:        linebot.FlexComponentTypeImage,
+									Size:        linebot.FlexImageSizeTypeFull,
+									URL:         "https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/author.png",
+									AspectRatio: "648:355",
+								},
+								Body: &linebot.BoxComponent{
+									Type:   linebot.FlexComponentTypeBox,
+									Layout: linebot.FlexBoxLayoutTypeVertical,
+									Contents: []linebot.FlexComponent{
+										&linebot.TextComponent{
+											Type:   linebot.FlexComponentTypeText,
+											Text:   "如果是想要匿名留給維羅博士，請直接發送首三字為「給博士」的文字訊息。\n\n如果有任何建議都歡迎來信至博士的 Email，標題請與「維羅博士」字眼相關。",
+											Color:  "#6C757D",
+											Align:  linebot.FlexComponentAlignTypeStart,
+											Wrap:   true,
+											Margin: linebot.FlexComponentMarginTypeSm,
+										},
+									},
+								},
+								Footer: &linebot.BoxComponent{
+									Type:    linebot.FlexComponentTypeBox,
+									Layout:  linebot.FlexBoxLayoutTypeVertical,
+									Spacing: linebot.FlexComponentSpacingTypeMd,
+									Contents: []linebot.FlexComponent{
+										&linebot.ButtonComponent{
+											Type:  linebot.FlexComponentTypeButton,
+											Style: linebot.FlexButtonStyleTypeLink,
+											Action: &linebot.URIAction{
+												Label: "傳送敲敲話給博士",
+												URI: fmt.Sprintf(
+													"https://line.me/R/oaMessage/%s/?給博士，",
+													botBasicID,
+												),
+											},
+										},
+										&linebot.ButtonComponent{
+											Type:  linebot.FlexComponentTypeButton,
+											Style: linebot.FlexButtonStyleTypeLink,
+											Action: &linebot.URIAction{
+												Label: "寫信給博士",
+												URI:   "mailto:salmon.zh.tw@gmail.com?subject=訓練家給維羅博士的一封信&body=博士您好，",
+											},
+										},
+									},
+								},
+							},
+						),
+					}
+				}
+				return messages
+                }
+				} else if selectedQuestion == "contact" {
+					messages = []linebot.SendingMessage{
+						linebot.NewTextMessage(
+						"常見問題",
+						linebot.NewCarouselTemplate(
+							&linebot.CarouselColumn{
+								ThumbnailImageURL: "https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/faq-donate.png",
+								Title:             "贊助",
+								Text:              "若您使用滿意，可以考慮鼓勵開發者",
+								Actions: []linebot.TemplateAction{
+									&linebot.URIAction{
+										Label: "需要贊助的理由",
+										URI:   "https://liff.line.me/1645278921-kWRPP32q/611mscwy/text/560773408578064?accountId=611mscwy",
+									},
+									&linebot.URIAction{
+										Label: "使用台新 Richart 轉帳",
+										URI:   "https://richart.tw/TSDIB_RichartWeb/RC04/RC040300?token=X6Y36lCy06A%3D",
+									},
+								},
+							},
+							&linebot.CarouselColumn{
+								ThumbnailImageURL: "https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/faq-data.png",
+								Title:             "資料相關",
+								Text:              "關於團體戰、蛋池與活動等資訊",
+								Actions: []linebot.TemplateAction{
+									&linebot.PostbackAction{
+										Label:       "資料來源與更新週期",
+										Data:        "faq=dataSource",
+										DisplayText: "我想知道資料來源與更新週期是？",
+									},
+									&linebot.PostbackAction{
+										Label:       "資料正確性",
+										Data:        "faq=dataAccuracy",
+										DisplayText: "我想知道資料的正確性有多高？",
+									},
+								},
+							},
+							&linebot.CarouselColumn{
+								ThumbnailImageURL: "https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/faq-misc.png",
+								Title:             "其它問題",
+								Text:              "關於維羅博士的運作方式與系統反饋",
+								Actions: []linebot.TemplateAction{
+									&linebot.PostbackAction{
+										Label:       "服務完全免費",
+										Data:        "faq=pricing",
+										DisplayText: "我想知道這項服務是免費還是付費的？",
+									},
+									&linebot.PostbackAction{
+										Label:       "提供建議或反饋",
+										Data:        "faq=contact",
+										DisplayText: "我應該如何提供對系統的建議或反饋？",
+									},
+								},
+							},
+							&linebot.CarouselColumn{
+								ThumbnailImageURL: "https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/faq-share.png",
+								Title:             "分享推廣",
+								Text:              "將維羅博士介紹給更多的訓練家",
+								Actions: []linebot.TemplateAction{
+									&linebot.URIAction{
+										Label: "將博士介紹給朋友",
+										URI: fmt.Sprintf(
+											"https://line.me/R/nv/recommendOA/%s",
+											botBasicID,
+										),
+									},
+									&linebot.URIAction{
+										Label: "巴哈姆特討論串",
+										URI:   "https://forum.gamer.com.tw/C.php?bsn=29659&snA=40930",
+									},
+								},
+							},
+						),
+					),
+				}
+
 				} else if "vpn" == message.Text {
 					imageURL := "https://lh3.googleusercontent.com/-xHqQP4wTZDU/YBq5AgqjvCI/AAAAAAAAL6c/TmVGaX4tgIk07K5bZIPDtV9Ct49xEwaxwCK8BGAsYHg/s512/2021-02-03.gif"
 					//log.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+imageURL)
@@ -274,7 +510,137 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						linebot.NewTemplateMessage("Carousel alt text", template),
 					).Do(); err != nil {
 						log.Print(err)
+				} else if "file" == message.Text {
+						message := event[0].Message.(*linebot.FileMessage)
+						_, err = files.AddFromLine(message.ID, event[0].Source.UserID,
+							c.Locals("db").(*models.Models))
+						return err
+				} else if "image" == message.Text {
+						message := event[0].Message.(*linebot.ImageMessage)
+						_, err = files.AddFromLine(message.ID, event[0].Source.UserID,
+							c.Locals("db").(*models.Models))
+						return err
 					}
+				} else if "mee2" == message.Text {
+					t1 := time.NewTimer(3 * time.Second)
+					rand.Seed(time.Now().Unix())
+					image := []string{
+						"https://i.imgur.com/z5yOT1e.jpg",
+						"https://i.imgur.com/Wxa4lzR.jpg",
+						"https://i.imgur.com/NPQy2Cn.jpg",
+						"https://i.imgur.com/VjV59Dk.jpg",
+						"https://i.imgur.com/fGvy47i.jpg",
+						"https://i.imgur.com/pPQI1LN.jpg",
+						"https://i.imgur.com/pEjnhSy.jpg",
+					}
+					<- t1.C
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("汪！"), linebot.NewImageMessage(image[rand.Intn(len(image))] , image[rand.Intn(len(image))])).Do(); err != nil {
+					log.Print(err)
+					}
+				} else if selectedQuestion == "mee3" {
+					messages = []linebot.SendingMessage{
+						linebot.NewTextMessage(
+					t1 := time.NewTimer(20 * time.Second)
+					<- t1.C
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("起床！！！"), linebot.NewImageMessage("https://i.imgur.com/URlBkOk.jpg" , "https://i.imgur.com/URlBkOk.jpg")).Do(); err != nil {
+					log.Print(err)
+					}
+				} else if selectedQuestion == "contact5" {
+					messages = []linebot.SendingMessage{
+						linebot.NewTextMessage(
+						"要選擇哪種類型的活動？\n(英文版資訊)",
+					).WithQuickReplies(
+						linebot.NewQuickReplyItems(
+							append(
+								[]*linebot.QuickReplyButton{
+									linebot.NewQuickReplyButton(
+										"",
+										&linebot.PostbackAction{
+											Label:       "全部",
+											Data:        fmt.Sprintf("event=%s,", eventLabel),
+											DisplayText: "全部",
+										},
+									),
+								},
+								funk.Map(allEventTypes, func(eventType string) *linebot.QuickReplyButton {
+									return linebot.NewQuickReplyButton(
+										"",
+										&linebot.PostbackAction{
+											Label:       eventType,
+											Data:        fmt.Sprintf("event=%s,%s", eventLabel, eventType),
+											DisplayText: eventType,
+										},
+									)
+								}).([]*linebot.QuickReplyButton)...,
+							)...,
+						),
+					),
+				}
+				} else if selectedQuestion == "contact" {
+					messages = []linebot.SendingMessage{
+						linebot.NewTextMessage(
+						"你想要知道哪一種寶可夢蛋資訊？",
+					).WithQuickReplies(
+						linebot.NewQuickReplyItems(
+							linebot.NewQuickReplyButton(
+								"https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/eggs/12km.png",
+								&linebot.PostbackAction{
+									Label:       "12 公里",
+									Data:        "egg=12km",
+									DisplayText: "我想知道擊敗火箭隊幹部取得的獎勵 12 公里蛋\n(可儲存於獎勵儲存空間)",
+								},
+							),
+							linebot.NewQuickReplyButton(
+								"https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/eggs/10km.png",
+								&linebot.PostbackAction{
+									Label:       "10 公里",
+									Data:        "egg=10km",
+									DisplayText: "我想知道補給站取得的 10 公里蛋",
+								},
+							),
+							linebot.NewQuickReplyButton(
+								"https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/eggs/7km.png",
+								&linebot.PostbackAction{
+									Label:       "7 公里",
+									Data:        "egg=7km",
+									DisplayText: "我想知道透過好友禮物取得的 7 公里蛋",
+								},
+							),
+							linebot.NewQuickReplyButton(
+								"https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/eggs/5km.png",
+								&linebot.PostbackAction{
+									Label:       "5 公里",
+									Data:        "egg=5km",
+									DisplayText: "我想知道補給站取得的 5 公里蛋",
+								},
+							),
+							linebot.NewQuickReplyButton(
+								"https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/eggs/2km.png",
+								&linebot.PostbackAction{
+									Label:       "2 公里",
+									Data:        "egg=2km",
+									DisplayText: "我想知道補給站取得的 2 公里蛋",
+								},
+							),
+							linebot.NewQuickReplyButton(
+								"https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/eggs/10km.png",
+								&linebot.PostbackAction{
+									Label:       "時時刻刻冒險 10 公里",
+									Data:        "egg=時時刻刻冒險 10km",
+									DisplayText: "我想知道時時刻刻冒險取得的獎勵 10 公里蛋\n(可儲存於獎勵儲存空間)",
+								},
+							),
+							linebot.NewQuickReplyButton(
+								"https://raw.githubusercontent.com/pmgo-professor-willow/line-chatbot/main/assets/eggs/5km.png",
+								&linebot.PostbackAction{
+									Label:       "時時刻刻冒險 5 公里",
+									Data:        "egg=時時刻刻冒險 5km",
+									DisplayText: "我想知道時時刻刻冒險取得的獎勵 5 公里蛋\n(可儲存於獎勵儲存空間)",
+								},
+							),
+						),
+					),
+				}
 				} else if "carousel" == message.Text {
 					imageURL := "https://lh3.googleusercontent.com/-CKPfi57SLOs/YGtXrTQ30ZI/AAAAAAAAMUU/SkJbo6DV4S0m7QmM3Dpsbl9BWpgA6uWJwCK8BGAsYHg/s500/2021-04-05.gif"
 					template := linebot.NewCarouselTemplate(
@@ -293,6 +659,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
+                }   
 				} else if "imagemap" == message.Text {
 					if _, err := bot.ReplyMessage(
 						replyToken,
@@ -306,8 +673,8 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							linebot.NewMessageImagemapAction("URANAI!", linebot.ImagemapArea{520, 520, 520, 520}),
 						),
 					).Do(); err != nil {
-						log.Print(err)
-                                        }    
+						log.Print(err))
+                    }    
 				} else if "/bye" == message.Text {
 					if rand.Intn(100) > 70 {
 						bot.ReplyMessage(replyToken, linebot.NewTextMessage("BYE BYE, 我偏不要, 嘿嘿")).Do()
@@ -360,3 +727,4 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	
 } 
+			
