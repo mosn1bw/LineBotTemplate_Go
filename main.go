@@ -363,9 +363,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 								},
 							},
 						),
-					}
-				        return messages,
-				
 				} else if "contact2" == message.Text {
 					messages = []linebot.SendingMessage{
 						linebot.NewTextMessage(
@@ -425,22 +422,21 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 								Title:             "分享推廣",
 								Text:              "將維羅博士介紹給更多的訓練家",
 								Actions: []linebot.TemplateAction{
-									&linebot.URIAction,
+									&linebot.URIAction,)
 										Label: "將博士介紹給朋友",
 										URI: fmt.Sprintf(
 											"https://line.me/R/nv/recommendOA/%s",
 											botBasicID,
 										),
 									},
-									&linebot.URIAction{
+									&linebot.URIAction,
 										Label: "巴哈姆特討論串",
 										URI:   "https://forum.gamer.com.tw/C.php?bsn=29659&snA=40930",
 									},
 								},
-							},
-						),
-					),
-
+					    	),
+                        }
+                        
 				} else if "vpn" == message.Text {
 					imageURL := "https://lh3.googleusercontent.com/-xHqQP4wTZDU/YBq5AgqjvCI/AAAAAAAAL6c/TmVGaX4tgIk07K5bZIPDtV9Ct49xEwaxwCK8BGAsYHg/s512/2021-02-03.gif"
 					//log.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+imageURL)
@@ -575,7 +571,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							),
 						),
 					),
-				}
+						
 				} else if "carousel" == message.Text {
 					imageURL := "https://lh3.googleusercontent.com/-CKPfi57SLOs/YGtXrTQ30ZI/AAAAAAAAMUU/SkJbo6DV4S0m7QmM3Dpsbl9BWpgA6uWJwCK8BGAsYHg/s500/2021-04-05.gif"
 					template := linebot.NewCarouselTemplate(
@@ -587,7 +583,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							imageURL, "мosᴇɴ", "ʙoт",
 							linebot.NewPostbackTemplateAction("мosᴇɴ", "hello ", "hello こんにちは"),
 						),
-					)
+					)}
 					if _, err := bot.ReplyMessage(
 						replyToken,
 						linebot.NewTemplateMessage("Carousel alt text", template),
