@@ -141,7 +141,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	for _, event := range events {
 		var replyToken = event.ReplyToken
 
-		var source = event.source //Eventsource		
+		var source = event.Source //EventSource		
 		var userId = source.UserID
 		var groupId = source.GroupID
 		var roomId = source.RoomID
@@ -183,26 +183,23 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							log.Print(err)
 						}
 						return
-				} else if  "groupid"  == message.Text {
+				} else if "groupid"  == message.Text {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(string(source.GroupID))).Do()
-				} else if  "byebye" == message.Text  {
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage("3", "187")).Do()
-					_, err := bot.LeaveGroup(source.GroupID).Do()
-					if err != nil {
-						bot.LeaveRoom(source.RoomID).Do()
-					}
 				} else if "help" == message.Text  {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("help\n・[image:画像url]=從圖片網址發送圖片\n・[speed]=測回話速度\n・[groupid]=發送GroupID\n・[roomid]=發送RoomID\n・[byebye]=取消訂閱\n・[about]=作者\n・[me]=發送發件人信息\n・[test]=test bowwow是否正常\n・[now]=現在時間\n・[mid]=mid\n・[sticker]=隨機圖片\n\n[其他機能]\n位置測試\n捉貼圖ID\n加入時發送消息")).Do()
-				} else if "check" == message.Text  {
-					fmt.Println(msg.Text)
 				} else if "mid" == message.Text  {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(source.UserID)).Do()
+				} else if "mee6" == message.Text  {
+					bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage("https://www.itsfun.com.tw/cacheimg/41/ac/f9e580eb9cbd38241182198bcb1b.jpg","https://www.itsfun.com.tw/cacheimg/41/ac/f9e580eb9cbd38241182198bcb1b.jpg")).Do()}
+				} else if "mee5" == message.Text  {
+					bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage("https://www.itsfun.com.tw/cacheimg/41/ac/f9e580eb9cbd38241182198bcb1b.jpg","https://www.itsfun.com.tw/cacheimg/41/ac/f9e580eb9cbd38241182198bcb1b.jpg")).Do()}
+					bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage("https://www.itsfun.com.tw/cacheimg/1a/e7/e18b42a3703133301659f6ddd7a4.jpg","https://www.itsfun.com.tw/cacheimg/1a/e7/e18b42a3703133301659f6ddd7a4.jpg")).Do()}
 				} else if "roomid" == message.Text  {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(source.RoomID)).Do()
 				} else if "hidden" == message.Text  {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("hidden")).Do()
 				} else if "bowwow" == message.Text  {
-					_, err := bot.ReplyMessage(replyToken, linebot.NewImageMessage(imageURL, "https://lh3.googleusercontent.com/-IVJ0bg14co4/YBq4zQOEN0I/AAAAAAAAL6Q/ojEHrB9Uju8Cj4nQ1FTHun-6XKHYZd_vACK8BGAsYHg/s340/2021-02-03.gif")).Do()
+					_, err := bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage("https://www.itsfun.com.tw/cacheimg/66/0c/eda9d251c3bd769ac820552b2ff1.jpg","https://www.itsfun.com.tw/cacheimg/66/0c/eda9d251c3bd769ac820552b2ff1.jpg")).Do()}
 					if err != nil {
 						log.Fatal(err)
 					}
