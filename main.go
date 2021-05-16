@@ -1,5 +1,4 @@
-		
-// Licensed under the Apache License, Version 2.0 (the "License");
+	// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -142,7 +141,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	for _, event := range events {
 		var replyToken = event.ReplyToken
 
-		var source = event.Source //EventSource		
+		var source = event.source //Eventsource		
 		var userId = source.UserID
 		var groupId = source.GroupID
 		var roomId = source.RoomID
@@ -185,25 +184,21 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						}
 						return
 				} else if  "groupid"  == message.Text {
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage(string(Source.GroupID))).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(string(source.GroupID))).Do()
 				} else if  "byebye" == message.Text  {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("3", "187")).Do()
-					_, err := bot.LeaveGroup(Source.GroupID).Do()
+					_, err := bot.LeaveGroup(source.GroupID).Do()
 					if err != nil {
-						bot.LeaveRoom(Source.RoomID).Do()
+						bot.LeaveRoom(source.RoomID).Do()
 					}
 				} else if "help" == message.Text  {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("help\n・[image:画像url]=從圖片網址發送圖片\n・[speed]=測回話速度\n・[groupid]=發送GroupID\n・[roomid]=發送RoomID\n・[byebye]=取消訂閱\n・[about]=作者\n・[me]=發送發件人信息\n・[test]=test bowwow是否正常\n・[now]=現在時間\n・[mid]=mid\n・[sticker]=隨機圖片\n\n[其他機能]\n位置測試\n捉貼圖ID\n加入時發送消息")).Do()
 				} else if "check" == message.Text  {
 					fmt.Println(msg.Text)
-				} else if "now" == message.Text  {
-					n := time.Now()
-					NowT := timeutil.Strftime(&n, "%Y年%m月%d日%H時%M分%S秒")
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage(NowT)).Do()
 				} else if "mid" == message.Text  {
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage(Source.UserID)).Do()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(source.UserID)).Do()
 				} else if "roomid" == message.Text  {
-					bot.ReplyMessage(ReplyToken, linebot.NewTextMessage(Source.RoomID)).Do()
+					bot.ReplyMessage(ReplyToken, linebot.NewTextMessage(source.RoomID)).Do()
 				} else if "hidden" == message.Text  {
 					bot.ReplyMessage(ReplyToken, linebot.NewTextMessage("hidden")).Do()
 				} else if "bowwow" == message.Text  {
@@ -222,7 +217,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					replytoken := ReplyToken
 					    bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("111111111111"),linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("2222222222")).Do(); err != nil 
 				} else if "me" == message.Text  {
-					mid := Source.UserID
+					mid := source.UserID
 					p, err := bot.GetProfile(mid).Do()
 					if err != nil {
 						bot.ReplyMessage(ReplyToken, linebot.NewTextMessage("新增同意"))
@@ -235,11 +230,11 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					bot.ReplyMessage(replytoken, linebot.NewTextMessage("..")).Do()
 					end := time.Now()
 					result := fmt.Sprintf("%f [sec]", (end.Sub(start)).Seconds())
-					_, err := bot.PushMessage(Source.GroupID, linebot.NewTextMessage(result)).Do()
+					_, err := bot.PushMessage(source.GroupID, linebot.NewTextMessage(result)).Do()
 					if err != nil {
-						_, err := bot.PushMessage(Source.RoomID, linebot.NewTextMessage(result)).Do()
+						_, err := bot.PushMessage(source.RoomID, linebot.NewTextMessage(result)).Do()
 						if err != nil {
-							_, err := bot.PushMessage(Source.UserID, linebot.NewTextMessage(result)).Do()
+							_, err := bot.PushMessage(source.UserID, linebot.NewTextMessage(result)).Do()
 							if err != nil {
 								log.Fatal(err)
 							}
@@ -412,7 +407,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 								Actions: []linebot.TemplateAction{
 									&linebot.PostbackAction{
 										Label:       "資料來源與更新週期",
-										Data:        "faq=dataSource",
+										Data:        "faq=datasource",
 										DisplayText: "我想知道資料來源與更新週期是？",
 									},
 									&linebot.PostbackAction{
@@ -506,12 +501,12 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						log.Print(err)
 				} else if "file" == message.Text {
 						message := event[0].Message.(*linebot.FileMessage)
-						_, err = files.AddFromLine(message.ID, event[0].Source.UserID,
+						_, err = files.AddFromLine(message.ID, event[0].source.UserID,
 							c.Locals("db").(*models.Models))
 						return err
 				} else if "image" == message.Text {
 						message := event[0].Message.(*linebot.ImageMessage)
-						_, err = files.AddFromLine(message.ID, event[0].Source.UserID,
+						_, err = files.AddFromLine(message.ID, event[0].source.UserID,
 							c.Locals("db").(*models.Models))
 						return err
 					}
@@ -665,12 +660,12 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						bot.ReplyMessage(replyToken, linebot.NewTextMessage("BYE BYE, 我偏不要, 嘿嘿")).Do()
 					} else {
 						switch source.Type {
-						case linebot.EventSourceTypeUser:
+						case linebot.EventsourceTypeUser:
 							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我想走, 但是我走不了...")).Do()
-						case linebot.EventSourceTypeGroup:
+						case linebot.EventsourceTypeGroup:
 							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
 							bot.LeaveGroup(source.GroupID).Do()
-						case linebot.EventSourceTypeRoom:
+						case linebot.EventsourceTypeRoom:
 							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
 							bot.LeaveRoom(source.RoomID).Do()
 						}
@@ -712,4 +707,5 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	
 } 
+	
 	
