@@ -242,17 +242,12 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					} else {
 						bot.ReplyMessage(replyToken, linebot.NewTextMessage("Bot can't use profile API without user ID")).Do()
 					}
-				} else if selectedQuestion == "mee4" {
+				} else if "mee4" == message.Text {
 					messages = []linebot.SendingMessage{
 						bot.ReplyMessage(replyToken, linebot.NewTextMessage("BYE BYE, 我偏不要, 嘿嘿").Do()
 						),
 						bot.ReplyMessage(replyToken, linebot.NewTextMessage("BYE BYE, 我偏不要, 嘿嘿").Do()
 						),
-				} else if selectedQuestion == "pricing" {
-					messages = []linebot.SendingMessage{
-						bot.ReplyMessage(replyToken, linebot.NewTextMessage("BYE BYE, 我偏不要, 嘿嘿").Do()
-						),
-					}
 				} else if "buttons" == message.Text {
 					imageURL := "https://lh3.googleusercontent.com/-IVJ0bg14co4/YBq4zQOEN0I/AAAAAAAAL6Q/ojEHrB9Uju8Cj4nQ1FTHun-6XKHYZd_vACK8BGAsYHg/s340/2021-02-03.gif"
 					//log.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+imageURL)
