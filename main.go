@@ -194,7 +194,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					if err != nil {
 						log.Fatal(err)
 				} else if "3"  == message.Text {
-					    bot.ReplyMessage(event.replyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("2222222222")).Do()
+					bot.ReplyMessage(event.replyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("2222222222")).Do()
 				} else if "me" == message.Text  {
 					mid := source.UserID
 					p, err := bot.GetProfile(mid).Do()
@@ -208,11 +208,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				} else if res := strings.Contains(message.Text, "image:"); res == true {
 					image_url := strings.Replace(message.Text, "image:", "", -1)
 					bot.ReplyMessage(replyToken, linebot.NewImageMessage(image_url, image_url)).Do()
-				} else if  "about" == message.Text {
-					_, err := bot.ReplyMessage(replyToken, linebot.NewTemplateMessage("hi", template)).Do()
-					if err != nil {
-						log.Println(err)
-					}
 				} else if "2" == message.Text {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111"), linebot.NewTextMessage("111111111111")).Do()
 				} else if  "time" == message.Text {
