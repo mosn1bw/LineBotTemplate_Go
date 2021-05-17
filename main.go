@@ -313,12 +313,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						linebot.NewTemplateMessage("Carousel alt text", template),
 					).Do(); err != nil {
 						log.Print(err)
-				} else if "file" == message.Text {
-						message := event[0].Message.(*linebot.FileMessage)
-						_, err = files.AddFromLine(message.ID, event[0].source.UserID,
-							c.Locals("db").(*models.Models))
-						return err
-					}
 				} else if "mee2" == message.Text {
 					t1 := time.NewTimer(3 * time.Second)
 					rand.Seed(time.Now().Unix())
