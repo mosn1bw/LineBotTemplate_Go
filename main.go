@@ -250,15 +250,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						linebot.NewTextMessage(
 							"維羅博士所使用之圖片、寶可夢資訊之版權屬於 Niantic, Inc. 與 Nintendo 擁有。（部分為二創將不在此列）",
 						),
-				} else if selectedQuestion == "dataAccuracy" {
-					messages = []linebot.SendingMessage{
-						linebot.NewTextMessage(
-							"資料取自富有規模的國外資料站，儘管可信度相當高，若與實際遊戲內容存在差異，維羅博士不另行告知。",
-						),
-						linebot.NewTextMessage(
-							"因地方時區因素，可能存在活動交替導致資訊落差，請各位訓練家注意。\n\n而時間倒數資訊將以台灣時區為主 (GMT+8)。",
-						),
-					}
 				} else if selectedQuestion == "pricing" {
 					messages = []linebot.SendingMessage{
 						linebot.NewTextMessage(
