@@ -212,20 +212,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("mid:"+mid+"\nname:"+p.DisplayName+"\nstatusMessage:"+p.StatusMessage)).Do()
-				//} else if  "speed" == message.Text  {
-				//	start := time.Now()
-				//	bot.ReplyMessage(replytoken, linebot.NewTextMessage("..")).Do()
-				//	end := time.Now()
-				//	result := fmt.Sprintf("%f [sec]", (end.Sub(start)).Seconds())
-				//	_, err := bot.PushMessage(source.GroupID, linebot.NewTextMessage(result)).Do()
-				//	if err != nil {
-				//		_, err := bot.PushMessage(source.RoomID, linebot.NewTextMessage(result)).Do()
-				//		if err != nil {
-				//			_, err := bot.PushMessage(source.UserID, linebot.NewTextMessage(result)).Do()
-				//			if err != nil {
-				//				log.Fatal(err)
-				//			}
-				//		}
 				} else if res := strings.Contains(message.Text, "hello"); res == true {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("hello!"), linebot.NewTextMessage("my name is bowwow")).Do()
 				} else if res := strings.Contains(message.Text, "image:"); res == true {
@@ -264,7 +250,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						linebot.NewTextMessage(
 							"維羅博士所使用之圖片、寶可夢資訊之版權屬於 Niantic, Inc. 與 Nintendo 擁有。（部分為二創將不在此列）",
 						),
-					}
 				} else if selectedQuestion == "dataAccuracy" {
 					messages = []linebot.SendingMessage{
 						linebot.NewTextMessage(
