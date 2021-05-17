@@ -28,7 +28,7 @@ import (
 
 // Constants
 var timeFormat = "01/02 PM03:04:05"
-var user_mosen = "u2023c2d6c4de3dc7c266f3f07cfabdcc"
+var user_zchien = "U696bcb700dfc9254b27605374b86968b"
 var user_yaoming = "U3aaab6c6248bb38f194134948c60f757"
 var user_jackal = "U3effab06ddf5bcf0b46c1c60bcd39ef5"
 var user_shane = "U2ade7ac4456cb3ca99ffdf9d7257329a"
@@ -99,7 +99,7 @@ func main() {
 	rand.Seed(time.Now().UnixNano())
 	/*
 	go func() {
-		tellTimeJob(user_mosen);
+		tellTimeJob(user_zchien);
 	}()
 	go func() {
 		for {
@@ -166,15 +166,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				//	log.Print(err)
 				//}
 				
-				if source.UserID != "" && source.UserID != user_mosen {
-					profile, err := bot.GetProfile(source.UserID).Do()
-					if err != nil {
-						log.Print(err)
-					} else if _, err := bot.PushMessage(user_mosen, linebot.NewTextMessage(profile.DisplayName + ": "+message.Text)).Do(); err != nil {
-							log.Print(err)
-					}
-				}
-			
 				if strings.Contains(message.Text, "test") {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("success")).Do()
 				} else if "1" == message.Text {
@@ -243,26 +234,14 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						bot.ReplyMessage(replyToken, linebot.NewTextMessage("Bot can't use profile API without user ID")).Do()
 					}
 				} else if "buttons" == message.Text {
-					imageURL := "https://lh3.googleusercontent.com/-IVJ0bg14co4/YBq4zQOEN0I/AAAAAAAAL6Q/ojEHrB9Uju8Cj4nQ1FTHun-6XKHYZd_vACK8BGAsYHg/s340/2021-02-03.gif"
-					//log.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+imageURL)
-					template := linebot.NewButtonsTemplate(
-						imageURL, "My button sample", "«ϻơsɛɳ»",
-						linebot.NewURITemplateAction("Go to line.me",  "line://ti/p/~M_BW"),
-						linebot.NewMessageTemplateAction("Say message", "«ϻơsɛɳ»"),
-					)
-					if _, err := bot.ReplyMessage(
-						replyToken,
-						linebot.NewTemplateMessage("Buttons alt text", template),
-					).Do(); err != nil {
-						log.Print(err)
-					}
-				} else if "buttons1" == message.Text {
-					imageURL := "https://lh3.googleusercontent.com/-IVJ0bg14co4/YBq4zQOEN0I/AAAAAAAAL6Q/ojEHrB9Uju8Cj4nQ1FTHun-6XKHYZd_vACK8BGAsYHg/s340/2021-02-03.gif"
+					imageURL := baseURL + "/static/buttons/1040.jpg"
 					//log.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+imageURL)
 					template := linebot.NewButtonsTemplate(
 						imageURL, "My button sample", "Hello, my button",
-						linebot.NewURITemplateAction("Go to line.me",  "line://ti/p/~M_BW"),
+						linebot.NewURITemplateAction("Go to line.me", "https://line.me"),
 						linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", ""),
+						linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは"),
+						linebot.NewMessageTemplateAction("Say message", "Rice=米"),
 					)
 					if _, err := bot.ReplyMessage(
 						replyToken,
@@ -270,23 +249,9 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
-				} else if "vpn" == message.Text {
-					imageURL := "https://lh3.googleusercontent.com/-xHqQP4wTZDU/YBq5AgqjvCI/AAAAAAAAL6c/TmVGaX4tgIk07K5bZIPDtV9Ct49xEwaxwCK8BGAsYHg/s512/2021-02-03.gif"
-					//log.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+imageURL)
-					template := linebot.NewButtonsTemplate(
-						imageURL, "فیلتر شکن", "روی یکی از منوهای زیر کلیک کنید",
-						linebot.NewURITemplateAction("supervpnfree", "https://play.google.com/store/apps/details?id=com.jrzheng.supervpnfree&hl=fa"),
-						linebot.NewURITemplateAction("totally", "https://play.google.com/store/apps/details?id=net.rejinderi.totallyfreevpn&hl=fa"),
-					)
-					if _, err := bot.ReplyMessage(
-						replyToken,
-						linebot.NewTemplateMessage("Buttons alt text", template),
-					).Do(); err != nil {
-						log.Print(err)
-					}
-				} else if "ربات" == message.Text {
+				} else if "confirm" == message.Text {
 					template := linebot.NewConfirmTemplate(
-						"از ربات راضی هستید?",
+						"Do it?",
 						linebot.NewMessageTemplateAction("Yes", "Yes!"),
 						linebot.NewMessageTemplateAction("No", "No!"),
 					)
@@ -296,49 +261,18 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
-				} else if "carousel1" == message.Text {
-					imageURL := "https://lh3.googleusercontent.com/-CKPfi57SLOs/YGtXrTQ30ZI/AAAAAAAAMUU/SkJbo6DV4S0m7QmM3Dpsbl9BWpgA6uWJwCK8BGAsYHg/s500/2021-04-05.gif"
-					template := linebot.NewCarouselTemplate(
-						linebot.NewCarouselColumn(
-							imageURL, "мosᴇɴ", "ʙoт",
-							linebot.NewURITemplateAction("Go to line.me", "line://ti/p/~M_BW"),
-						),
-						linebot.NewCarouselColumn(
-							imageURL, "мosᴇɴ", "ʙoт",
-							linebot.NewMessageTemplateAction("мosᴇɴ", "✿мosᴇɴ👿ʙoт✿"),
-						),
-					)
-					if _, err := bot.ReplyMessage(
-						replyToken,
-						linebot.NewTemplateMessage("Carousel alt text", template),
-					).Do(); err != nil {
-						log.Print(err)
-				} else if "mee2" == message.Text {
-					t1 := time.NewTimer(3 * time.Second)
-					rand.Seed(time.Now().Unix())
-					image := []string{
-						"https://i.imgur.com/z5yOT1e.jpg",
-						"https://i.imgur.com/Wxa4lzR.jpg",
-						"https://i.imgur.com/NPQy2Cn.jpg",
-						"https://i.imgur.com/VjV59Dk.jpg",
-						"https://i.imgur.com/fGvy47i.jpg",
-						"https://i.imgur.com/pPQI1LN.jpg",
-						"https://i.imgur.com/pEjnhSy.jpg",
-					}
-					<- t1.C
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("汪！"), linebot.NewImageMessage(image[rand.Intn(len(image))] , image[rand.Intn(len(image))])).Do(); err != nil {
-					log.Print(err)
-					}
 				} else if "carousel" == message.Text {
-					imageURL := "https://lh3.googleusercontent.com/-CKPfi57SLOs/YGtXrTQ30ZI/AAAAAAAAMUU/SkJbo6DV4S0m7QmM3Dpsbl9BWpgA6uWJwCK8BGAsYHg/s500/2021-04-05.gif"
+					imageURL := baseURL + "/static/buttons/1040.jpg"
 					template := linebot.NewCarouselTemplate(
 						linebot.NewCarouselColumn(
-							imageURL, "мosᴇɴ", "ʙoт",
-							linebot.NewURITemplateAction("Go to line.me",  "line://ti/p/~M_BW"),
+							imageURL, "hoge", "fuga",
+							linebot.NewURITemplateAction("Go to line.me", "https://line.me"),
+							linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", ""),
 						),
 						linebot.NewCarouselColumn(
-							imageURL, "мosᴇɴ", "ʙoт",
-							linebot.NewPostbackTemplateAction("мosᴇɴ", "hello ", "hello こんにちは"),
+							imageURL, "hoge", "fuga",
+							linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは"),
+							linebot.NewMessageTemplateAction("Say message", "Rice=米"),
 						),
 					)
 					if _, err := bot.ReplyMessage(
@@ -351,7 +285,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					if _, err := bot.ReplyMessage(
 						replyToken,
 						linebot.NewImagemapMessage(
-							baseURL + "https://8pic.ir/uploads/045ceedfbc8efc4bb05d612cebe22ae0.jpg",
+							baseURL + "/static/rich",
 							"Imagemap alt text",
 							linebot.ImagemapBaseSize{1040, 1040},
 							linebot.NewURIImagemapAction("https://store.line.me/family/manga/en", linebot.ImagemapArea{0, 0, 520, 520}),
@@ -361,7 +295,22 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						),
 					).Do(); err != nil {
 						log.Print(err)
-                                       }    
+					}
+				} else if "/bye" == message.Text {
+					if rand.Intn(100) > 70 {
+						bot.ReplyMessage(replyToken, linebot.NewTextMessage("請神容易送神難, 我偏不要, 嘿嘿")).Do()
+					} else {
+						switch source.Type {
+						case linebot.EventSourceTypeUser:
+							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我想走, 但是我走不了...")).Do()
+						case linebot.EventSourceTypeGroup:
+							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
+							bot.LeaveGroup(source.GroupID).Do()
+						case linebot.EventSourceTypeRoom:
+							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
+							bot.LeaveRoom(source.RoomID).Do()
+						}
+					}
 				} else if "無恥" == message.Text {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ReplyCurseMessage[rand.Intn(len(answers_ReplyCurseMessage))])).Do()
 				} else if silentMap[sourceId] != true {
@@ -398,5 +347,4 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	
-} 
-	
+}
