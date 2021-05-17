@@ -368,14 +368,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
                                        }    
-				} else if "/bye" == message.Text {
-					if rand.Intn(100) > 70 {
-						bot.ReplyMessage(replyToken, linebot.NewTextMessage("BYE BYE")).Do()
-					} else {
-						switch source.Type {
-							bot.LeaveRoom(source.RoomID).Do()
-						}
-					}
 				} else if "無恥" == message.Text {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ReplyCurseMessage[rand.Intn(len(answers_ReplyCurseMessage))])).Do()
 				} else if silentMap[sourceId] != true {
