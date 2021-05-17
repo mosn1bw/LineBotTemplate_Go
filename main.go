@@ -318,11 +318,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						_, err = files.AddFromLine(message.ID, event[0].source.UserID,
 							c.Locals("db").(*models.Models))
 						return err
-				} else if "image" == message.Text {
-						message := event[0].Message.(*linebot.ImageMessage)
-						_, err = files.AddFromLine(message.ID, event[0].source.UserID,
-							c.Locals("db").(*models.Models))
-						return err
 					}
 				} else if "mee2" == message.Text {
 					t1 := time.NewTimer(3 * time.Second)
