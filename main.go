@@ -244,16 +244,13 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 				} else if selectedQuestion == "mee4" {
 					messages = []linebot.SendingMessage{
-						linebot.NewTextMessage(
-							"資料來源主以國外 Leek Duck 與 The Sliph Road 網站所彙整，維羅博士透過自動化程式進行收集。\n\n因此更新時間將以上述網站為主，而雙方資訊差異不會超過三十分鐘。",
+						bot.ReplyMessage(replyToken, linebot.NewTextMessage("BYE BYE, 我偏不要, 嘿嘿").Do()
 						),
-						linebot.NewTextMessage(
-							"維羅博士所使用之圖片、寶可夢資訊之版權屬於 Niantic, Inc. 與 Nintendo 擁有。（部分為二創將不在此列）",
+						bot.ReplyMessage(replyToken, linebot.NewTextMessage("BYE BYE, 我偏不要, 嘿嘿").Do()
 						),
 				} else if selectedQuestion == "pricing" {
 					messages = []linebot.SendingMessage{
-						linebot.NewTextMessage(
-							"維羅博士提供的功能皆為「免費」，且不會有任何廣告訊息。\n\n在使用過程中，傳輸圖片所產生的流量，請訓練家們自行注意哦！",
+						bot.ReplyMessage(replyToken, linebot.NewTextMessage("BYE BYE, 我偏不要, 嘿嘿").Do()
 						),
 					}
 				} else if "buttons" == message.Text {
