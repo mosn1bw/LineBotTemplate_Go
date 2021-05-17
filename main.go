@@ -190,7 +190,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				} else if "hidden" == message.Text  {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("hidden")).Do()
 				} else if "bowwow" == message.Text  {
-					_, err := bot.ReplyMessage(replyToken, linebot.NewImageMessage("https://www.itsfun.com.tw/cacheimg/66/0c/eda9d251c3bd769ac820552b2ff1.jpg","https://www.itsfun.com.tw/cacheimg/66/0c/eda9d251c3bd769ac820552b2ff1.jpg")).Do()}
+					bot.ReplyMessage(replyToken, linebot.NewImageMessage("https://www.itsfun.com.tw/cacheimg/66/0c/eda9d251c3bd769ac820552b2ff1.jpg","https://www.itsfun.com.tw/cacheimg/66/0c/eda9d251c3bd769ac820552b2ff1.jpg")).Do()}
 					if err != nil {
 						log.Fatal(err)
 				} else if "3"  == message.Text {
