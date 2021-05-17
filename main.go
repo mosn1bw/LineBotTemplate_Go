@@ -351,7 +351,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							imageURL, "мosᴇɴ", "ʙoт",
 							linebot.NewPostbackTemplateAction("мosᴇɴ", "hello ", "hello こんにちは"),
 						),
-					)}
+					)
 					if _, err := bot.ReplyMessage(
 						replyToken,
 						linebot.NewTemplateMessage("Carousel alt text", template),
@@ -372,7 +372,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						),
 					).Do(); err != nil {
 						log.Print(err)
-                                        }    
+                    }    
 				} else if "/bye" == message.Text {
 					if rand.Intn(100) > 70 {
 						bot.ReplyMessage(replyToken, linebot.NewTextMessage("BYE BYE, 我偏不要, 嘿嘿")).Do()
