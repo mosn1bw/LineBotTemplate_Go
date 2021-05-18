@@ -105,7 +105,6 @@ func main() {
 		for {
 			now := time.Now().In(loc)
 			log.Println("keep alive at : " + now.Format(timeFormat))
-			//http.Get("https://line-talking-bot-go.herokuapp.com")
 			time.Sleep(time.Duration(rand.Int31n(29)) * time.Minute)
 		}
 	}()
@@ -162,9 +161,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			case *linebot.TextMessage:
 
 				log.Print("ReplyToken[" + replyToken + "] TextMessage: ID(" + message.ID + "), Text(" + message.Text  + "), current silent status=" + strconv.FormatBool(silent) )
-				//if _, err = bot.ReplyMessage(replyToken, linebot.NewTextMessage(message.ID+":"+message.Text+" OK!")).Do(); err != nil {
-				//	log.Print(err)
-				//}
 				
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
@@ -202,6 +198,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					bot.ReplyMessage(replyToken, linebot.NewImageMessage("https://www.itsfun.com.tw/cacheimg/66/0c/eda9d251c3bd769ac820552b2ff1.jpg","https://www.itsfun.com.tw/cacheimg/66/0c/eda9d251c3bd769ac820552b2ff1.jpg")).Do()}
 					if err != nil {
 						log.Fatal(err)
+					}
 				} else if message.Text == "sticker" {
 					stid := random(180, 259)
 					stidx := strconv.Itoa(stid)
@@ -335,18 +332,19 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							log.Println(err)
 						}
 					}
-				case *linebot.StickerMessage:
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage("StickerId:"+message.StickerID+"\nPackageId:"+message.PackageID)).Do()
-				case *linebot.LocationMessage:
-					bot.ReplyMessage(replyToken, linebot.NewLocationMessage(
-						message.Title,
-						message.Address,
-						message.Latitude,
-						message.Longitude)).Do()
 				} else if "無恥" == message.Text {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ReplyCurseMessage[rand.Intn(len(answers_ReplyCurseMessage))])).Do()
 				} else if silentMap[sourceId] != true {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_TextMessage[rand.Intn(len(answers_TextMessage))])).Do()
+				}
+			case *linebot.StickerMessage:
+				bot.ReplyMessage(replyToken, linebot.NewTextMessage("StickerId:"+message.StickerID+"\nPackageId:"+message.PackageID)).Do()
+			case *linebot.LocationMessage:
+				bot.ReplyMessage(replyToken, linebot.NewLocationMessage(
+					message.Title,
+					message.Address,
+					message.Latitude,
+					message.Longitude)).Do()
 				}
 			case *linebot.ImageMessage :
 				log.Print("ReplyToken[" + replyToken + "] ImageMessage[" + message.ID + "] OriginalContentURL(" + message.OriginalContentURL + "), PreviewImageURL(" + message.PreviewImageURL + ")" )
