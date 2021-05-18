@@ -196,10 +196,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("hidden")).Do()
 				} else if "botman" == message.Text  {
 					bot.ReplyMessage(replyToken, linebot.NewImageMessage("https://www.itsfun.com.tw/cacheimg/66/0c/eda9d251c3bd769ac820552b2ff1.jpg","https://www.itsfun.com.tw/cacheimg/66/0c/eda9d251c3bd769ac820552b2ff1.jpg")).Do()}
-					if err != nil {
-						log.Print(err)
-					}
-					
+
 				} else if "me" == message.Text  {
 					mid := source.UserID
 					bot.GetProfile(mid).Do()
@@ -313,26 +310,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						),
 					).Do(); err != nil {
 						log.Print(err)
-					}
-				} else if "/bye" == message.Text {
-					if rand.Intn(100) > 70 {
-						bot.ReplyMessage(replyToken, linebot.NewTextMessage("請神容易送神難, 我偏不要, 嘿嘿")).Do()
-					} else {
-						switch source.Type {
-						case linebot.EventSourceTypeUser:
-							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我想走, 但是我走不了...")).Do()
-						case linebot.EventSourceTypeGroup:
-							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
-							bot.LeaveGroup(source.GroupID).Do()
-						case linebot.EventSourceTypeRoom:
-							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
-							bot.LeaveRoom(source.RoomID).Do()
-						}
-					} else if message.Text == "about" {
-						bot.ReplyMessage(replyToken, linebot.NewTemplateMessage("hi", template)).Do()
-						if err != nil {
-							log.Print(err)
-						}
 					}
 				} else if "無恥" == message.Text {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ReplyCurseMessage[rand.Intn(len(answers_ReplyCurseMessage))])).Do()
