@@ -191,7 +191,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					mid := source.UserID
 					p, err := bot.GetProfile(mid).Do()
 					if err != nil {
-						bot.ReplyMessage(replyToken, linebot.NewTextMessage("新增同意"))
+						bot.ReplyMessage(replyToken, linebot.NewTextMessage("─═≡🌸ᖼOᗱᗴℕ️🌸≡═─"))
 					}
 
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("mid:"+mid+"\nname:"+p.DisplayName+"\nstatusMessage:"+p.StatusMessage)).Do()
@@ -200,6 +200,8 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				} else if res := strings.Contains(message.Text, "image:"); res == true {
 					image_url := strings.Replace(message.Text, "image:", "", -1)
 					bot.ReplyMessage(replyToken, linebot.NewImageMessage(image_url, image_url)).Do()
+				} else if  "ساعت" == message.Text {
+					tellTime(replyToken, true)
 				} else if "profile" == message.Text {
 					if source.UserID != "" {
 						profile, err := bot.GetProfile(source.UserID).Do()
@@ -218,10 +220,10 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					//log.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+imageURL)
 					template := linebot.NewButtonsTemplate(
 						imageURL, "My button sample", "Hello, my button",
-						linebot.NewURITemplateAction("Go to line.me", "https://line.me"),
-						linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", ""),
+							linebot.NewURITemplateAction("Go to line.me", "line://ti/p/~M_BW"),
+						linebot.NewPostbackTemplateAction("─═≡🌸ᖼOᗱᗴℕ️🌸≡═─", "hello ", ""),
 						linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは"),
-						linebot.NewMessageTemplateAction("Say message", "Rice=米"),
+						linebot.NewMessageTemplateAction("─═≡🌸ᖼOᗱᗴℕ️🌸≡═─", "confirm"),
 					)
 					if _, err := bot.ReplyMessage(
 						replyToken,
@@ -265,7 +267,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					if _, err := bot.ReplyMessage(
 						replyToken,
 						linebot.NewImagemapMessage(
-							baseURL + "https://lh3.googleusercontent.com/-sg7om8mJZLA/YJ51dyKdQ1I/AAAAAAAAMo0/vvwzPlQcmfQ74crbOKkMkF6kcriIExa-gCK8BGAsYHg/s512/2021-05-14.jpg",
+							baseURL + "/static/rich",
 							"Imagemap alt text",
 							linebot.ImagemapBaseSize{1040, 1040},
 							linebot.NewURIImagemapAction("https://store.line.me/family/manga/en", linebot.ImagemapArea{0, 0, 520, 520}),
