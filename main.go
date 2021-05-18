@@ -28,7 +28,7 @@ import (
 
 // Constants
 var timeFormat = "01/02 PM03:04:05"
-var user_zchien = "U696bcb700dfc9254b27605374b86968b"
+var user_mosen = "ub5e4ae027d8d4a82736222b2a8dc77df"
 var user_yaoming = "U3aaab6c6248bb38f194134948c60f757"
 var user_jackal = "U3effab06ddf5bcf0b46c1c60bcd39ef5"
 var user_shane = "U2ade7ac4456cb3ca99ffdf9d7257329a"
@@ -99,7 +99,7 @@ func main() {
 	rand.Seed(time.Now().UnixNano())
 	/*
 	go func() {
-		tellTimeJob(user_zchien);
+		tellTimeJob(user_mosen);
 	}()
 	go func() {
 		for {
@@ -176,7 +176,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						bot.LeaveRoom(Source.RoomID).Do()
 					}
 				} else if message.Text == "help" {
-					bot.ReplyMessage(replyToken, linebot.NewTextMessage("راهنما \n ・ [تصویر: portraiturl] = ارسال عکس از URL تصویر \n ・ [speed] = سرعت مکالمه را بسنجید \n ・ [groupid] = ارسال GroupID \n ・ [roomid] = ارسال RoomID \n [byebye] = اشتراک را لغو کنید \n ・ [درباره] = نویسنده \n ・ [من] = اطلاعات ارسال کننده را ارسال کنید \n ・ [تست] = تست کنید آیا botman نرمال است \n ・[اکنون] = اکنن زمان \n ・ [اواسط] = اواسط \n ・ [برچسب] = تصویرتصادفی \n \n [سایر عملکردها] \n آزمون مکان \n شناسه برچسب را بگیرید \n هنگام پیوستن پیام ارسال کنید ")). انجام دهید ()
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage("راهنما \n ・ [تصویر: portraiturl] = ارسال عکس از URL تصویر \n ・ [speed] = سرعت مکالمه را بسنجید \n ・ [groupid] = ارسال GroupID \n ・ [roomid] = ارسال RoomID \n [byebye] = اشتراک را لغو کنید \n ・ [درباره] = نویسنده \n ・ [من] = اطلاعات ارسال کننده را ارسال کنید \n ・ [تست] = تست کنید آیا botman نرمال است \n ・[اکنون] = اکنن زمان \n ・ [اواسط] = اواسط \n ・ [برچسب] = تصویرتصادفی \n \n [سایر عملکردها] \n آزمون مکان \n شناسه برچسب را بگیرید \n هنگام پیوستن پیام ارسال کنید ")).Do()
 				} else if message.Text == "check" {
 					fmt.Println(message)
 				} else if message.Text == "now" {
@@ -197,18 +197,18 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				} else if "botman" == message.Text  {
 					bot.ReplyMessage(replyToken, linebot.NewImageMessage("https://www.itsfun.com.tw/cacheimg/66/0c/eda9d251c3bd769ac820552b2ff1.jpg","https://www.itsfun.com.tw/cacheimg/66/0c/eda9d251c3bd769ac820552b2ff1.jpg")).Do()}
 					if err != nil {
-						log.Fatal(err)
+						log.Print(err)
 					}
 				} else if message.Text == "sticker" {
 					stid := random(180, 259)
 					stidx := strconv.Itoa(stid)
 					bot.ReplyMessage(replyToken, linebot.NewStickerMessage("3", stidx)).Do()
 					if err != nil {
-						log.Fatal(err)
+						log.Print(err)
 					}
 				} else if "me" == message.Text  {
 					mid := source.UserID
-					p, err := bot.GetProfile(mid).Do()
+					bot.GetProfile(mid).Do()
 					if err != nil {
 						bot.ReplyMessage(replyToken, linebot.NewTextMessage("新增同意"))
 					}
@@ -224,8 +224,8 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						bot.PushMessage(Source.RoomID, linebot.NewTextMessage(result)).Do()
 						if err != nil {
 							bot.PushMessage(Source.UserID, linebot.NewTextMessage(result)).Do()
-							if err != nil {
-								log.Fatal(err)
+					    	if err != nil {
+						    	log.Print(err)
 							}
 						}
 					}
@@ -329,7 +329,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					} else if message.Text == "about" {
 						bot.ReplyMessage(replyToken, linebot.NewTemplateMessage("hi", template)).Do()
 						if err != nil {
-							log.Println(err)
+							log.Print(err)
 						}
 					}
 				} else if "無恥" == message.Text {
