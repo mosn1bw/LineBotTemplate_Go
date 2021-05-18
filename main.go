@@ -204,14 +204,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						bot.ReplyMessage(replyToken, linebot.NewTextMessage("新增同意"))
 					}
 
-				} else if message.Text == "sticker" {
-					stid := random(180, 259)
-					stidx := strconv.Itoa(stid)
-					bot.ReplyMessage(replyToken, linebot.NewStickerMessage("3", stidx)).Do()
-					if err != nil {
-						log.Print(err)
-					}
-					
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("mid:"+mid+"\nname:"+p.DisplayName+"\nstatusMessage:"+p.StatusMessage)).Do()
 				} else if message.Text == "speed" {
 					start := time.Now()
@@ -315,15 +307,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ReplyCurseMessage[rand.Intn(len(answers_ReplyCurseMessage))])).Do()
 				} else if silentMap[sourceId] != true {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_TextMessage[rand.Intn(len(answers_TextMessage))])).Do()
-				}
-			case *linebot.StickerMessage:
-				bot.ReplyMessage(replyToken, linebot.NewTextMessage("StickerId:"+message.StickerID+"\nPackageId:"+message.PackageID)).Do()
-			case *linebot.LocationMessage:
-				bot.ReplyMessage(replyToken, linebot.NewLocationMessage(
-					message.Title,
-					message.Address,
-					message.Latitude,
-					message.Longitude)).Do()
 				}
 			case *linebot.ImageMessage :
 				log.Print("ReplyToken[" + replyToken + "] ImageMessage[" + message.ID + "] OriginalContentURL(" + message.OriginalContentURL + "), PreviewImageURL(" + message.PreviewImageURL + ")" )
