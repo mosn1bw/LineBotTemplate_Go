@@ -199,13 +199,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					if err != nil {
 						log.Print(err)
 					}
-				} else if message.Text == "sticker" {
-					stid := random(180, 259)
-					stidx := strconv.Itoa(stid)
-					bot.ReplyMessage(replyToken, linebot.NewStickerMessage("3", stidx)).Do()
-					if err != nil {
-						log.Print(err)
-					}
+					
 				} else if "me" == message.Text  {
 					mid := source.UserID
 					bot.GetProfile(mid).Do()
@@ -213,6 +207,14 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						bot.ReplyMessage(replyToken, linebot.NewTextMessage("新增同意"))
 					}
 
+				} else if message.Text == "sticker" {
+					stid := random(180, 259)
+					stidx := strconv.Itoa(stid)
+					bot.ReplyMessage(replyToken, linebot.NewStickerMessage("3", stidx)).Do()
+					if err != nil {
+						log.Print(err)
+					}
+					
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("mid:"+mid+"\nname:"+p.DisplayName+"\nstatusMessage:"+p.StatusMessage)).Do()
 				} else if message.Text == "speed" {
 					start := time.Now()
@@ -238,8 +240,8 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					tellTime(replyToken, true)
 				} else if "profile" == message.Text {
 					if source.UserID != "" {
-						profile, err := bot.GetProfile(source.UserID).Do()
-						if err != nil {
+						bot.GetProfile(source.UserID).Do()
+						{
 							log.Print(err)
 						} else bot.ReplyMessage(
 							replyToken,
@@ -259,7 +261,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは"),
 						linebot.NewMessageTemplateAction("Say message", "Rice=米"),
 					)
-					bot.ReplyMessage(
+					if _, err := bot.ReplyMessage(
 						replyToken,
 						linebot.NewTemplateMessage("Buttons alt text", template),
 					).Do(); err != nil {
@@ -271,7 +273,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						linebot.NewMessageTemplateAction("Yes", "Yes!"),
 						linebot.NewMessageTemplateAction("No", "No!"),
 					)
-					bot.ReplyMessage(
+					if _, err := bot.ReplyMessage(
 						replyToken,
 						linebot.NewTemplateMessage("Confirm alt text", template),
 					).Do(); err != nil {
@@ -291,14 +293,14 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							linebot.NewMessageTemplateAction("Say message", "Rice=米"),
 						),
 					)
-					bot.ReplyMessage(
+					if _, err := bot.ReplyMessage(
 						replyToken,
 						linebot.NewTemplateMessage("Carousel alt text", template),
 					).Do(); err != nil {
 						log.Print(err)
 					}
 				} else if "imagemap" == message.Text {
-					bot.ReplyMessage(
+					if _, err := bot.ReplyMessage(
 						replyToken,
 						linebot.NewImagemapMessage(
 							baseURL + "/static/rich",
