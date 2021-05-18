@@ -171,7 +171,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(string(Source.GroupID))).Do()
 				} else if message.Text == "byebye" {
 					bot.ReplyMessage(replyToken, linebot.NewStickerMessage("3", "187")).Do()
-					if _, err := bot.LeaveGroup(Source.GroupID).Do()
+					bot.LeaveGroup(Source.GroupID).Do()
 					if err != nil {
 						bot.LeaveRoom(Source.RoomID).Do()
 					}
@@ -202,7 +202,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				} else if message.Text == "sticker" {
 					stid := random(180, 259)
 					stidx := strconv.Itoa(stid)
-					if _, err := bot.ReplyMessage(replyToken, linebot.NewStickerMessage("3", stidx)).Do()
+					bot.ReplyMessage(replyToken, linebot.NewStickerMessage("3", stidx)).Do()
 					if err != nil {
 						log.Fatal(err)
 					}
@@ -219,11 +219,11 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					bot.ReplyMessage(replytoken, linebot.NewTextMessage("..")).Do()
 					end := time.Now()
 					result := fmt.Sprintf("%f [sec]", (end.Sub(start)).Seconds())
-					if _, err := bot.PushMessage(Source.GroupID, linebot.NewTextMessage(result)).Do()
+					bot.PushMessage(Source.GroupID, linebot.NewTextMessage(result)).Do()
 					if err != nil {
-						if _, err := bot.PushMessage(Source.RoomID, linebot.NewTextMessage(result)).Do()
+						bot.PushMessage(Source.RoomID, linebot.NewTextMessage(result)).Do()
 						if err != nil {
-							if _, err := bot.PushMessage(Source.UserID, linebot.NewTextMessage(result)).Do()
+							bot.PushMessage(Source.UserID, linebot.NewTextMessage(result)).Do()
 							if err != nil {
 								log.Fatal(err)
 							}
@@ -241,7 +241,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						profile, err := bot.GetProfile(source.UserID).Do()
 						if err != nil {
 							log.Print(err)
-						} else if _, err := bot.ReplyMessage(
+						} else bot.ReplyMessage(
 							replyToken,
 							linebot.NewTextMessage("Display name: "+profile.DisplayName + ", Status message: "+profile.StatusMessage)).Do(); err != nil {
 								log.Print(err)
@@ -259,7 +259,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは"),
 						linebot.NewMessageTemplateAction("Say message", "Rice=米"),
 					)
-					if _, err := bot.ReplyMessage(
+					bot.ReplyMessage(
 						replyToken,
 						linebot.NewTemplateMessage("Buttons alt text", template),
 					).Do(); err != nil {
@@ -271,7 +271,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						linebot.NewMessageTemplateAction("Yes", "Yes!"),
 						linebot.NewMessageTemplateAction("No", "No!"),
 					)
-					if _, err := bot.ReplyMessage(
+					bot.ReplyMessage(
 						replyToken,
 						linebot.NewTemplateMessage("Confirm alt text", template),
 					).Do(); err != nil {
@@ -291,14 +291,14 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							linebot.NewMessageTemplateAction("Say message", "Rice=米"),
 						),
 					)
-					if _, err := bot.ReplyMessage(
+					bot.ReplyMessage(
 						replyToken,
 						linebot.NewTemplateMessage("Carousel alt text", template),
 					).Do(); err != nil {
 						log.Print(err)
 					}
 				} else if "imagemap" == message.Text {
-					if _, err := bot.ReplyMessage(
+					bot.ReplyMessage(
 						replyToken,
 						linebot.NewImagemapMessage(
 							baseURL + "/static/rich",
@@ -327,7 +327,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							bot.LeaveRoom(source.RoomID).Do()
 						}
 					} else if message.Text == "about" {
-						if _, err := bot.ReplyMessage(replyToken, linebot.NewTemplateMessage("hi", template)).Do()
+						bot.ReplyMessage(replyToken, linebot.NewTemplateMessage("hi", template)).Do()
 						if err != nil {
 							log.Println(err)
 						}
