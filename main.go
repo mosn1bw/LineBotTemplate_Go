@@ -161,7 +161,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			case *linebot.TextMessage:
 
 				log.Print("ReplyToken[" + replyToken + "] TextMessage: ID(" + message.ID + "), Text(" + message.Text  + "), current silent status=" + strconv.FormatBool(silent) )
-				
+				}
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
@@ -172,8 +172,9 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				} else if message.Text == "byebye" {
 					bot.ReplyMessage(replyToken, linebot.NewStickerMessage("3", "187")).Do()
 					bot.LeaveGroup(Source.GroupID).Do()
-					if err != nil {
+					if err != nil }
 						bot.LeaveRoom(Source.RoomID).Do()
+					    }
 					}
 				} else if message.Text == "help" {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("راهنما \n ・ [تصویر: portraiturl] = ارسال عکس از URL تصویر \n ・ [speed] = سرعت مکالمه را بسنجید \n ・ [groupid] = ارسال GroupID \n ・ [roomid] = ارسال RoomID \n [byebye] = اشتراک را لغو کنید \n ・ [درباره] = نویسنده \n ・ [من] = اطلاعات ارسال کننده را ارسال کنید \n ・ [تست] = تست کنید آیا botman نرمال است \n ・[اکنون] = اکنن زمان \n ・ [اواسط] = اواسط \n ・ [برچسب] = تصویرتصادفی \n \n [سایر عملکردها] \n آزمون مکان \n شناسه برچسب را بگیرید \n هنگام پیوستن پیام ارسال کنید ")).Do()
@@ -195,10 +196,10 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				} else if "hidden" == message.Text  {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage("hidden")).Do()
 				} else if "botman" == message.Text  {
-					bot.ReplyMessage(replyToken, linebot.NewImageMessage("https://www.itsfun.com.tw/cacheimg/66/0c/eda9d251c3bd769ac820552b2ff1.jpg","https://www.itsfun.com.tw/cacheimg/66/0c/eda9d251c3bd769ac820552b2ff1.jpg")).Do()}
+					bot.ReplyMessage(replyToken, linebot.NewImageMessage("https://www.itsfun.com.tw/cacheimg/66/0c/eda9d251c3bd769ac820552b2ff1.jpg","https://www.itsfun.com.tw/cacheimg/66/0c/eda9d251c3bd769ac820552b2ff1.jpg")).Do()
 
 				} else if "me" == message.Text  {
-					mid := source.UserID
+					mid := source.UserID {
 					bot.GetProfile(mid).Do()
 					if err != nil {
 						bot.ReplyMessage(replyToken, linebot.NewTextMessage("新增同意"))
@@ -230,10 +231,9 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				} else if "profile" == message.Text {
 					if source.UserID != "" {
 						bot.GetProfile(source.UserID).Do()
-						{
 							log.Print(err)
 						} else bot.ReplyMessage(
-							replyToken,
+							replyToken,{
 							linebot.NewTextMessage("Display name: "+profile.DisplayName + ", Status message: "+profile.StatusMessage)).Do(); err != nil {
 								log.Print(err)
 						}
@@ -293,7 +293,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						replyToken,
 						linebot.NewImagemapMessage(
 							baseURL + "/static/rich",
-							"Imagemap alt text",
+							"Imagemap alt text",{
 							linebot.ImagemapBaseSize{1040, 1040},
 							linebot.NewURIImagemapAction("https://store.line.me/family/manga/en", linebot.ImagemapArea{0, 0, 520, 520}),
 							linebot.NewURIImagemapAction("https://store.line.me/family/music/en", linebot.ImagemapArea{520, 0, 520, 520}),
