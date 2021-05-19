@@ -263,11 +263,271 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						log.Print(err)
 					}
-				} else if "imagemap" == message.Text {
+				} else if "mee2" == message.Text {
+					jsonString :={
+  "type": "carousel",
+  "contents": [
+    {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "image",
+            "url": "https://lh3.googleusercontent.com/-whyYVLJuubQ/Xj2Q4kCm4WI/AAAAAAAABXg/_FKU8QJOvIoRmfTEMhABiTNhZdSoQzXigCK8BGAsYHg/s400/2020-02-07.gif",
+            "size": "full",
+            "aspectMode": "cover",
+            "aspectRatio": "2:3",
+            "gravity": "top"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "image",
+                "url": "https://lh3.googleusercontent.com/-ebXzFauYy1I/XjpCMrNWnWI/AAAAAAAABPw/z5Z8ssZ_zxMfK3c-xfPKoHjIKaENVnXqACK8BGAsYHg/s340/2020-02-04.gif",
+                "size": "3xl",
+                "gravity": "center",
+                "align": "end",
+                "aspectRatio": "2:2",
+                "aspectMode": "cover"
+              }
+            ],
+            "position": "absolute",
+            "borderWidth": "3px",
+            "cornerRadius": "100px",
+            "width": "65px",
+            "height": "65px",
+            "borderColor": "#00ffff",
+            "offsetTop": "117px",
+            "offsetStart": "115px"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "image",
+                "url": "https://lh3.googleusercontent.com/-wYvj4hhe3E4/Xj0LCSDGUxI/AAAAAAAABVg/cgipb0IycK41K2Fi01nYdLuL9DVZHKxNACK8BGAsYHg/s418/2020-02-06.jpg",
+                "size": "3xl",
+                "gravity": "center",
+                "align": "end",
+                "aspectRatio": "2:2",
+                "aspectMode": "cover"
+              }
+            ],
+            "position": "absolute",
+            "borderWidth": "3px",
+            "cornerRadius": "100px",
+            "width": "135px",
+            "height": "135px",
+            "borderColor": "#00ffff",
+            "offsetTop": "5px",
+            "offsetEnd": "5px"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "image",
+                "url": "https://lh3.googleusercontent.com/-wfUIBGeUetk/Xj0LMNo50VI/AAAAAAAABVs/FnSRSUpY9ccn4lJxf7RUivpvAIBukDt4wCK8BGAsYHg/s512/2020-02-06.jpg",
+                "size": "3xl",
+                "gravity": "center",
+                "align": "end",
+                "aspectRatio": "2:2",
+                "aspectMode": "cover"
+              }
+            ],
+            "position": "absolute",
+            "borderWidth": "3px",
+            "cornerRadius": "100px",
+            "width": "135px",
+            "height": "135px",
+            "borderColor": "#00ffff",
+            "offsetTop": "5px",
+            "offsetStart": "5px"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "SALE",
+                "color": "#ffffff",
+                "align": "center",
+                "size": "xs",
+                "offsetTop": "3px"
+              }
+            ],
+            "position": "absolute",
+            "cornerRadius": "20px",
+            "offsetTop": "18px",
+            "backgroundColor": "#ff334b",
+            "offsetStart": "18px",
+            "height": "25px",
+            "width": "53px"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "image",
+                "url": "https://lh3.googleusercontent.com/-rozO-WlsVN8/Xj0LBeorHSI/AAAAAAAABVc/LEHcsYgPgg4Ae3kS73YG5Fm-38kOxGOcACK8BGAsYHg/s501/2020-02-06.jpg",
+                "size": "3xl",
+                "gravity": "center",
+                "align": "end",
+                "aspectRatio": "2:2",
+                "aspectMode": "cover"
+              }
+            ],
+            "position": "absolute",
+            "borderWidth": "3px",
+            "cornerRadius": "100px",
+            "width": "135px",
+            "height": "135px",
+            "borderColor": "#00ffff",
+            "offsetTop": "157px",
+            "offsetStart": "5px"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "image",
+                "url": "https://lh3.googleusercontent.com/-VD62Qe8ZZZo/XjpBaY3BeHI/AAAAAAAABOs/Ud3oyOAgwPEKSKpdQSVk6djowioYKQ34gCK8BGAsYHg/s400/2020-02-04.gif",
+                "size": "3xl",
+                "gravity": "center",
+                "align": "end",
+                "aspectRatio": "2:2",
+                "aspectMode": "cover"
+              }
+            ],
+            "position": "absolute",
+            "borderWidth": "3px",
+            "cornerRadius": "100px",
+            "width": "135px",
+            "height": "135px",
+            "borderColor": "#00ffff",
+            "offsetTop": "157px",
+            "offsetEnd": "5px"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "image",
+                "url": "https://lh3.googleusercontent.com/-WKCgkeWYo9w/XjyRTj28coI/AAAAAAAABSs/lu9muWDdNUsGaX--zUvPtGKXRom-oK6wgCK8BGAsYHg/s320/2020-02-06.gif",
+                "size": "3xl",
+                "gravity": "center",
+                "align": "end",
+                "aspectRatio": "2:2",
+                "aspectMode": "cover"
+              }
+            ],
+            "position": "absolute",
+            "borderWidth": "3px",
+            "cornerRadius": "100px",
+            "width": "135px",
+            "height": "135px",
+            "borderColor": "#000ff0",
+            "offsetStart": "153px",
+            "offsetBottom": "5px"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "image",
+                "url": "https://lh3.googleusercontent.com/-y4hM4Vb2JjI/Xjy-DBpRnKI/AAAAAAAAD0k/QmlYsXFRlggU3l7EsCYIcWEPT9xi3buFgCK8BGAsYHg/s512/2020-02-06.gif",
+                "size": "3xl",
+                "gravity": "center",
+                "align": "end",
+                "aspectRatio": "2:2",
+                "aspectMode": "cover"
+              }
+            ],
+            "position": "absolute",
+            "borderWidth": "3px",
+            "cornerRadius": "100px",
+            "width": "135px",
+            "height": "135px",
+            "borderColor": "#bb00ff",
+            "offsetStart": "5px",
+            "offsetBottom": "5px"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "image",
+                "url": "https://lh3.googleusercontent.com/-41sPwcKo6rQ/Xj0LUts7zQI/AAAAAAAABV4/z38M2QPp5LQxwxn5nbMAKY9CKtT96XfDwCK8BGAsYHg/s512/2020-02-06.jpg",
+                "size": "3xl",
+                "gravity": "center",
+                "align": "end",
+                "aspectRatio": "2:2",
+                "aspectMode": "cover"
+              }
+            ],
+            "position": "absolute",
+            "borderWidth": "3px",
+            "cornerRadius": "100px",
+            "width": "65px",
+            "height": "65px",
+            "borderColor": "#00ffff",
+            "offsetStart": "115px",
+            "offsetBottom": "113px"
+          }
+        ],
+        "paddingAll": "0px",
+        "action": {
+          "type": "uri",
+          "label": "action",
+          "uri": "http://linecorp.com/"
+        },
+        "borderWidth": "3px",
+        "borderColor": "#cc0000",
+        "cornerRadius": "15px"
+      }
+    }
+  ]
+}
+					contents, err := linebot.UnmarshalFlexMessageJSON([]byte(jsonString))
+					if err != nil {
+						return err
+					}
+					if _, err := app.bot.ReplyMessage(
+						replyToken,
+						linebot.NewFlexMessage("Flex message alt text", contents),
+					).Do(); err != nil {
+						return err
+					}
+        
+				} else if "mee4" == message.Text {
 					if _, err := bot.ReplyMessage(
 						replyToken,
 						linebot.NewImagemapMessage(
-							baseURL + "/static/rich",
+							imageURL := "https://lh3.googleusercontent.com/-YJMZznY3kmc/YJ51r5vHUTI/AAAAAAAAMo4/3cQfGARwXDQnJAXDzZI0c1qJ9hOdHclqQCK8BGAsYHg/s512/2021-05-14.jpg",
+							"Imagemap alt text",
+							linebot.ImagemapBaseSize{1040, 1040},
+							linebot.NewURIImagemapAction("https://store.line.me/family/manga/en", linebot.ImagemapArea{0, 0, 520, 520}),
+							linebot.NewURIImagemapAction("https://store.line.me/family/music/en", linebot.ImagemapArea{520, 0, 520, 520}),
+							linebot.NewURIImagemapAction("https://store.line.me/family/play/en", linebot.ImagemapArea{0, 520, 520, 520}),
+							linebot.NewMessageImagemapAction("URANAI!", linebot.ImagemapArea{520, 520, 520, 520}),
+						),
+				} else if "mee3" == message.Text {
+					if _, err := bot.ReplyMessage(
+						replyToken,
+						linebot.NewImagemapMessage(
+							baseURL + "https://lh3.googleusercontent.com/-YJMZznY3kmc/YJ51r5vHUTI/AAAAAAAAMo4/3cQfGARwXDQnJAXDzZI0c1qJ9hOdHclqQCK8BGAsYHg/s512/2021-05-14.jpg",
 							"Imagemap alt text",
 							linebot.ImagemapBaseSize{1040, 1040},
 							linebot.NewURIImagemapAction("https://store.line.me/family/manga/en", linebot.ImagemapArea{0, 0, 520, 520}),
@@ -330,3 +590,4 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	
 }
+		
