@@ -280,7 +280,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
           },
           {
             "type": "box",
-            "layout": "vertical",
+            "layout": "vertical"
             "contents": [
               {
                 "type": "image",
