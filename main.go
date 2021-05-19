@@ -265,10 +265,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 				} else if "mee2" == message.Text {
 					jsonString :={
-  "type": "carousel",
-  "contents": [
-    {
-      "type": "bubble",
+      "type": "bubble"[,
       "body": {
         "type": "box",
         "layout": "horizontal",
@@ -500,6 +497,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
     }
   ]
 }
+                    }
 					contents, err := linebot.UnmarshalFlexMessageJSON([]byte(jsonString))
 					if err != nil {
 						return err
@@ -590,4 +588,3 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	
 }
-		
