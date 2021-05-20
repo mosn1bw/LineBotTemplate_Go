@@ -218,28 +218,6 @@ func (s *SelfIntro) replyText(replyToken, text string) error {
 	return nil
 }
 
-func (s *SelfIntro) handleJoin(replyToken string, source *linebot.EventSource) error {
-	profile, _ := s.bot.GetProfile(source.UserID).Do()
-	intro, err := readJSON("static/message/intro.json")
-	if err != nil {
-		return err
-	}
-	contents, err := linebot.UnmarshalFlexMessageJSON([]byte(intro))
-	if err != nil {
-		return err
-	}
-	if _, err := s.bot.ReplyMessage(
-		replyToken,
-		linebot.NewTextMessage(fmt.Sprintf("$$歡迎 %s!!\n 按下方的按鈕來認識我吧！", profile.DisplayName)).AddEmoji(
-			linebot.NewEmoji(0, "5ac1bfd5040ab15980c9b435", "098")).AddEmoji(
-			linebot.NewEmoji(1, "5ac1bfd5040ab15980c9b435", "098")),
-		linebot.NewFlexMessage("自我介紹", contents),
-	).Do(); err != nil {
-		return err
-	}
-	return nil
-}
-
 func readJSON(file string) ([]byte, error) {
 	jsonFile, err := os.Open(file)
 
