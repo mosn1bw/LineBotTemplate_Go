@@ -427,19 +427,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						return err
 					}
-				} else if "mee4" == message.Text {
-					if _, err := bot.ReplyMessage(
-						replyToken,
-						linebot.NewImagemapMessage(
-							imageURL := "https://lh3.googleusercontent.com/-YJMZznY3kmc/YJ51r5vHUTI/AAAAAAAAMo4/3cQfGARwXDQnJAXDzZI0c1qJ9hOdHclqQCK8BGAsYHg/s512/2021-05-14.jpg",
-							"Imagemap alt text",
-							linebot.ImagemapBaseSize{1040, 1040},
-							linebot.NewURIImagemapAction("https://store.line.me/family/manga/en", linebot.ImagemapArea{0, 0, 520, 520}),
-							linebot.NewURIImagemapAction("https://store.line.me/family/music/en", linebot.ImagemapArea{520, 0, 520, 520}),
-							linebot.NewURIImagemapAction("https://store.line.me/family/play/en", linebot.ImagemapArea{0, 520, 520, 520}),
-							linebot.NewMessageImagemapAction("URANAI!", linebot.ImagemapArea{520, 520, 520, 520}),
-						),
-					)
 				} else if "mee3" == message.Text {
 					if _, err := bot.ReplyMessage(
 						replyToken,
