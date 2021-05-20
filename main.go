@@ -264,240 +264,159 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						log.Print(err)
 					}
 				} else if "mee2" == message.Text {
-					jsonString :={
-      "type": "bubble"[,
-      "body": {
-        "type": "box",
-        "layout": "horizontal",
-        "contents": [
-          {
-            "type": "image",
-            "url": "https://lh3.googleusercontent.com/-whyYVLJuubQ/Xj2Q4kCm4WI/AAAAAAAABXg/_FKU8QJOvIoRmfTEMhABiTNhZdSoQzXigCK8BGAsYHg/s400/2020-02-07.gif",
-            "size": "full",
-            "aspectMode": "cover",
-            "aspectRatio": "2:3",
-            "gravity": "top"
-          },
-          {
-            "type": "box",
-            "layout": "vertical"
-            "contents": [
-              {
-                "type": "image",
-                "url": "https://lh3.googleusercontent.com/-ebXzFauYy1I/XjpCMrNWnWI/AAAAAAAABPw/z5Z8ssZ_zxMfK3c-xfPKoHjIKaENVnXqACK8BGAsYHg/s340/2020-02-04.gif",
-                "size": "3xl",
-                "gravity": "center",
-                "align": "end",
-                "aspectRatio": "2:2",
-                "aspectMode": "cover"
-              }
-            ],
-            "position": "absolute",
-            "borderWidth": "3px",
-            "cornerRadius": "100px",
-            "width": "65px",
-            "height": "65px",
-            "borderColor": "#00ffff",
-            "offsetTop": "117px",
-            "offsetStart": "115px"
-          },
-          {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "image",
-                "url": "https://lh3.googleusercontent.com/-wYvj4hhe3E4/Xj0LCSDGUxI/AAAAAAAABVg/cgipb0IycK41K2Fi01nYdLuL9DVZHKxNACK8BGAsYHg/s418/2020-02-06.jpg",
-                "size": "3xl",
-                "gravity": "center",
-                "align": "end",
-                "aspectRatio": "2:2",
-                "aspectMode": "cover"
-              }
-            ],
-            "position": "absolute",
-            "borderWidth": "3px",
-            "cornerRadius": "100px",
-            "width": "135px",
-            "height": "135px",
-            "borderColor": "#00ffff",
-            "offsetTop": "5px",
-            "offsetEnd": "5px"
-          },
-          {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "image",
-                "url": "https://lh3.googleusercontent.com/-wfUIBGeUetk/Xj0LMNo50VI/AAAAAAAABVs/FnSRSUpY9ccn4lJxf7RUivpvAIBukDt4wCK8BGAsYHg/s512/2020-02-06.jpg",
-                "size": "3xl",
-                "gravity": "center",
-                "align": "end",
-                "aspectRatio": "2:2",
-                "aspectMode": "cover"
-              }
-            ],
-            "position": "absolute",
-            "borderWidth": "3px",
-            "cornerRadius": "100px",
-            "width": "135px",
-            "height": "135px",
-            "borderColor": "#00ffff",
-            "offsetTop": "5px",
-            "offsetStart": "5px"
-          },
-          {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "text",
-                "text": "SALE",
-                "color": "#ffffff",
-                "align": "center",
-                "size": "xs",
-                "offsetTop": "3px"
-              }
-            ],
-            "position": "absolute",
-            "cornerRadius": "20px",
-            "offsetTop": "18px",
-            "backgroundColor": "#ff334b",
-            "offsetStart": "18px",
-            "height": "25px",
-            "width": "53px"
-          },
-          {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "image",
-                "url": "https://lh3.googleusercontent.com/-rozO-WlsVN8/Xj0LBeorHSI/AAAAAAAABVc/LEHcsYgPgg4Ae3kS73YG5Fm-38kOxGOcACK8BGAsYHg/s501/2020-02-06.jpg",
-                "size": "3xl",
-                "gravity": "center",
-                "align": "end",
-                "aspectRatio": "2:2",
-                "aspectMode": "cover"
-              }
-            ],
-            "position": "absolute",
-            "borderWidth": "3px",
-            "cornerRadius": "100px",
-            "width": "135px",
-            "height": "135px",
-            "borderColor": "#00ffff",
-            "offsetTop": "157px",
-            "offsetStart": "5px"
-          },
-          {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "image",
-                "url": "https://lh3.googleusercontent.com/-VD62Qe8ZZZo/XjpBaY3BeHI/AAAAAAAABOs/Ud3oyOAgwPEKSKpdQSVk6djowioYKQ34gCK8BGAsYHg/s400/2020-02-04.gif",
-                "size": "3xl",
-                "gravity": "center",
-                "align": "end",
-                "aspectRatio": "2:2",
-                "aspectMode": "cover"
-              }
-            ],
-            "position": "absolute",
-            "borderWidth": "3px",
-            "cornerRadius": "100px",
-            "width": "135px",
-            "height": "135px",
-            "borderColor": "#00ffff",
-            "offsetTop": "157px",
-            "offsetEnd": "5px"
-          },
-          {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "image",
-                "url": "https://lh3.googleusercontent.com/-WKCgkeWYo9w/XjyRTj28coI/AAAAAAAABSs/lu9muWDdNUsGaX--zUvPtGKXRom-oK6wgCK8BGAsYHg/s320/2020-02-06.gif",
-                "size": "3xl",
-                "gravity": "center",
-                "align": "end",
-                "aspectRatio": "2:2",
-                "aspectMode": "cover"
-              }
-            ],
-            "position": "absolute",
-            "borderWidth": "3px",
-            "cornerRadius": "100px",
-            "width": "135px",
-            "height": "135px",
-            "borderColor": "#000ff0",
-            "offsetStart": "153px",
-            "offsetBottom": "5px"
-          },
-          {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "image",
-                "url": "https://lh3.googleusercontent.com/-y4hM4Vb2JjI/Xjy-DBpRnKI/AAAAAAAAD0k/QmlYsXFRlggU3l7EsCYIcWEPT9xi3buFgCK8BGAsYHg/s512/2020-02-06.gif",
-                "size": "3xl",
-                "gravity": "center",
-                "align": "end",
-                "aspectRatio": "2:2",
-                "aspectMode": "cover"
-              }
-            ],
-            "position": "absolute",
-            "borderWidth": "3px",
-            "cornerRadius": "100px",
-            "width": "135px",
-            "height": "135px",
-            "borderColor": "#bb00ff",
-            "offsetStart": "5px",
-            "offsetBottom": "5px"
-          },
-          {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "image",
-                "url": "https://lh3.googleusercontent.com/-41sPwcKo6rQ/Xj0LUts7zQI/AAAAAAAABV4/z38M2QPp5LQxwxn5nbMAKY9CKtT96XfDwCK8BGAsYHg/s512/2020-02-06.jpg",
-                "size": "3xl",
-                "gravity": "center",
-                "align": "end",
-                "aspectRatio": "2:2",
-                "aspectMode": "cover"
-              }
-            ],
-            "position": "absolute",
-            "borderWidth": "3px",
-            "cornerRadius": "100px",
-            "width": "65px",
-            "height": "65px",
-            "borderColor": "#00ffff",
-            "offsetStart": "115px",
-            "offsetBottom": "113px"
-          }
-        ],
-        "paddingAll": "0px",
-        "action": {
-          "type": "uri",
-          "label": "action",
-          "uri": "http://linecorp.com/"
-        },
-        "borderWidth": "3px",
-        "borderColor": "#cc0000",
-        "cornerRadius": "15px"
-      }
-    }
-  ]
-}
-                    }
+					jsonString := `{
+					"type": "bubble",
+					"hero": {
+					"type": "image",
+					"url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+					"size": "full",
+					"aspectRatio": "20:13",
+					"aspectMode": "cover",
+					"action": {
+					"type": "uri",
+					"uri": "http://linecorp.com/"
+ 			     }
+ 			 },
+			  "body": {
+    			"type": "box",
+			    "layout": "vertical",
+ 			   "contents": [
+  			    {
+   			     "type": "text",
+    	         "text": "Brown Cafe",
+    	         "weight": "bold",
+    	         "size": "xl"
+    	       },
+    	       {
+    	         "type": "box",
+     	        "layout": "baseline",
+    	         "margin": "md",
+    	         "contents": [
+    	           {
+    	             "type": "icon",
+    	             "size": "sm",
+    	             "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+     	          },
+     	          {
+     	            "type": "icon",
+     	            "size": "sm",
+     	            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+     	          },
+     	          {
+     	            "type": "icon",
+    	             "size": "sm",
+    	             "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+       	        },
+       	        {
+       	          "type": "icon",
+       	          "size": "sm",
+       	          "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+       	        },
+       	        {
+        	      "type": "icon",
+         	      "size": "sm",
+        	      "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png"
+                },
+       	        {
+       	          "type": "text",
+        	      "text": "4.0",
+         	      "size": "sm",
+        	      "color": "#999999",
+                  "margin": "md",
+                  "flex": 0
+   	            }
+   	          ]
+   	        },
+    	       {
+                  "type": "box",
+                  "layout": "vertical",
+                  "margin": "lg",
+                  "spacing": "sm",
+                  "contents": [
+    	           {
+                  "type": "box",
+       	          "layout": "baseline",
+                  "spacing": "sm",
+                  "contents": [
+       	            {
+       	              "type": "text",
+       	              "text": "Place",
+        	             "color": "#aaaaaa",
+        	             "size": "sm",
+        	             "flex": 1
+        	           },
+         	          {
+                      "type": "text",
+                      "text": "Miraina Tower, 4-1-6 Shinjuku, Tokyo",
+                      "wrap": true,
+                      "color": "#666666",
+           	          "size": "sm",
+                      "flex": 5
+       	            }
+        	         ]
+         	      },
+    			      {
+    			        "type": "box",
+    			        "layout": "baseline",
+    			        "spacing": "sm",
+    			        "contents": [
+    			          {
+    			            "type": "text",
+    			            "text": "Time",
+    			            "color": "#aaaaaa",
+    			            "size": "sm",
+    			            "flex": 1
+    			          },
+    			          {
+    			            "type": "text",
+    			            "text": "10:00 - 23:00",
+    			            "wrap": true,
+    			            "color": "#666666",
+    			            "size": "sm",
+    			            "flex": 5
+    			          }
+    			        ]
+    			      }
+    			    ]
+    			  }
+    			]
+			  },
+			    "footer": {
+    			"type": "box",
+    			"layout": "vertical",
+    			"spacing": "sm",
+    			"contents": [
+    			  {
+    			    "type": "button",
+    			    "style": "link",
+    			    "height": "sm",
+    			    "action": {
+    			      "type": "uri",
+    			      "label": "CALL",
+    			      "uri": "https://linecorp.com"
+    			    }
+    			  },
+    			  {
+    			    "type": "button",
+    			    "style": "link",
+    			    "height": "sm",
+    			    "action": {
+    			      "type": "uri",
+    			      "label": "WEBSITE",
+    			      "uri": "https://linecorp.com",
+    			      "altUri": {
+    			        "desktop": "https://line.me/ja/download"
+    			      }
+    			    }
+    			  },
+    			  {
+    			    "type": "spacer",
+    			    "size": "sm"
+    			  }
+    			],
+    			"flex": 0
+ 			 }
+		        	}`
 					contents, err := linebot.UnmarshalFlexMessageJSON([]byte(jsonString))
 					if err != nil {
 						return err
@@ -508,7 +427,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					).Do(); err != nil {
 						return err
 					}
-        
 				} else if "mee4" == message.Text {
 					if _, err := bot.ReplyMessage(
 						replyToken,
