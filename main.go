@@ -264,166 +264,46 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						log.Print(err)
 					}
 				} else if "mee2" == message.Text {
-					jsonString := `{
-                  "type": "bubble",
-                  "hero": {
-                    "type": "image",
-                    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
-                    "size": "full",
-                    "aspectRatio": "20:13",
-                    "aspectMode": "cover",
-                    "action": {
-                      "type": "uri",
-                      "uri": "http://linecorp.com/"
-                    }
-                  },
-                  "body": {
-                    "type": "box",
-                    "layout": "vertical",
-                    "contents": [
-                      {
-                        "type": "text",
-                        "text": "Brown Cafe",
-                        "weight": "bold",
-                        "size": "xl"
-                      },
-                      {
-                        "type": "box",
-                        "layout": "baseline",
-                        "margin": "md",
-                        "contents": [
-                          {
-                            "type": "icon",
-                            "size": "sm",
-                            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
-                          },
-                          {
-                            "type": "icon",
-                            "size": "sm",
-                            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
-                          },
-                          {
-                            "type": "icon",
-                            "size": "sm",
-                            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
-                          },
-                          {
-                            "type": "icon",
-                            "size": "sm",
-                            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
-                          },
-                          {
-                            "type": "icon",
-                            "size": "sm",
-                            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png"
-                          },
-                          {
-                            "type": "text",
-                            "text": "4.0",
-                            "size": "sm",
-                            "color": "#999999",
-                            "margin": "md",
-                            "flex": 0
-                          }
-                        ]
-                      },
-                      {
-                        "type": "box",
-                        "layout": "vertical",
-                        "margin": "lg",
-                        "spacing": "sm",
-                        "contents": [
-                          {
-                            "type": "box",
-                            "layout": "baseline",
-                            "spacing": "sm",
-                            "contents": [
-                              {
-                                "type": "text",
-                                "text": "Place",
-                                "color": "#aaaaaa",
-                                "size": "sm",
-                                "flex": 1
-                              },
-                              {
-                                "type": "text",
-                                "text": "Miraina Tower, 4-1-6 Shinjuku, Tokyo",
-                                "wrap": true,
-                                "color": "#666666",
-                                "size": "sm",
-                                "flex": 5
-                              }
-                            ]
-                          },
-                          {
-                            "type": "box",
-                            "layout": "baseline",
-                            "spacing": "sm",
-                            "contents": [
-                              {
-                                "type": "text",
-                                "text": "Time",
-                                "color": "#aaaaaa",
-                                "size": "sm",
-                                "flex": 1
-                              },
-                              {
-                                "type": "text",
-                                "text": "10:00 - 23:00",
-                                "wrap": true,
-                                "color": "#666666",
-                                "size": "sm",
-                                "flex": 5
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "footer": {
-                    "type": "box",
-                    "layout": "vertical",
-                    "spacing": "sm",
-                    "contents": [
-                      {
-                        "type": "button",
-                        "style": "link",
-                        "height": "sm",
-                        "action": {
-                          "type": "uri",
-                          "label": "CALL",
-                          "uri": "https://linecorp.com"
-                        }
-                      },
-                      {
-                        "type": "button",
-                        "style": "link",
-                        "height": "sm",
-                        "action": {
-                          "type": "uri",
-                          "label": "WEBSITE",
-                          "uri": "https://linecorp.com"
-                        }
-                      },
-                      {
-                        "type": "spacer",
-                        "size": "sm"
-                      }
-                    ],
-                    "flex": 0
-                  }
-                }`
-					contents := &linebot.flexContainer{
-					if err != nil {
-						log.Print(err)
-					}
-					if _, err := bot.ReplyMessage(
-						replyToken,
-						linebot.NewFlexMessage("Flex message alt text", contents),
-					).Do(); err != nil {
-						log.Print(err)
-					}
+				// {
+				//   "type": "bubble",
+				//   "body": {
+				//     "type": "box",
+				//     "layout": "horizontal",
+				//     "contents": [
+				//       {
+				//         "type": "text",
+				//         "text": "Hello,"
+				//       },
+				//       {
+				//         "type": "text",
+				//         "text": "World!"
+				//       }
+				//     ]
+				//   }
+				// }
+				contents := &linebot.BubbleContainer{
+					Type: linebot.FlexContainerTypeBubble,
+					Body: &linebot.BoxComponent{
+						Type:   linebot.FlexComponentTypeBox,
+						Layout: linebot.FlexBoxLayoutTypeHorizontal,
+						Contents: []linebot.FlexComponent{
+							&linebot.TextComponent{
+								Type: linebot.FlexComponentTypeText,
+								Text: "Hello,",
+							},
+							&linebot.TextComponent{
+								Type: linebot.FlexComponentTypeText,
+								Text: "World!",
+							},
+						},
+					},
+				}
+				if _, err := app.bot.ReplyMessage(
+					replyToken,
+					linebot.NewFlexMessage("Flex message alt text", contents),
+				).Do(); err != nil {
+					return err
+				}
 				} else if "mee3" == message.Text {
 					if _, err := bot.ReplyMessage(
 						replyToken,
