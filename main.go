@@ -417,8 +417,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
     			"flex": 0
  			 }
 		        	}`
-					 {
-					}
 					if _, err := bot.ReplyMessage(
 						replyToken,
 						linebot.NewFlexMessage("Flex message alt text", contents),
