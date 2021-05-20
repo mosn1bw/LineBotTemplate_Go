@@ -414,7 +414,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
                     "flex": 0
                   }
                 }`
-					contents, err := linebot.UnmarshalFlexMessageJSON([]byte(jsonString))
+					contents := &linebot.flexContainer{
 					if err != nil {
 						log.Print(err)
 					}
