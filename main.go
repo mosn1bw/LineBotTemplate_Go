@@ -417,15 +417,13 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
     			"flex": 0
  			 }
 		        	}`
-					contents, err := linebot.UnmarshalFlexMessageJSON([]byte(jsonString))
-					if err != nil {
-						return err
+					 {
 					}
-					if _, err := app.bot.ReplyMessage(
+					if _, err := bot.ReplyMessage(
 						replyToken,
 						linebot.NewFlexMessage("Flex message alt text", contents),
 					).Do(); err != nil {
-						return err
+						log.Print(err)
 					}
 				} else if "mee3" == message.Text {
 					if _, err := bot.ReplyMessage(
