@@ -125,6 +125,151 @@ func handler(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
 }
 
+func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken string, source *linebot.EventSource) error {
+	switch message.Text {
+	case "profile":
+		if source.UserID != "" {
+			profile, err := app.bot.GetProfile(source.UserID).Do()
+			if err != nil {
+				return app.replyText(replyToken, err.Error())
+			}
+			if _, err := app.bot.ReplyMessage(
+				replyToken,
+				linebot.NewTextMessage("Display name: "+profile.DisplayName),
+				linebot.NewTextMessage("Status message: "+profile.StatusMessage),
+			).Do(); err != nil {
+				return err
+			}
+		} else {
+			return app.replyText(replyToken, "Bot can't use profile API without user ID")
+		}
+	case "a1":
+		imageURL := app.appBaseURL + "/assets/buttons/1040.jpg"
+		template := linebot.NewButtonsTemplate(
+			imageURL, "My button sample", "Hello, my button",
+			linebot.NewURITemplateAction("Go to line.me", "https://line.me"),
+			linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", "", "hello こんにちは"),
+			linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは", ""),
+			linebot.NewMessageTemplateAction("Say message", "Rice=米"),
+		)
+		if _, err := app.bot.ReplyMessage(
+			replyToken,
+			linebot.NewTemplateMessage("Buttons alt text", template),
+		).Do(); err != nil {
+			return err
+		}
+	case "a2":
+		template := linebot.NewConfirmTemplate(
+			"Do it?",
+			linebot.NewMessageTemplateAction("Yes", "Yes!"),
+			linebot.NewMessageTemplateAction("No", "No!"),
+		)
+		if _, err := app.bot.ReplyMessage(
+			replyToken,
+			linebot.NewTemplateMessage("Confirm alt text", template),
+		).Do(); err != nil {
+			return err
+		}
+	case "a3":
+		imageURL := app.appBaseURL + "/assets/buttons/1040.jpg"
+		template := linebot.NewCarouselTemplate(
+			linebot.NewCarouselColumn(
+				imageURL, "hoge", "fuga",
+				linebot.NewURITemplateAction("Go to line.me", "https://line.me"),
+				linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", "", ""),
+			),
+			linebot.NewCarouselColumn(
+				imageURL, "hoge", "fuga",
+				linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは", ""),
+				linebot.NewMessageTemplateAction("Say message", "Rice=米"),
+			),
+		)
+		if _, err := app.bot.ReplyMessage(
+			replyToken,
+			linebot.NewTemplateMessage("Carousel alt text", template),
+		).Do(); err != nil {
+			return err
+		}
+	case "image a4":
+		imageURL := app.appBaseURL + "/assets/buttons/1040.jpg"
+		template := linebot.NewImageCarouselTemplate(
+			linebot.NewImageCarouselColumn(
+				imageURL,
+				linebot.NewURITemplateAction("Go to LINE", "https://line.me"),
+			),
+			linebot.NewImageCarouselColumn(
+				imageURL,
+				linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", "", ""),
+			),
+			linebot.NewImageCarouselColumn(
+				imageURL,
+				linebot.NewMessageTemplateAction("Say message", "Rice=米"),
+			),
+			linebot.NewImageCarouselColumn(
+				imageURL,
+				linebot.NewDatetimePickerTemplateAction("datetime", "DATETIME", "datetime", "", "", ""),
+			),
+		)
+		if _, err := app.bot.ReplyMessage(
+			replyToken,
+			linebot.NewTemplateMessage("Image carousel alt text", template),
+		).Do(); err != nil {
+			return err
+		}
+	case "datetime1":
+		template := linebot.NewButtonsTemplate(
+			"", "", "Select date / time !",
+			linebot.NewDatetimePickerTemplateAction("date", "DATE", "date", "", "", ""),
+			linebot.NewDatetimePickerTemplateAction("time", "TIME", "time", "", "", ""),
+			linebot.NewDatetimePickerTemplateAction("datetime", "DATETIME", "datetime", "", "", ""),
+		)
+		if _, err := app.bot.ReplyMessage(
+			replyToken,
+			linebot.NewTemplateMessage("Datetime pickers alt text", template),
+		).Do(); err != nil {
+			return err
+		}
+	case "flex1":
+		// {
+		//   "type": "bubble",
+		//   "body": {
+		//     "type": "box",
+		//     "layout": "horizontal",
+		//     "contents": [
+		//       {
+		//         "type": "text",
+		//         "text": "Hello,"
+		//       },
+		//       {
+		//         "type": "text",
+		//         "text": "World!"
+		//       }
+		//     ]
+		//   }
+		// }
+		contents := &linebot.BubbleContainer{
+			Type: linebot.FlexContainerTypeBubble,
+			Body: &linebot.BoxComponent{
+				Type:   linebot.FlexComponentTypeBox,
+				Layout: linebot.FlexBoxLayoutTypeHorizontal,
+				Contents: []linebot.FlexComponent{
+					&linebot.TextComponent{
+						Type: linebot.FlexComponentTypeText,
+						Text: "Hello,",
+					},
+					&linebot.TextComponent{
+						Type: linebot.FlexComponentTypeText,
+						Text: "World!",
+					},
+				},
+			},
+		}
+		if _, err := app.bot.ReplyMessage(
+			replyToken,
+			linebot.NewFlexMessage("Flex message alt text", contents),
+		).Do(); err != nil {
+			return err
+		}
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	events, err := bot.ParseRequest(r)
 	log.Print("URL:"  + r.URL.String())
@@ -423,14 +568,14 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
                     }
                 }`
 	                contents, err := linebot.UnmarshalFlexMessageJSON([]byte(jsonString))
-	                if err != nil {
-	                	return err
+					).Do(); err != nil {
+						log.Print(err)
 	                }
 	                if _, err := app.bot.ReplyMessage(
 	                	replyToken,
 	                	linebot.NewFlexMessage("Flex message alt text", contents),
-	                ).Do(); err != nil {
-	                	return err
+					).Do(); err != nil {
+						log.Print(err)
 	                }
 				} else if "imagemap" == message.Text {
 					if _, err := bot.ReplyMessage(
