@@ -576,7 +576,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	                	linebot.NewFlexMessage("Flex message alt text", contents),
 					).Do(); err != nil {
 						log.Print(err)
-	                }
 				} else if "imagemap" == message.Text {
 					if _, err := bot.ReplyMessage(
 						replyToken,
@@ -606,7 +605,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
 							bot.LeaveRoom(source.RoomID).Do()
 						}
-					}
 				} else if "無恥" == message.Text {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ReplyCurseMessage[rand.Intn(len(answers_ReplyCurseMessage))])).Do()
 				} else if silentMap[sourceId] != true {
