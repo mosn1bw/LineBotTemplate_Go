@@ -125,22 +125,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
 }
 
-// UnmarshalFlexMessageJSON function
-func UnmarshalFlexMessageJSON(data []byte) (FlexContainer, error) {
-	raw := rawFlexContainer{}
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return nil, err
-	}
-	return raw.Container, nil
-}
-
-// Carousel message
-func Carousel(p PlacesCarousel, maxBubble int) *linebot.FlexMessage {
-	carousel := MarshalCarousel(p, maxBubble)
-	altText := p.AltText()
-	return linebot.NewFlexMessage(altText, carousel)
-}
-
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	events, err := bot.ParseRequest(r)
 	log.Print("URL:"  + r.URL.String())
