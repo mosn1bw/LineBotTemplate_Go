@@ -348,6 +348,7 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 							replyToken,
 							linebot.NewTextMessage("Display name: "+profile.DisplayName + ", Status message: "+profile.StatusMessage)).Do(); err != nil {
 								log.Print(err)
+							}	
 						}
 					} else {
 						bot.ReplyMessage(replyToken, linebot.NewTextMessage("Bot can't use profile API without user ID")).Do()
@@ -429,6 +430,7 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 							bot.ReplyMessage(replyToken, linebot.NewTextMessage("我揮一揮衣袖 不帶走一片雲彩")).Do()
 							bot.LeaveRoom(source.RoomID).Do()
 						}
+					}	
 				} else if "無恥" == message.Text {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(answers_ReplyCurseMessage[rand.Intn(len(answers_ReplyCurseMessage))])).Do()
 				} else if silentMap[sourceId] != true {
