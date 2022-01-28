@@ -10,5 +10,15 @@
     {
       "url": "heroku/go"
     }
-  ]
+  ],
+  "env": {
+    "ChannelAccessToken": {
+      "description": "Channel Access Token",
+      "required": true
+    },
+    "ChannelSecret": {
+      "description": "Channel Secret",
+      "required": true
+    }
+  }
 }
